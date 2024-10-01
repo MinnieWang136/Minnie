@@ -1,4 +1,5 @@
-.Yunnan {
+
+.Centralpark {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -7,7 +8,7 @@
 }
 
 header {
-    background: linear-gradient(to right, #4eb4dc, #94d8f1);
+    background: linear-gradient(to right, #11998e, #38ef7d);
     color: #ffffff;
     padding: 20px 0;
     text-align: center;
@@ -20,12 +21,15 @@ header {
 header h1 {
     font-size: 2.5rem;
     margin: 0;}
-
+   
+   
 div.left-box {
-    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size:5ch;
-    background-color: #9a38eb;
-    color:rgb(20, 204, 255);
+    font-family: "neplus", serif;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 50px;
+    background-color: #acec2d;
+    color:deeppink;
     transition:background-color 0.5s ease 0.5s;
     padding: 14px 16px;
     border-radius: 8px;
@@ -55,17 +59,17 @@ header nav ul li a:hover {
     color: #f3f4f6;
 }
   div.left-box:hover {
-   background-color: #8ccfdc;
-    color: rgb(207, 173, 222);
+   background-color: #b8dc8c;
+    color: rgb(222, 173, 173);
     }
   
 
 .marquee{
     font-family:Arial, Helvetica, sans-serif;
     font-size:150%;
-    color:#e539ff;
+    color:#ff39b6;
     margin-top: 20px;
-    background-color: #e7c7ff;
+    background-color: #ffc7f1;
     border-radius: 10px;
     margin-bottom: 20px;
 
@@ -78,13 +82,13 @@ header nav ul li a:hover {
 
 .Featured{
     font-size: 4ch;
-    background-color: rgb(205, 52, 239);
+    background-color: deeppink;
+    max-height:min-content;
     border-radius: 10px;
-    height: 80px;
     margin-bottom: 20px;
     text-align: left;
-    color: #2dbcec;
-    padding: 20px;
+    color: #acec2d;
+    padding: 20px 10px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
@@ -100,7 +104,7 @@ header nav ul li a:hover {
   }
 
 .Animal {
-    background-color: #c7e7ff;
+    background-color: #ffc7f1;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -112,7 +116,7 @@ header nav ul li a:hover {
 }
 
 .Animal button {
-    background: linear-gradient(to right, #3bb6ea, #79bbe4);
+    background: linear-gradient(to right, #b0cf11, #8def38);
     color: #ffffff;
     font-size: 20px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -126,7 +130,7 @@ header nav ul li a:hover {
     width: 100px;
 }
 .Animal button:hover {
-    background: linear-gradient(to right, #116b9f, #5a9abd);
+    background: linear-gradient(to right, #0c8976, #30c270);
 }
 
 .Animal img {

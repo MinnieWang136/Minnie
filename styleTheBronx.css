@@ -1,0 +1,150 @@
+.TheBronx {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+header {
+    background: linear-gradient(to right, #d0dd94, #59a357);
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin: 0;}
+
+div.left-box {
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size:5ch;
+    background-color: #3fd32e;
+    color:rgb(255, 208, 20);
+    transition:background-color 0.5s ease 0.5s;
+    padding: 14px 16px;
+    border-radius: 8px;
+  }
+
+  header nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+header nav ul li {
+    display: inline;
+}
+
+header nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    color: #f3f4f6;
+}
+  div.left-box:hover {
+   background-color: #ebe893;
+    color: rgb(204, 222, 173);
+    }
+  
+
+.marquee{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:150%;
+    color:#66c52f;
+    margin-top: 20px;
+    background-color: #b3eaa4;
+    border-radius: 10px;
+    margin-bottom: 20px;
+
+}
+
+#Animals {
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.Featured{
+    font-size: 4ch;
+    background-color: rgb(30, 131, 43);
+    border-radius: 10px;
+    height: 80px;
+    margin-bottom: 20px;
+    text-align: left;
+    color: #e9ec2d;
+    padding: 20px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 创建6列，每列等宽 */
+    grid-template-rows: repeat(
+      2,
+      1fr
+    ); /* 创建4行，每行等高 */ /* 设置格子之间的间隔 */
+    height: 100vh; /* 容器高度为视窗高度 */
+  }
+
+.Animal {
+    background-color: #96cfa9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    Width: 400px;
+    margin-bottom: 20px;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease; 
+}
+
+.Animal button {
+    background: linear-gradient(to right, #25973e, #f8fa70);
+    color: #ffffff;
+    font-size: 20px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    outline: none;
+    height: 50px;
+    width: 100px;
+}
+.Animal button:hover {
+    background: linear-gradient(to right, #1a7021, #5abd7b);
+}
+
+.Animal img {
+    width: 200%;
+    max-width: 300px;
+    height:400px;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Animal h3 {
+    font-size: 1.5rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin: 0;
+}
+
+.Animal p {
+    color: #666666;
+    margin-bottom: 0.5rem;
+}
