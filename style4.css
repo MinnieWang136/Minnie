@@ -1,5 +1,4 @@
-
-.Centralpark {
+.Yunnan {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -8,7 +7,7 @@
 }
 
 header {
-    background: linear-gradient(to right, #11998e, #38ef7d);
+    background: linear-gradient(to right, #4eb4dc, #94d8f1);
     color: #ffffff;
     padding: 20px 0;
     text-align: center;
@@ -25,8 +24,8 @@ header h1 {
 div.left-box {
     font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size:5ch;
-    background-color: #acec2d;
-    color:deeppink;
+    background-color: #9a38eb;
+    color:rgb(20, 204, 255);
     transition:background-color 0.5s ease 0.5s;
     padding: 14px 16px;
     border-radius: 8px;
@@ -56,17 +55,17 @@ header nav ul li a:hover {
     color: #f3f4f6;
 }
   div.left-box:hover {
-   background-color: #b8dc8c;
-    color: rgb(222, 173, 173);
+   background-color: #8ccfdc;
+    color: rgb(207, 173, 222);
     }
   
 
 .marquee{
     font-family:Arial, Helvetica, sans-serif;
     font-size:150%;
-    color:#ff39b6;
+    color:#e539ff;
     margin-top: 20px;
-    background-color: #ffc7f1;
+    background-color: #e7c7ff;
     border-radius: 10px;
     margin-bottom: 20px;
 
@@ -79,12 +78,12 @@ header nav ul li a:hover {
 
 .Featured{
     font-size: 4ch;
-    background-color: deeppink;
+    background-color: rgb(205, 52, 239);
     border-radius: 10px;
     height: 80px;
     margin-bottom: 20px;
     text-align: left;
-    color: #acec2d;
+    color: #2dbcec;
     padding: 20px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
@@ -101,7 +100,7 @@ header nav ul li a:hover {
   }
 
 .Animal {
-    background-color: #ffc7f1;
+    background-color: #c7e7ff;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -113,7 +112,7 @@ header nav ul li a:hover {
 }
 
 .Animal button {
-    background: linear-gradient(to right, #b0cf11, #8def38);
+    background: linear-gradient(to right, #3bb6ea, #79bbe4);
     color: #ffffff;
     font-size: 20px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -127,7 +126,7 @@ header nav ul li a:hover {
     width: 100px;
 }
 .Animal button:hover {
-    background: linear-gradient(to right, #0c8976, #30c270);
+    background: linear-gradient(to right, #116b9f, #5a9abd);
 }
 
 .Animal img {
