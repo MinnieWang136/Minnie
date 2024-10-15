@@ -77,12 +77,14 @@ header nav ul li a:hover {
 }
 
 .Featured{
-    font-size: 4ch;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 6ch;
     background-color: rgb(131, 82, 30);
     border-radius: 10px;
     height: 80px;
     margin-bottom: 20px;
-    text-align: left;
     color: #ecbc2d;
     padding: 20px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;

@@ -170,3 +170,7 @@ a {
     color: rgb(241, 231, 51);
   }
   
+
+body {
+    cursor: url('path-to-image.png'), auto;
+}

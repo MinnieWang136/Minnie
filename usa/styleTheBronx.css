@@ -77,27 +77,46 @@ header nav ul li a:hover {
 }
 
 .Featured{
-    font-size: 4ch;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 6ch;
     background-color: rgb(30, 131, 43);
     border-radius: 10px;
     height: 80px;
     margin-bottom: 20px;
-    text-align: left;
     color: #e9ec2d;
     padding: 20px;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
-
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 创建6列，每列等宽 */
+    grid-template-columns: repeat(1, minmax(100px, 1fr)); /* 创建6列，每列等宽 */
     grid-template-rows: repeat(
-      2,
+      6,
       1fr
     ); /* 创建4行，每行等高 */ /* 设置格子之间的间隔 */
     height: 100vh; /* 容器高度为视窗高度 */
   }
+
+
+@media (min-width: 700px) {
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(100px, 1fr)); /* 创建6列，每列等宽 */
+        grid-template-rows: repeat(
+          2,
+          1fr
+        ); /* 创建4行，每行等高 */ /* 设置格子之间的间隔 */
+        height: 100vh; /* 容器高度为视窗高度 */
+      }
+
+}
+
+
+
 
 
 
@@ -106,7 +125,7 @@ header nav ul li a:hover {
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    Width: 400px;
+    max-Width: 400px;
     margin-bottom: 20px;
     align-items: center;
     text-align: center;
@@ -134,7 +153,7 @@ header nav ul li a:hover {
 }
 
 .Animal img {
-    width: 200%;
+    /* width: 200%; */
     max-width: 300px;
     height:400px;
     margin-bottom: 1rem;
