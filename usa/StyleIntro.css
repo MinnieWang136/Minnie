@@ -1,0 +1,71 @@
+body {color: #9cb3cb;
+    font-size: 14ch;
+    background-color: #cddaea;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-align:left;
+    margin-right: 1ch;}
+
+/* Change the color when the mouse is over it. */
+a:hover { color: fuchsia; }
+
+
+
+ p {color: rgb(196, 150, 171); 
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-align:left;}
+  
+
+/* And when the mouse is clicked. */
+a:active { color: rgb(65, 222, 233); }
+
+
+/* Place the navbar at the top of the page, and make it stick */
+.navbar {
+    background-color: #514f51;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100ch;
+  }
+ 
+
+/* Style the links inside the navigation bar */
+.navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+
+
+/* Change the color of links on hover */
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;}
+
+    /* Add a color to the active/current link */
+.navbar a.active {
+    background-color: #04AA6D;
+    color: white;
+  }
+
+
+.button{
+  border: none;
+    height: 200px;
+    width: 200px;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 130px;
+    margin: 10px 2px;
+    background-color: #04AA6D;
+    color:white;
+   text-decoration: none;
+    font-family:'Helvetica', 'Arial', sans-serif;
+}
