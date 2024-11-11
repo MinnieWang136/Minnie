@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Ticket Form</title>
+    <link rel="stylesheet" href="planticket.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Flight Ticket Information</h1>
+        <form id="ticketForm">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" required>
+
+            <label for="flightNumber">Flight Number:</label>
+            <input type="text" id="flightNumber" required>
+
+            <label for="departure">Departure Airport:</label>
+            <input type="text" id="departure" required>
+
+            <label for="arrival">Arrival Airport:</label>
+            <input type="text" id="arrival" required>
+
+            <label for="date">Date of Flight:</label>
+            <input type="date" id="date" required>
+
+            <label for="seat">Seat Number:</label>
+            <input type="text" id="seat" required>
+
+            <button type="button" onclick="generateTicket()">Generate Ticket</button>
+        </form>
+
+        <div id="ticket" class="ticket">
+            <div class="ticket-content">
+                <!-- Ticket details will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="planticket.js"></script>
+</body>
+</html>

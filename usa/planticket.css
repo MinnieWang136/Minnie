@@ -1,0 +1,98 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 900px;
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.ticket {
+    margin-top: 20px;
+    border-radius: 10px;
+    background: url('planetickect.svg') no-repeat center center;
+    background-size: cover;
+    color: white;
+    /* Adjust the width and height to match your image's dimensions */
+    width: 900px; /* This makes it as wide as its container */
+    max-width: 900px; /* Adjust this value to your image's width */
+    height: 400px; /* Adjust this to your image's height */
+    position: relative;
+    display: none;
+}
+
+.ticket-content {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    right: 20px;
+    color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.ticket-content p {
+    flex: 1 1 45%; /* Each paragraph takes up about 45% of the width */
+    margin: 5px 0;
+}
+
+/* Add this CSS rule to left-justify the second column */
+.ticket-content p:nth-child(2n) {
+    text-align: left; /* Align text to the left for every even paragraph */
+}
+
+
+.takeoff-button{
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    right: 20px;
+    color: #fff;
+    display: flex;
+}
