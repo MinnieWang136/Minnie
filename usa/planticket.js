@@ -16,7 +16,7 @@ function generateTicket() {
         <p><strong>Arrival:</strong> ${arrival}</p>
         <p><strong>Date:</strong> ${date}</p>
         <p><strong>Seat:</strong> ${seat}</p>
-        <a href="Entry 4 YUnnan Zoo Intro.html" class="takeoff-button">Take Off</a>
+        <a href="Entry 4 Yunnan Zoo Intro.html" class="takeoff-button">Take Off</a>
     `;
     document.getElementById("ticket").style.display = "block";
 }
