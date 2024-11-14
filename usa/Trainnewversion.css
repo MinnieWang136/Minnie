@@ -1,0 +1,74 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.station-sign {
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 40px;
+    border-radius: 10px;
+    width: 80%; /* Increase width to fill more of the screen */
+    max-width: 1200px; /* Set a maximum width for larger screens */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.train-lines {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.line {
+    font-size: 24px; /* Increase font size for better readability */
+    color: white;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 50%;
+    margin: 0 10px;
+    width: 60px; /* Increase size of the circle */
+    height: 60px; /* Increase size of the circle */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Line Colors */
+.line.n { background-color: #FFD700; } /* N - Yellow */
+.line.q { background-color: #FFD700; } /* Q - Yellow */
+.line.r { background-color: #FF4500; } /* R - Orange */
+.line.w { background-color: #FFD700; } /* W - Yellow */
+.line.five { background-color: #009E60; } /* 5 - Green */
+
+.directions {
+    margin-top: 20px;
+}
+
+.direction-btn {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 15px 25px; /* Increase button size */
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px; /* Increase font size */
+    transition: background-color 0.3s;
+}
+
+.direction-btn:hover {
+    background-color: #666;
+}
+
+.direction-info {
+    margin-top: 30px;
+    font-size: 18px; /* Increase font size for better readability */
+    color: #ddd;
+}

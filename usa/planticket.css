@@ -19,6 +19,8 @@ body {
 }
 
 h1 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 30pt;
     text-align: center;
     color: #333;
 }
@@ -39,7 +41,9 @@ form input {
 }
 
 button {
-    background-color: #007BFF;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 15pt;
+    background-color: #5eb0e3;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -89,6 +93,8 @@ button:hover {
 
 
 .takeoff-button{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-decoration: none;
     position: absolute;
     top: 100px;
     left: 20px;
