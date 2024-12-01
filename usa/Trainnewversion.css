@@ -39,13 +39,16 @@ body {
     justify-content: center;
     align-items: center;
 }
+a{text-decoration: none;
+
+}
 
 /* Line Colors */
-.line.n { background-color: #FFD700; } /* N - Yellow */
-.line.q { background-color: #FFD700; } /* Q - Yellow */
-.line.r { background-color: #FF4500; } /* R - Orange */
-.line.w { background-color: #FFD700; } /* W - Yellow */
-.line.five { background-color: #009E60; } /* 5 - Green */
+.line.n { background-color: #FFD700;text-decoration: none;color:#222;} /* N - Yellow */
+.line.q { background-color: #FFD700; text-decoration: none;color:#222;} /* Q - Yellow */
+.line.r { background-color: #FF4500;text-decoration: none; color:#222;} /* R - Orange */
+.line.w { background-color: #FFD700;text-decoration: none; color:#222;} /* W - Yellow */
+.line.five { background-color: #009E60; text-decoration: none;} /* 5 - Green */
 
 .directions {
     margin-top: 20px;

@@ -1,0 +1,98 @@
+/* General Styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #cddaea;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color:#9cb3cb;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    min-height: 100vh;
+  }
+  
+  h1 {
+    font-size: 8rem;
+    margin-top: 1rem;
+  }
+  
+  /* Zoo Container */
+  .zoo-container {
+    display: grid;
+    grid-template-columns: repeat(1, 4fr); /* 4 equal columns */
+    gap: 2rem; /* Space between cards */
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto; /* Center container horizontally */
+  }
+  
+  /* Zoo Card Styling */
+  .zoo-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .zoo-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .zoo-name {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: #99bde2;
+  }
+  
+  .zoo-labels {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 1rem;
+  }
+  
+  /* Button Styling */
+  .zoo-button {
+    background-color: #88add2;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+  }
+  
+  .zoo-button:hover {
+    background-color: #84a6c8;
+  }
+  
+  /* Responsive Design: Stack on Smaller Screens */
+  @media (max-width: 768px) {
+    .zoo-container {
+      grid-template-columns: 1fr; /* Stack cards vertically */
+    }
+  }
+  
+  /* Badge Styling */
+.zoo-card:first-child::before {
+    content: "Minnie’s Favorite"; /* Badge text */
+    position: absolute;
+    top: 10px; /* Position from the top */
+    left: 10px; /* Position from the left */
+    background-color: #ffdf37; /* Badge background color */
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 50%; /* Make the badge circular */
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    line-height: 1.4; /* Vertically center the text in the circle */
+  }
+  
