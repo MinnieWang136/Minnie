@@ -13,6 +13,26 @@ body {
     min-height: 100vh;
   }
   
+/* Homepage Button Styling */
+.homepage-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background-color:  rgb(196, 150, 171);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.homepage-button:hover {
+  background-color:#cddaea ;
+}
+
   h1 {
     font-size: 8rem;
     margin-top: 1rem;
@@ -46,7 +66,7 @@ body {
   .zoo-name {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
-    color: #99bde2;
+    color: rgb(196, 150, 171);
   }
   
   .zoo-labels {
@@ -80,19 +100,5 @@ body {
   }
   
   /* Badge Styling */
-.zoo-card:first-child::before {
-    content: "Minnie’s Favorite"; /* Badge text */
-    position: absolute;
-    top: 10px; /* Position from the top */
-    left: 10px; /* Position from the left */
-    background-color: #ffdf37; /* Badge background color */
-    color: #fff;
-    padding: 10px 15px;
-    border-radius: 50%; /* Make the badge circular */
-    font-weight: bold;
-    font-size: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    line-height: 1.4; /* Vertically center the text in the circle */
-  }
+
   

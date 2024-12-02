@@ -42,14 +42,17 @@ body {
 }
 a{text-decoration: none;}
 
-.line:hover { color: fuchsia; }
-
+.line.five:hover { background-color: fuchsia; }
+.line.n:hover{background-color: fuchsia;}
+.line.r:hover{background-color: fuchsia;}
+.line.q:hover{background-color: fuchsia;}
+.line.w:hover{background-color: fuchsia;}
 
 /* Line Colors */
 .line.n { background-color: #FFD700;text-decoration: none;color:#222;} /* N - Yellow */
 .line.q { background-color: #FFD700; text-decoration: none;color:#222;} /* Q - Yellow */
-.line.r { background-color: #FF4500;text-decoration: none; color:#222;} /* R - Orange */
-.line.w { background-color: #FFD700;text-decoration: none; color:#222;} /* W - Yellow */
+.line.r { background-color: #FF4500;text-decoration: none; color:#ffffff;} /* R - Orange */
+.line.w { background-color: #FFD700;text-decoration: none; color:#000000;} /* W - Yellow */
 .line.five { background-color: #009E60; text-decoration: none;} /* 5 - Green */
 
 .directions {

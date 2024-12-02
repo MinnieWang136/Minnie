@@ -1,24 +1,24 @@
 // Zoo data
 const zoos = [
     {
-      name: "Safari Zoo",
+      name: "The Bronx Zoo",
       labels: "Large Open Spaces • Exotic Animals • Family Friendly",
-      page: "safari-zoo.html",
+      page: "Entry 6 The Bronx Intro.html",
     },
     {
-      name: "Rainforest Habitat Zoo",
+      name: "Central Park Zoo",
       labels: "Tropical Themes • Rare Birds • Conservation Efforts",
-      page: "rainforest-habitat.html",
+      page: "Entry 2 Central Park Intro.html",
     },
     {
-      name: "Oceanic Wildlife Zoo",
+      name: "Prospect Park Zoo",
       labels: "Aquatic Animals • Interactive Displays • Educational Tours",
-      page: "oceanic-wildlife.html",
+      page: "Entry 8 Prospect Park Intro.html",
     },
     {
-      name: "Mountain Safari Zoo",
+      name: "Yunnan Wildlife Zoo",
       labels: "Mountain Wildlife • Stunning Views • Hiking Trails",
-      page: "mountain-safari.html",
+      page: "Entry 4 Yunnan Zoo Intro.html",
     },
   ];
   
