@@ -16,8 +16,8 @@ body {
     padding: 40px;
     border-radius: 10px;
     width: 80%; /* Increase width to fill more of the screen */
-    max-width: 1200px; /* Set a maximum width for larger screens */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    max-width: 1280px; /* Set a maximum width for larger screens */
+    box-shadow: 0 4px 15px #463f3f80;
 }
 
 .train-lines {
@@ -86,7 +86,7 @@ a{text-decoration: none;}
     top: 20px;
     left: 20px;
     padding: 10px 20px;
-    background-color:  rgb(196, 150, 171);
+    background-color:  rgb(28, 24, 25);
     color: white;
     text-decoration: none;
     border-radius: 5px;
