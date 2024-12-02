@@ -24,6 +24,7 @@ body {
     display: flex;
     justify-content: center;
     margin: 20px 0;
+    z-index: 10;
 }
 
 .line {
@@ -39,9 +40,10 @@ body {
     justify-content: center;
     align-items: center;
 }
-a{text-decoration: none;
+a{text-decoration: none;}
 
-}
+.line:hover { color: fuchsia; }
+
 
 /* Line Colors */
 .line.n { background-color: #FFD700;text-decoration: none;color:#222;} /* N - Yellow */
