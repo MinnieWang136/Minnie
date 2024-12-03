@@ -1,0 +1,80 @@
+/* General Styling */
+body {
+    margin: 0;
+    padding: 0;
+   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    background: linear-gradient(to bottom, #f9f9f9, #e6f7ff);
+    text-align: center;
+    color: #333;
+    min-height: 100vh;
+  }
+  
+  /* Homepage Button Styling */
+  .homepage-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color:#9cb3cb;
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .homepage-button:hover {
+    background-color: #9cb3cb;
+  }
+  
+  /* Profile Container */
+  .profile-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Profile Header */
+  .profile-header h1 {
+    font-size: 3rem;
+    color: #9cb3cb;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin-bottom: 1rem;
+  }
+  
+  /* Profile Picture Section */
+  .profile-pic-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  
+  .profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* Circular profile picture */
+    border: 4px solid #9cb3cb; /* Blue border */
+    object-fit: cover; /* Ensure the image covers the entire circle */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Bio Section */
+  .bio-container h2 {
+    font-size: 2rem;
+    color: #555;
+    margin-bottom: 1rem;
+  }
+  
+  .bio-container p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+  

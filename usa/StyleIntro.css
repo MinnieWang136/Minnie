@@ -24,7 +24,7 @@ a:active { color: rgb(65, 222, 233); }
     background-color: #514f51;
     overflow: hidden;
     position: fixed;
-    bottom: 0;
+    top: 0;
     width: 100ch;
   }
  
@@ -49,7 +49,7 @@ a:active { color: rgb(65, 222, 233); }
 
     /* Add a color to the active/current link */
 .navbar a.active {
-    background-color: #04AA6D;
+    background-color: #ef04d0;
     color: white;
   }
 
@@ -64,7 +64,7 @@ a:active { color: rgb(65, 222, 233); }
     display: inline-block;
     font-size: 130px;
     margin: 10px 2px;
-    background-color: #04AA6D;
+    background-color: #f407c0;
     color:white;
    text-decoration: none;
     font-family:'Helvetica', 'Arial', sans-serif;
