@@ -9,6 +9,16 @@ body {
     min-height: 100vh;
   }
   
+  .intro{
+    color:  rgb(196, 150, 171);
+    font-size: 2.5ch;
+  }
+   
+ .title{
+    color:#9cb3cb;
+    font-size: 2ch;
+ }
+
   /* Homepage Button Styling */
   .homepage-button {
     position: absolute;
