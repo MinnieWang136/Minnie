@@ -17,6 +17,8 @@ body {
     text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.2);
   }
   
+h2{color: rgb(196, 150, 171) ;}
+
   /* Homepage Button Styling */
   .homepage-button {
     position: absolute;
