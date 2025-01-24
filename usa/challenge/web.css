@@ -1,0 +1,32 @@
+.buttons {
+text-decoration: none;
+font-size: 20px;
+color: black;
+background-color: rgb(240, 150, 195);
+border-radius: 5px;
+}
+
+.buttons2 {
+    text-decoration: none;
+    font-size: 20px;
+    color: black;
+    background-color: rgb(240, 150, 195);
+    border-radius: 5px;
+    }
+
+    .buttons3 {
+        text-decoration: none;
+        font-size: 20px;
+        color: black;
+        background-color: rgb(240, 150, 195);
+        border-radius: 5px;
+        }
+
+.homepage { 
+    text-decoration: none;
+    font-size: 20px;
+    color:black;
+    background-color: aliceblue;
+    border-radius: 5px;
+
+}
