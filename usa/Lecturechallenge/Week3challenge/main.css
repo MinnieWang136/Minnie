@@ -1,0 +1,116 @@
+
+
+
+  /* Use these classes to style the .card component */
+section{
+    background-color: beige;
+
+}
+
+.card {
+background-color: rgb(185, 223, 99);
+border-radius: 3rem;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+color:rgb(255, 255, 165);
+padding:1rem;
+}
+  
+.card__title {
+    font-size: 2rem;
+    padding: 5px;
+    margin-left: 35px;
+    margin-bottom: 0;
+  }
+  .card__excerpt {
+  padding: 20px;
+  margin-left: 20px;
+  margin-top: 0;
+  line-height: 20px;
+  max-width: 80%;
+  margin-bottom: 2px;
+  text-align:left;
+  }
+
+  .card__image {
+  max-width: 80%;
+  height: auto;
+  margin-bottom: 20px;
+  margin-top: 2px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  }
+
+  .card__more {
+    background-color:rgb(116, 146, 81);
+    border-radius: 3rem;
+    text-decoration: none;
+    color: rgb(253, 254, 152);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 10px;
+    max-width: 8rem;
+    margin-left: 30%; 
+    margin-right: 30%;
+    display:block;
+    text-align: center;
+    margin-bottom: 1rem;
+
+  }
+
+  .card__more:hover {
+    color: antiquewhite;
+    background-color: deeppink;
+    border-radius: 5px;
+    transition: ease-in 0.2s;
+  }
+
+  .card__more:active {
+    color: antiquewhite;
+    background-color: deeppink;
+  }
+
+  @media screen and (min-width: 1024px) {
+
+    section{
+        background-color: rgb(153, 233, 248);
+    }
+    .card {
+        color: rgb(116, 215, 254);
+        background-color: deeppink;
+        padding: 3rem;
+    }
+    .card__title {
+        font-size: 6rem;
+    }
+    .card__excerpt {
+       padding: 2rem ;
+    margin-left: 5rem;}
+    .card__image {
+        margin-bottom: 2rem;
+    }
+    .card__more {
+        background-color:  rgb(116, 215, 254);
+        color: rgb(255, 0, 153);
+        display: inline-block;
+       margin-left: 45%; 
+        margin-right: 45%;
+    }
+    .card__more:hover {
+        background-color: aliceblue;
+        color: aqua;
+    }
+    .card__more:active {
+        background-color: hotpink;
+        color: aqua;
+    }
+  }
+
+  /* You can leave everything below as is — we'll explain flexbox in a later lecture! */
+
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 8vw;
+  }
+
