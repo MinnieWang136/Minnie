@@ -1,0 +1,42 @@
+
+        /* Page Styling */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            padding: 50px;
+            background: linear-gradient(to bottom, #0a0f1d, #1c355c);
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Text Styling */
+        .text-container {
+            text-align: right;
+            color: white;
+        }
+
+        .small-text {
+            font-size: 20px;
+            font-weight: 300;
+            color: #cdd4e0;
+        }
+
+        .large-text {
+            font-size: 60px;
+            font-weight: bold;
+            color: #f8e86b;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            font-weight: 300;
+            color: #cdd4e0;
+        }
+
+        .author {
+            font-size: 16px;
+            font-weight: 300;
+            color: #a2b178;
+        }

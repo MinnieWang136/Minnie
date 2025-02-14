@@ -22,9 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function showCentralLightSpot() {
         const centralSpot = document.createElement("div");
-        centralSpot.classList.add("central-light-spot");
+        centralSpot.classList.add("central-light-spot2");
         centralSpot.addEventListener("click", () => {
-            window.location.href = "page2.html"; // Redirect to the next page
+            window.location.href = "page4.html"; // Redirect to the next page
         });
         document.body.appendChild(centralSpot);
     }
