@@ -7,12 +7,18 @@
     <link rel="stylesheet" href="homepage.css">
 </head>
 <body>
-   
+
     <div class="container">
         <h1 class="title" onclick="goToNextPage()">First Light In Winter Deep</h1>
+        <h2 class="author">By Emily Verse</h2>
     </div>
-    <script src="homepage.js"></script>
-    <iframe src="music.html" allow="autoplay" style="display:none;"></iframe>
-</html>
-</body> 
 
+    <audio id="background-music" autoplay loop>
+        <source src="audio/music.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag.
+    </audio>
+
+    <script src="homepage.js"></script>
+
+</body>
+</html>

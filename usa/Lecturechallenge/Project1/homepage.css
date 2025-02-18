@@ -40,6 +40,17 @@ body {
     animation: none; /* Stop floating while hovering */
 }
 
+.author {
+    font-family: 'Merriweather', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #ffffff; /* Soft light gray */
+    letter-spacing: 1px;
+    opacity: 0.8;
+    margin-top: 5px;
+}
+
+
 /* Glowing Stars */
 .star {
     position: absolute;
