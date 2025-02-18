@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Merriweather:wght@300;400;700&display=swap');
 body {
-    background-color: #111;
+    background: linear-gradient(to bottom,#FF9F45,#FFECB3 );
     color: white;
-    font-family: "Georgia", serif;
+    font-family: 'Merriweather', serif;
+    font-size: 1.2rem;
     text-align: center;
     padding: 50px;
     height: 100vh;
