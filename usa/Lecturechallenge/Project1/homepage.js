@@ -1,27 +1,35 @@
-document.getElementById("title").addEventListener("click", function(event) {
-    const lightspot = document.getElementById("lightspot");
-    const title = document.getElementById("title");
+// Redirect to next page when title is clicked
+function goToNextPage() {
+    window.location.href = "page1.html"; // Change this to your target page
+}
 
-    // Get title position
-    const rect = event.target.getBoundingClientRect();
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-
-    // Position the lightspot at the title location
-    lightspot.style.left = `${x}px`;
-    lightspot.style.top = `${y}px`;
-
-    // Activate the glowing effect
-    lightspot.style.opacity = "1";
-    lightspot.style.transform = "scale(15)";
-
-    // Wait 0.5s before fading out the title (prevents instant disappearance)
-    setTimeout(() => {
-        title.style.opacity = "0"; // Gradual fade-out
-    }, 500);
-
-    // Redirect to another page after animation
-    setTimeout(() => {
-        window.location.href = "page1.html"; // Change to your destination page
-    }, 1500);
+// Event listener for title hover to trigger star effect
+document.querySelector(".title").addEventListener("mouseenter", function() {
+    createBurstOfStars(50); // Generate 50 stars across the screen
 });
+
+function createBurstOfStars(count) {
+    for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+            createStar(
+                Math.random() * window.innerWidth,  // Random X position
+                Math.random() * window.innerHeight // Random Y position
+            );
+        }, i * 20); // Slight delay for a smooth effect
+    }
+}
+
+function createStar(x, y) {
+    let star = document.createElement("div");
+    star.classList.add("star");
+    document.body.appendChild(star);
+
+    // Position the star randomly
+    star.style.left = `${x}px`;
+    star.style.top = `${y}px`;
+
+    // Remove star after animation ends
+    setTimeout(() => {
+        star.remove();
+    }, 2000);
+}

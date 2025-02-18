@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Music</title>
+</head>
+<body>
+    <audio id="bg-music" autoplay loop>
+        <source src="audio/candle-light-231780.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        let music = document.getElementById("bg-music");
+
+        document.addEventListener("click", function() {
+            if (music.paused) {
+                music.play().catch(error => console.warn("Auto-play blocked", error));
+            }
+        });
+
+        // Save playback position
+        window.addEventListener("beforeunload", function () {
+            localStorage.setItem("musicTime", music.currentTime);
+        });
+
+        // Resume playback
+        window.addEventListener("load", function () {
+            let savedTime = localStorage.getItem("musicTime");
+            if (savedTime) {
+                music.currentTime = savedTime;
+            }
+        });
+    </script>
+</body>
+</html>
