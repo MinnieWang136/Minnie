@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="story.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sample Form Elements</title>
+</head>
+<body>
+    <h1>The tale of Peter Rabbit</h1>
+    <h2>By Beatrix Potter</h2>
+<div class="box">
+	<!-- Example of an Input -->
+	<label for="time">Once upon the</label>
+	<select id="time" name="time">
+		<option value="time">time,</option>
+		<option value="tiger">tiger,</option>
+		<option value="tree">tree,</option>
+		<!-- Add as many options as needed -->
+	</select>
+    <span class="text">there were four little Rabbits,</span>
+    <label for="name">and their names were— </label> 
+    <select id="name" name="name">
+        <option value="name1">Spiderman, Batman, X-man, and Hawkeye.</option>
+        <option value="name2">Flopsy, Mopsy, Cotton-tail, and Peter.</option>
+        <option value="name3">Snowwhite, Cinderella, Ariel, and Bell.</option>
+    </select>
+</div>
+<div class="box">
+    <p>They lived with their Mother in a...</p>
+	<div>
+		<input type="radio" id="sandbank" name="place" value="sandbank" checked />
+		<label for="sandbank">sandbank</label>
+	</div>
+	<div>
+		<input type="radio" id="supermarket" name="place" value="supermarket" />
+		<label for="supermarket">supermarket</label>
+	</div>
+	<div>
+		<input type="radio" id="spaceship" name="place" value="spaceship" />
+		<label for="spaceship">spaceship</label>
+	</div>
+</div>
+
+<div class="box">
+	<p><!-- Example of a Checkbox -->
+	<div>
+		<label for="home1">underneath the root of a very bad figma tree.</label>
+		<input type="checkbox" id="home1" name="home1" checked />
+	</div>
+	<div>
+		<label for="home2">underneath the root of a very big fir tree.</label>
+		<input type="checkbox" id="home2" name="home2" />
+	</div></p>
+</div>
+
+<div class="box">
+	<!-- Example of an Input -->
+	
+	<select id="words" name="words">
+		<option value="dear">"NOW, my dears," </option>
+		<option value="bear">"NOW, my bears," </option>
+		<option value="ear">"NOW, my ears," </option>
+        </select>
+    <label for="time">said old Mrs. Rabbit one morning, </label>
+    <span>"you may go into the fields or down the lane, but don't go into Mr. McGregor's </span>
+    <p> garden: your Father had an accident there; he was put in a pie by Mrs. McGregor."</p>
+    vertical-align:middle;
+</div>
+
+
+
+<div class="box">
+    <p>
+	<!-- Example of a Number Input -->
+	<div>
+		<span>THEN old Mrs. Rabbit took a basket and her umbrella, to the baker's. She bought a loaf of brown bread and </span>
+		<input type="number" id="bread" name="bread" min="0" max="10" step="5" />
+		<span>currant buns.</span>
+	</div>
+    </p>
+</div>
+<img class="peter" src="peterrabbit.avif" alt="Flowers in Chania">
+</body>
+</html>
