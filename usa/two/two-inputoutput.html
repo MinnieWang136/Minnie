@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>select two item to form a Legendary item</title>
+    <link rel="stylesheet" href="two.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="content">
+    <h2>Select two item to form a legendary item</h2>
+    
+    <div class="image-container">
+       <div class="image-wrapper"> <img src="yanlei.webp" id="img1" class="selectable-image" onclick="selectImage('img1')">
+    <p>Tear of the Goddess</p>   
+    </div> 
+
+    <div class="image-wrapper">
+       <img src="gongsu.jpg" id="img2" class="selectable-image" onclick="selectImage('img2')">
+       <p>Recurve Bow</p>
+       </div> 
+       
+       <div class="image-wrapper">
+       <img src="quantao.jpg" id="img3" class="selectable-image" onclick="selectImage('img3')">
+       <p>Sparring Gloves</p>
+       </div>
+       <div class="image-wrapper">
+        <img src="dabang.jpg" id="img4" class="selectable-image" onclick="selectImage('img4')">
+    <p>Needlessly Large Rod</p>   
+    </div>
+</div>
+
+    <h3>Legendary item:</h3>
+    <div class="result-container">
+        <img id="resultImage">
+        <p id="resultLabel"></p>  <!-- Label moved below the image -->
+        <p id="resultDescription"></p>  <!-- Description stays below the label -->
+    </div>
+</div>
+
+    <script src="two.js"></script>
+</body>
+</html>
