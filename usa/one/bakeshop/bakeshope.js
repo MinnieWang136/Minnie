@@ -6,9 +6,12 @@ let selectedIngredients = [];
             "Banana+Flour": { name: "Banana bread", img: "bananabread.png" },
             "Flour+Milk": { name: "Pancakes", img: "pancake.png" },
             "Butter+Chocolate": { name: "Chocolate Ganache", img: "ganache.png" },
-            "Banana+Chocolate": { name: "Chocobanana", img: "chocobanana.png" }
+            "Banana+Chocolate": { name: "Chocobanana", img: "chocobanana.png" },
+            "Flour+Sugar": { name: "Donut", img: "donut.png" },
+            "Milk+Sugar": { name: "Toffee", img: "toffee.png" },
+        
         };
-
+       
         function selectIngredient(ingredient, element) {
             element.classList.toggle('selected');
 
@@ -29,7 +32,10 @@ let selectedIngredients = [];
                     document.getElementById("dessert-image").style.display = "block";
                     document.getElementById("dessert-name").innerText = dessert.name;
                 } else {
-                    alert("No dessert found for this combination!");
+                   
+                    document.getElementById("dessert-image").src = "soldout.png";
+                    document.getElementById("dessert-image").style.display = "block";
+                    document.getElementById("dessert-name").innerText = "";
                 }
 
                 setTimeout(() => {
