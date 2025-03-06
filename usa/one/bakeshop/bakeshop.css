@@ -1,13 +1,13 @@
 body {
     font-family: 'Quicksand', sans-serif;
     text-align: center;
-    background-color: #fff8e1;
+    background-color: #fff6d8;
 }
 
 h1 {
     font-family: 'Pacifico', cursive;
     color: #d2691e;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     font-size: 100px;
 }
 
@@ -49,9 +49,9 @@ h1 {
 
 #dessert img {
     width: 250px;
+  
     height: auto;
     border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
     display: none;
 }
 
