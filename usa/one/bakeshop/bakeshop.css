@@ -1,14 +1,17 @@
+
 body {
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Pacifico', cursive;
     text-align: center;
     background-color: #fff6d8;
+ 
 }
 
 h1 {
     font-family: 'Pacifico', cursive;
-    color: #d2691e;
-    margin-bottom: 30px;
-    font-size: 100px;
+    color: #a55923;
+    margin-bottom: 40px;
+    font-size: 115px;
+    margin-top: 35px;
 }
 
 .ingredients {
@@ -33,7 +36,7 @@ h1 {
 }
 
 .selected {
-    border: 3px solid #ff7043;
+    border: 3px solid #ca6445;
 }
 
 #dessert {
@@ -60,5 +63,5 @@ h1 {
     font-weight: bold;
     font-family: 'Pacifico', cursive;
     color: #6d4c41;
-    margin-top: 10px;
+    margin-top: 5px;
 }
