@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bakery Ingredient Mixer</title>
+    <link rel="stylesheet" href="bakeshop.css">
+</head>
+<body>
+
+
+    <h1>Bakery Shop</h1>
+
+    <div class="ingredients">
+        <img src="flour.png" class="ingredient" onclick="selectIngredient('Flour', this)">
+        <img src="sugar.png" class="ingredient" onclick="selectIngredient('Sugar', this)">
+        <img src="milk.png" class="ingredient" onclick="selectIngredient('Milk', this)">
+        <img src="chocolate.png" class="ingredient" onclick="selectIngredient('Chocolate', this)">
+        <img src="butter.png" class="ingredient" onclick="selectIngredient('Butter', this)">
+        <img src="banana.png" class="ingredient" onclick="selectIngredient('Banana', this)">
+    </div>
+    
+    <div class="result-container">
+    <div id="dessert">
+        <img id="dessert-image" src="" alt="Dessert">
+        <p id="dessert-name"></p>
+    </div>
+    </div>
+
+    <script src="bakeshope.js"></script>
+</body>
+</html>
