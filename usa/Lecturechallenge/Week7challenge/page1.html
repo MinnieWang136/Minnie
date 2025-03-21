@@ -1,0 +1,31 @@
+<!-- grid-layout.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Layout</title>
+    <link id="stylesheet" rel="stylesheet" href="page1.css">
+</head>
+<body> 
+    <nav>
+        <button onclick="switchStyle('page2.css')">Use Flexbox</button>
+        <button onclick="switchStyle('page1.css')">Use grid-layout</button>
+    </nav>
+
+    <div class="envelope">
+        <header>Some header</header>
+        <div class="sidecol">This is side column 1.</div>
+        <div class="maincol">This is the main column.</div>
+        <div class="sidecol2">This is side column 2.</div>
+        <footer>Some ending.</footer>
+    </div>
+
+    <script>
+        function switchStyle(sheet) {
+            document.getElementById('stylesheet').setAttribute('href', sheet);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+/* flexbox.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.envelope {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    background-color: rgb(143, 177, 151);
+    flex-direction: column;
+}
+header, .sidecol, .maincol, .sidecol2, footer {
+    padding: 2em;
+    text-align: center;
+}
+header {
+    background-color: rgb(150, 232, 92);
+    width: 100%;
+}
+.sidecol, .sidecol2 {
+    background-color: rgb(108, 234, 219);
+    width: 25%;
+}
+.maincol {
+    background-color: rgb(179, 215, 50);
+    width: 50%;
+    height: 20rem;
+}
+footer {
+    background-color: rgb(201, 147, 201);
+    width: 100%;
+}
+@media screen and (min-width: 500px) {
+    .envelope {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    header, footer {
+        width: 100%;
+    }
+    .sidecol, .sidecol2 {
+        width: 25%;
+    }
+    .maincol {
+        width: 50%;
+    }
+}

@@ -1,0 +1,60 @@
+/* grid.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.envelope {
+    display: grid;
+    width: 100%;
+    background-color: yellow;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "header"
+        "side1"
+        "main"
+        "side2"
+        "footer";
+}
+header {
+    grid-area: header;
+    background-color: red;
+    padding: 2em;
+    text-align: center;
+}
+.sidecol {
+    grid-area: side1;
+    background-color: green;
+    padding: 2em;
+    text-align: center;  /* 添加文字居中 */
+}
+.maincol {
+    grid-area: main;
+    background-color: blue;
+    padding: 2em;
+    height: 20rem;
+    text-align: center;  /* 添加文字居中 */
+}
+.sidecol2 {
+    grid-area: side2;
+    background-color: pink;
+    padding: 2em;
+    text-align: center;  /* 添加文字居中 */
+}
+footer {
+    grid-area: footer;
+    background-color: purple;
+    padding: 2em;
+    text-align: center;
+}
+@media screen and (min-width: 500px) {
+    .envelope {
+        grid-template-columns: 25% 50% 25%;
+        grid-template-rows: auto auto auto;
+        grid-template-areas:
+            "header header header"
+            "side1 main side2"
+            "footer footer footer";
+    }
+}
