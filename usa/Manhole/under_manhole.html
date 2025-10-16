@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Under the Manhole</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: #0a0a0a;
+    font-family: sans-serif;
+    color: #fff;
+  }
+
+  /* -------- Intro Scene -------- */
+  .intro-scene {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+  }
+
+  .manhole img {
+    width: 200px;
+    transition: transform 1s ease;
+    transform-origin: center bottom;
+  }
+
+  .rat-intro img {
+    width: 100px;
+    position: relative;
+    bottom: -80px;
+    opacity: 0;
+    transition: all 1s ease;
+  }
+
+  .instruction {
+    margin-top: 20px;
+    opacity: 0.8;
+    font-size: 18px;
+  }
+
+  /* -------- Game Section -------- */
+  .hidden { display: none; }
+
+  .game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #0e0e0e;
+  }
+
+
+  .wall {
+    position: absolute;
+    background: #222;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+    border: 1px solid #111;
+  }
+
+.tunnel {
+  position: relative;
+  width: 4000px;
+  height: 100%;
+  background: #111 url('brick_texture.jpg') repeat;
+  background-size: 300px;
+  display: block;
+  overflow: visible;
+}
+
+
+  /* -------- Rat -------- */
+
+.rat {
+  position: absolute;
+  width: 120px;
+  height: auto;
+  left: 100px;
+  top: 320px;
+  z-index: 10;
+  transition: transform 0.08s linear;
+}
+
+.rat img {
+  width: 100%;
+  display: block;
+}
+  /* -------- Coins -------- */
+ .coin {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: url('treasure.png') center/contain no-repeat;
+  animation: coinFloat 1.5s ease-in-out infinite alternate;
+  cursor: pointer;
+  z-index: 9; /* ensure coins appear above walls */
+}
+
+  @keyframes coinFloat {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); }
+  }
+
+  /* -------- Popup -------- */
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: rgba(15,15,15,0.95);
+    border: 1px solid #444;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(0,0,0,0.7);
+    transition: transform 0.3s ease;
+    z-index: 2000;
+  }
+
+  .popup.show { transform: translate(-50%, -50%) scale(1); }
+
+  .popup img {
+    width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto 0.5rem;
+  }
+
+  /* -------- End Marker -------- */
+  .end {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    right: 150px;
+    bottom: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #00ffff55, #003333);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: cyan;
+    font-weight: bold;
+    text-shadow: 0 0 8px cyan;
+    animation: pulse 2s infinite alternate;
+    cursor: pointer;
+  }
+
+  .fade-out {
+  animation: fadeOut 2.5s ease forwards;
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+
+  @keyframes pulse {
+    from { transform: scale(1); opacity: 0.8; }
+    to { transform: scale(1.1); opacity: 1; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- Intro Scene -->
+<div class="intro-scene" id="introScene">
+  <div class="manhole" id="manhole"><img src="6.png" alt="Manhole Cover"></div>
+  <div class="rat-intro" id="ratIntro"><img src="rat.webp" alt="Rat"></div>
+  <div class="instruction" id="instruction">Press any key to start...</div>
+</div>
+
+<!-- Game -->
+<div class="game-container hidden" id="gameContainer">
+  <div class="tunnel" id="tunnel">
+    <!-- Walls (short maze layout) -->
+    <div class="wall" style="left:0; top:0; width:4000px; height:80px;"></div>
+    <div class="wall" style="left:0; bottom:0; width:4000px; height:80px;"></div>
+    <div class="wall" style="left:600px; top:200px; width:200px; height:300px;"></div>
+    <div class="wall" style="left:1200px; top:400px; width:200px; height:250px;"></div>
+    <div class="wall" style="left:1800px; top:150px; width:200px; height:300px;"></div>
+    <div class="wall" style="left:2600px; top:300px; width:200px; height:300px;"></div>
+
+   
+<!-- Coins -->
+<div class="coin" 
+     style="left:500px; top:300px;" 
+     data-text="You found a Lost MetroCard — a golden ticket for mice who dream big." 
+     data-img="metrocard.png"></div>
+
+<div class="coin" 
+     style="left:1300px; top:320px;" 
+     data-text="A Shiny Screw — the mouse’s precious treasure, perfect for a crown." 
+     data-img="screw.png"></div>
+
+<div class="coin" 
+     style="left:2100px; top:260px;" 
+     data-text="A Half-Eaten Bagel — breakfast of champions in the underworld." 
+     data-img="bagel.png"></div>
+
+<div class="coin" 
+     style="left:3000px; top:320px;" 
+     data-text="A Subway Map Scrap — a map to every crumb in Manhattan." 
+     data-img="submap.png"></div>
+
+<div class="coin" 
+     style="left:3600px; top:280px;" 
+     data-text="A Plastic Bottle Cap — the mouse’s boat during rainy days." 
+     data-img="bottlecap.png"></div>
+    <!-- End Marker -->
+    <div class="end" id="end">Back to Human World</div>
+
+    <!-- Rat -->
+    <div class="rat" id="rat"><img src="rat.webp" alt="rat"></div>
+  </div>
+
+
+<!-- Popup -->
+<div class="popup" id="popup">
+  <img id="popup-img" src="" alt="Object found">
+  <p id="popup-text"></p>
+</div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const intro = document.getElementById("introScene");
+  const manhole = document.getElementById("manhole").querySelector("img");
+  const ratIntro = document.getElementById("ratIntro").querySelector("img");
+  const game = document.getElementById("gameContainer");
+  const tunnel = document.getElementById("tunnel");
+  const rat = document.getElementById("rat");
+  const coins = document.querySelectorAll(".coin");
+  const popup = document.getElementById("popup");
+  const popupText = document.getElementById("popup-text");
+  const popupImg = document.getElementById("popup-img");
+  const endMarker = document.getElementById("end");
+
+  let started = false;
+  let playing = false;
+  const keys = { ArrowLeft:false, ArrowRight:false, ArrowUp:false, ArrowDown:false, w:false,a:false,s:false,d:false };
+
+  document.addEventListener("keydown", (e)=>{
+    if(!started){
+      started = true;
+      startIntro();
+      return;
+    }
+    if(playing && keys.hasOwnProperty(e.key)) keys[e.key] = true;
+  });
+  document.addEventListener("keyup",(e)=>{
+    if(playing && keys.hasOwnProperty(e.key)) keys[e.key] = false;
+  });
+
+  function startIntro(){
+    document.getElementById("instruction").style.opacity="0";
+    manhole.style.transform = "rotateX(75deg)";
+    setTimeout(()=>{ratIntro.style.opacity="1";ratIntro.style.bottom="160px";},500);
+    setTimeout(()=>{ratIntro.style.bottom="0";ratIntro.style.opacity="0";},1500);
+    setTimeout(()=>{
+      intro.style.display="none";
+      game.classList.remove("hidden");
+      playing=true;
+      startGame();
+    },2300);
+  }
+
+  function startGame(){
+  // store static wall positions relative to tunnel coordinates
+const walls = Array.from(document.querySelectorAll(".wall")).map(w => ({
+  left: parseInt(w.style.left) || 0,
+  top: parseInt(w.style.top) || 0,
+  right: (parseInt(w.style.left) || 0) + w.offsetWidth,
+  bottom: (parseInt(w.style.top) || 0) + w.offsetHeight
+}));
+
+
+    let ratX=100, ratY=320, speed=300;
+    const ratW=120, ratH=100;
+    let last=performance.now();
+
+    function rectsIntersect(a,b){
+      return !(a.left>=b.right||a.right<=b.left||a.top>=b.bottom||a.bottom<=b.top);
+    }
+    function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+
+    function animate(now){
+      const dt=Math.min(0.06,(now-last)/1000); last=now;
+      let vx=0,vy=0;
+      if(keys.ArrowRight||keys.d)vx+=1;
+      if(keys.ArrowLeft||keys.a)vx-=1;
+      if(keys.ArrowUp||keys.w)vy-=1;
+      if(keys.ArrowDown||keys.s)vy+=1;
+      if(vx&&vy){vx*=0.707;vy*=0.707;}
+      let nextX=ratX+vx*speed*dt, nextY=ratY+vy*speed*dt;
+      const collide=(x,y)=>{
+        const c={left:x,top:y,right:x+ratW,bottom:y+ratH};
+        return walls.some(w=>rectsIntersect(c,w));
+      };
+      if(!collide(nextX,ratY))ratX=nextX;
+      if(!collide(ratX,nextY))ratY=nextY;
+      const tw=tunnel.offsetWidth,th=tunnel.offsetHeight;
+      ratX=clamp(ratX,0,tw-ratW-10);ratY=clamp(ratY,80,th-ratH-10);
+      rat.style.left=ratX+"px";rat.style.top=ratY+"px";
+      const vw=window.innerWidth;
+      const desired=-ratX+(vw/2)-(ratW/2);
+      const minT=Math.min(0,vw-tw);
+      const clamped=Math.max(minT,Math.min(0,desired));
+      tunnel.style.transform=`translateX(${clamped}px)`;
+
+     // Coin collection
+coins.forEach(c => {
+  if (!c.dataset.text) return;
+  const x = parseInt(c.style.left) || 0;
+  const y = parseInt(c.style.top) || 0;
+  const r1 = { left: ratX, top: ratY, right: ratX + ratW, bottom: ratY + ratH };
+  const r2 = { left: x, top: y, right: x + c.offsetWidth, bottom: y + c.offsetHeight };
+  if (rectsIntersect(r1, r2)) {
+    popupImg.src = c.dataset.img;
+    popupText.textContent = c.dataset.text;
+    popup.classList.add("show");
+    setTimeout(() => popup.classList.remove("show"), 2200);
+    c.removeAttribute("data-text");
+    c.style.display = "none";
+  }
+});
+
+
+
+      // End marker check
+      const endRect=endMarker.getBoundingClientRect();
+      const tRect=tunnel.getBoundingClientRect();
+      const endX=endRect.left-tRect.left, endY=endRect.top-tRect.top;
+      const r1={left:ratX,top:ratY,right:ratX+ratW,bottom:ratY+ratH};
+      const r2={left:endX,top:endY,right:endX+200,bottom:endY+200};
+  if (rectsIntersect(r1, r2)) {
+  playing = false;
+
+  // Portal glow + feedback
+  endMarker.textContent = "Climbing back...";
+  endMarker.style.animation = "none";
+  endMarker.style.background = "radial-gradient(circle, #00ffffaa, #003333)";
+  endMarker.style.boxShadow = "0 0 40px cyan";
+
+  // Add fade-out animation
+  document.body.classList.add("fade-out");
+
+  // Redirect after delay (adjust time if you want slower)
+  setTimeout(() => {
+    window.location.href = "page.html#rat-game"; // <-- change to your actual page + section
+  }, 2500);
+  return;
+}
+
+
+
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  }
+});
+</script>
+
+</body>
+</html>

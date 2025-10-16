@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NYC Manholes Interactive</title>
+<!-- Intro Section -->
+<style>
+  body {
+    margin: 0;
+    background: #000000;
+    color: #fff;
+    font-family: sans-serif;
+    height: 200vh; /* extra scroll room */
+  }
+
+.intro-section {
+  position: relative;
+  height: 200vh; /* extra scrollable space below */
+  background: #000;
+  overflow: hidden;
+}
+
+#breakText {
+  position: absolute;
+  top: 60vh;  /* 60% down from the top of the section */
+  right: 20px;
+  font-size: 80px;
+  font-weight: 800;
+  text-align: right;
+  line-height: 1.2;
+  display: inline-block;
+}
+
+
+  .letter {
+    display: inline-block;
+    will-change: transform, opacity, filter;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- Vertical Ruler Navigation -->
+<nav class="ruler-nav">
+  <ul>
+    <li data-target=".intro-section"><span class="tick"></span><span class="label">Intro</span></li>
+    <li data-target=".story"><span class="tick"></span><span class="label">Story</span></li>
+    <li data-target=".map-section"><span class="tick"></span><span class="label">Map</span></li>
+    <li data-target=".shape-section"><span class="tick"></span><span class="label">Shape</span></li>
+    <li data-target=".pattern-section"><span class="tick"></span><span class="label">Pattern</span></li>
+    <li data-target=".rat-game"><span class="tick"></span><span class="label">Rat</span></li>
+    <li data-target=".outro"><span class="tick"></span><span class="label">Outro</span></li>
+    <li data-target=".content-page"><span class="tick"></span><span class="label">Content</span></li>
+  </ul>
+</nav>    
+
+<section class="intro-section">
+  <div id="breakText">Jump into the underflow</div>
+</section>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script>
+  const el = document.getElementById('breakText');
+  const text = el.textContent.trim();
+  el.textContent = '';
+
+  // Split text into individual letters
+  text.split('').forEach(char => {
+    const span = document.createElement('span');
+    span.classList.add('letter');
+    span.textContent = char === ' ' ? '\u00A0' : char; // non-breaking space
+    el.appendChild(span);
+  });
+
+  const letters = gsap.utils.toArray('.letter');
+
+  // Scroll-based animation
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.to(letters, {
+    y: () => gsap.utils.random(100, 300), // random fall distance
+    x: () => gsap.utils.random(-100, 100),
+    rotation: () => gsap.utils.random(-60, 60),
+    opacity: 0,
+    filter: "blur(3px)",
+    ease: "power2.out",
+    stagger: { each: 0.02 },
+    scrollTrigger: {
+      trigger: ".intro-section",
+      start: "top top",
+      end: "bottom top",
+      scrub: 0.5,
+    }
+  });
+</script>
+
+<style>
+
+
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #000000;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+
+
+section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  text-align: center;
+  flex-direction: column;
+  position: relative;
+}
+
+/* --- Map Section --- */
+.map-section { 
+  background: #000000; 
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  gap: 2rem; 
+  padding-bottom: 4rem;
+}
+
+.map-container { 
+  position: relative;
+  width: 80%; 
+  max-width: 1200px; 
+  overflow: hidden;
+}
+
+.map-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+}
+
+.map-spot { 
+  width: 20px; 
+  height: 20px; 
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid #00ffff;
+  border-radius: 50%; 
+  position: absolute;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.map-spot:hover { 
+  transform: scale(1.5); 
+  box-shadow: 0 0 15px cyan; 
+}
+
+/* Tooltip image popup */
+.spot-popup {
+  position: absolute;
+  top: -120px; /* adjust vertical position */
+  left: 30px; /* adjust horizontal offset */
+  width: 150px;
+
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+  box-shadow: 0 0 15px rgba(0,255,255,0.3);
+}
+
+/* Reveal on hover */
+.map-spot:hover .spot-popup {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+
+
+/* --- Story Section (Updated for Side-by-Side + Flip Animation) --- */
+.story {
+  background: #000;
+  color: #fff;
+  padding: 6rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+}
+
+.portal-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  width: 80%;
+  max-width: 1000px;
+}
+
+.portal-row {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  perspective: 1000px; /* for 3D flip effect */
+}
+
+.portal {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  transform: rotateX(90deg) translateY(50px);
+  opacity: 0;
+  transition: transform 1s ease, opacity 1s ease;
+}
+
+.portal.active {
+  transform: rotateX(0deg) translateY(0);
+  opacity: 1;
+}
+
+.portal-info {
+  max-width: 400px;
+  line-height: 1.5;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.portal-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: cyan;
+}
+
+.portal-info p {
+  font-size: 1rem;
+  color: #ddd;
+  word-wrap: break-word;
+}
+
+@media (min-width: 768px) {
+  .portal-info p {
+    max-width: 380px;
+  }
+}
+
+.portal-info {
+  max-width: 400px;
+  line-height: 1.5;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+
+
+
+/* Make sure long text wraps in 2 lines max on wide screens */
+@media (min-width: 768px) {
+  .portal-info p {
+    max-width: 380px;
+  }
+}
+
+/* --- Manhole Round Section --- */
+.shape-section {
+  background: #000000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 5rem 2rem;
+  text-align: center;
+}
+
+a {
+   
+    color:cyan;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.manhole-flip {
+  perspective: 1000px;
+}
+
+
+.manhole-card {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s ease;
+  cursor: pointer;
+}
+
+.manhole-card .manhole-front,
+.manhole-card .manhole-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.manhole-front {
+  background-size: 125%;
+  background-position: center;
+  position: relative;
+}
+
+.manhole-front .hint {
+  position: absolute;
+  bottom: 10px;
+  font-size: 0.9rem;
+  color: #0ff;
+  animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+
+.manhole-back {
+  background: #222;
+  flex-direction: column;
+  padding: 1rem;
+  transform: rotateY(180deg);
+}
+
+.manhole-back p {
+  font-size: 1.2rem;
+}
+
+.manhole-back .arrow {
+  font-size: 2rem;
+  margin-top: 10px;
+  animation: spin 2s linear infinite;
+  color: cyan;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* --- Pattern Section --- */
+.pattern-section {
+  background: #000000;
+  color: #fff;
+  padding: 100px 0;
+  text-align: center;
+}
+
+.pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.pattern-item {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.pattern-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.5s ease;
+  border-radius: 12px;
+}
+
+.pattern-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  line-height: 1.4;
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+  border-radius: 0 0 12px 12px;
+}
+
+.pattern-item:hover img {
+  transform: scale(1.1);
+}
+
+.pattern-item:hover .pattern-info {
+  transform: translateY(0);
+}
+
+
+/* --- Rat Game Flip Section --- */
+.rat-game {
+  background: #000000;
+  color: #fff;
+  padding: 5rem 2rem;
+  text-align: center;
+}
+
+.game-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.flip-hole {
+  width: 100px;
+  height: 100px;
+  perspective: 1000px;
+}
+
+.flip-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  cursor: pointer;
+}
+
+.flip-hole:hover .flip-card {
+  transform: rotateY(180deg);
+}
+
+.flip-front, .flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
+  background: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rat-clickable {
+  width: 60px;
+  cursor: pointer;
+}
+
+/* --- Outro Section --- */
+.outro {
+  background: black;
+  font-size: 1.5rem;
+  overflow: hidden;
+}
+
+.outro p {
+  transform: translateX(-50px);
+  opacity: 0;
+  transition: transform 1s ease, opacity 1s ease;
+}
+
+.outro p.visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+/* ---------- Content Page: Visual Book Layout ---------- */
+.content-page {
+  background: #000;
+  color: #f5f5f5;
+  padding: 5rem 2rem;
+  line-height: 1.7;
+  max-width: 1100px;
+  margin: 0 auto;
+  border-top: 1px solid rgba(0,255,255,0.15);
+}
+
+.content-page h1 {
+  font-size: 2.5rem;
+  color: cyan;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1px;
+}
+
+.intro-paragraph {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 4rem auto;
+  font-size: 1rem;
+  color: #cfcfcf;
+}
+
+.content-book {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+/* alternating layout */
+.chapter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(0,255,255,0.15);
+  padding-bottom: 3rem;
+}
+
+.chapter-text {
+  flex: 1 1 50%;
+  min-width: 300px;
+}
+
+.chapter-text h2 {
+  color: #00ffff;
+  font-size: 1.5rem;
+  margin-bottom: 0.6rem;
+  letter-spacing: 1px;
+}
+
+.chapter-text p {
+  font-size: 0.95rem;
+  color: #ddd;
+  text-align: justify;
+  line-height: 1.6;
+}
+
+.chapter-img {
+  flex: 1 1 40%;
+  min-width: 260px;
+  display: flex;
+  justify-content: center;
+}
+
+.chapter-img img {
+  width: 85%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,255,255,0.15);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  filter: grayscale(100%) brightness(0.85);
+}
+
+.chapter-img img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 30px rgba(0,255,255,0.3);
+  filter: grayscale(0%);
+}
+
+/* alternating layout directions */
+.chapter:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.content-footer {
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding-top: 2rem;
+  margin-top: 3rem;
+  font-style: italic;
+  color: #aaa;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .chapter {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .chapter-img img {
+    width: 90%;
+  }
+  .chapter-text {
+    flex: 1 1 100%;
+  }
+}
+
+
+/* -------- Vertical Ruler Navigation -------- */
+.ruler-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 70px;
+  background: rgba(255, 255, 255, 0.08); /* partially transparent white */
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 1000;
+}
+
+.ruler-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ruler-nav li {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.2s ease;
+}
+
+.ruler-nav li:hover {
+  transform: scale(1.2);
+}
+
+.tick {
+  width: 2px;
+  height: 25px;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background 0.3s ease, height 0.3s ease;
+}
+
+.label {
+  font-size: 10px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.3s ease;
+}
+
+/* Active State */
+.ruler-nav li.active .tick {
+  background: #fff;
+  height: 35px;
+}
+
+.ruler-nav li.active .label {
+  color: #fff;
+}
+
+</style>
+</head>
+<body>
+
+
+
+<!-- Story / Sequential Portals -->
+<section class="story">
+  <h2>Manhattan’s Hidden Systems</h2>
+  <div class="portal-container">
+
+    <div class="portal-row">
+      <div class="portal" style="background-image:url('1.png')"></div>
+      <div class="portal-info">
+      <h3>Steam</h3>
+        <p>Steam manholes connect to a 100-mile network heating Midtown’s buildings.</p>
+      </div>
+    </div>
+
+    <div class="portal-row">
+      <div class="portal" style="background-image:url('2.png')"></div>
+      <div class="portal-info">
+         <h3>Electric</h3>
+        <p>Con Edison manholes hide cables that power Manhattan’s skyline.</p>
+      </div>
+    </div>
+
+    <div class="portal-row">
+      <div class="portal" style="background-image:url('3.png')"></div>
+      <div class="portal-info">
+        <h3>Water & Sewer</h3>
+        <p>These manholes lead to tunnels carrying fresh water and storm drainage beneath the city.</p>
+      </div>
+    </div>
+
+    <div class="portal-row">
+      <div class="portal" style="background-image:url('4.png')"></div>
+      <div class="portal-info">
+        <h3>Gas</h3>
+        <p>Gas utility manholes provide access to underground lines fueling kitchens and heaters.</p>
+      </div>
+    </div>
+
+    <div class="portal-row">
+      <div class="portal" style="background-image:url('5.png')"></div>
+      <div class="portal-info">
+        <h3>Telecom</h3>
+        <p>Telecommunication manholes protect the fiber optic network linking Manhattan’s communications grid.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="map-section"> 
+  <h2>Explore NYC Manholes on the Map</h2> 
+  <div class="map-container"> 
+    <img src="map.png" alt="NYC Map" class="map-image">
+
+<!-- Individual Map Spots -->
+    <div class="map-spot" style="top: 40%; left: 42%;">
+      <img src="east village.jpeg" alt="Sewer manhole" class="spot-popup">
+    </div> 
+
+    <div class="map-spot" style="top: 45%; left: 25%;">
+      <img src="uptown.jpeg" alt="Electrical manhole" class="spot-popup">
+    </div> 
+
+    <div class="map-spot" style="top: 45%; left: 55%;">
+      <img src="downtown.jpeg" alt="Steam manhole" class="spot-popup">
+    </div> 
+
+    <div class="map-spot" style="top: 42%; left: 60%;">
+      <img src="up.jpeg" alt="Steam manhole" class="spot-popup">
+
+  </div> 
+</section>
+
+
+<!-- Manhole Round Section -->
+<section class="shape-section">
+  <h2>Why Manholes Are Round</h2>
+  <div class="manhole-flip">
+    <div class="manhole-card">
+      <div class="manhole-front" style="background-image:url('4.png')">
+        <div class="hint">Hover or Scroll ↓</div>
+      </div>
+      <div class="manhole-back">
+       <p>The round design ensures that the manhole cover never <a href="card.html">falls</a> into the hole.</p>
+        <div class="arrow">&#x21bb;</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pattern Section -->
+<section class="pattern-section">
+  <h2>Understanding Designer's Pattern Choices</h2>
+  <div class="pattern-grid">
+    <div class="pattern-item">
+      <img src="pattern-01.png" alt="Pattern 1">
+      <div class="pattern-info">Emphasizes repetition and rhythm.</div>
+    </div>
+    <div class="pattern-item">
+      <img src="pattern-02.png" alt="Pattern 2">
+      <div class="pattern-info">Symmetry guides visual flow.</div>
+    </div>
+    <div class="pattern-item">
+      <img src="pattern-03.png" alt="Pattern 3">
+      <div class="pattern-info">Contrast highlights functional areas.</div>
+    </div>
+    <div class="pattern-item">
+      <img src="pattern-04.png" alt="Pattern 4">
+      <div class="pattern-info">Repeating grid creates balance.</div>
+    </div>
+    <div class="pattern-item">
+      <img src="pattern-05.png" alt="Pattern 5">
+      <div class="pattern-info">Geometric order implies structure.</div>
+    </div>
+    <div class="pattern-item">
+      <img src="pattern-06.png" alt="Pattern 6">
+      <div class="pattern-info">Texture adds depth to flat surfaces.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Rat Game Flip Section -->
+<section class="rat-game" id="rat-game">
+  <h2>Find the Rat!</h2>
+  <p>Hover over the manholes to reveal the rat. Click it to learn more!</p>
+  <div class="game-container">
+    <div class="flip-hole"><div class="flip-card"><div class="flip-front" style="background-image:url('6.png')"></div><div class="flip-back"></div></div></div>
+    <div class="flip-hole"><div class="flip-card"><div class="flip-front" style="background-image:url('6.png')"></div><div class="flip-back"></div></div></div>
+    <div class="flip-hole"><div class="flip-card"><div class="flip-front" style="background-image:url('6.png')"></div><div class="flip-back"></div></div></div>
+    <div class="flip-hole"><div class="flip-card"><div class="flip-front" style="background-image:url('6.png')"></div><div class="flip-back"></div></div></div>
+    <div class="flip-hole"><div class="flip-card"><div class="flip-front" style="background-image:url('6.png')"></div><div class="flip-back"></div></div></div>
+    <div class="flip-hole"><div class="flip-card"><div class="flip-front" style="background-image:url('6.png')"></div><div class="flip-back"></div></div></div>
+    <div class="flip-hole"><div class="flip-card"><div class="flip-front" style="background-image:url('6.png')"></div><div class="flip-back"></div></div></div>
+    <div class="flip-hole"><div class="flip-card"><div class="flip-front" style="background-image:url('6.png')"></div><div class="flip-back"></div></div></div>
+  </div>
+</section>
+
+
+
+<!-- Outro -->
+<section class="outro">
+  <p>The manholes of New York remind us: what we see on the surface is only the beginning.</p>
+</section>
+
+
+<section class="content-page">
+  <h1>The Hidden Story Beneath Manhattan</h1>
+  <p class="intro-paragraph">
+    Beneath Manhattan’s surface lies a vast network of tunnels, pipes, and chambers— 
+    the unseen circulatory system of the city. Through manholes, we glimpse the relationship 
+    between urban design, technology, and time.
+  </p>
+
+  <div class="content-book">
+
+    <!-- History -->
+    <article class="chapter">
+      <div class="chapter-img left">
+        <img src="E1.jpeg" alt="Historic manhole cover">
+      </div>
+      <div class="chapter-text">
+        <h2>Origins of the Manhole</h2>
+        <p>
+          The first manholes appeared in the 1800s to provide access to newly built sewer systems. 
+          Each iron cover was cast in foundries across New York, stamped with unique lettering and patterns. 
+          They were functional objects, yet each one carried a quiet sense of identity — 
+          a record of the city’s early industrial craftsmanship.
+        </p>
+      </div>
+    </article>
+
+    <!-- Design -->
+    <article class="chapter">
+      <div class="chapter-text">
+        <h2>Design & Material Evolution</h2>
+        <p>
+          The circular shape prevents the cover from falling through its opening, 
+          distributes pressure evenly, and allows it to be rolled along the street. 
+          Today, composite materials replace solid iron to reduce weight and resist corrosion, 
+          blending tradition with innovation beneath the streets.
+        </p>
+      </div>
+      <div class="chapter-img right">
+        <img src="E2.jpeg" alt="Modern manhole design">
+      </div>
+    </article>
+
+    <!-- Infrastructure -->
+    <article class="chapter">
+      <div class="chapter-img left">
+        <img src="E3.jpeg" alt="Underground network diagram">
+      </div>
+      <div class="chapter-text">
+        <h2>Networks Beneath the Grid</h2>
+        <p>
+          Manholes connect to systems of water, gas, electricity, steam, and fiber optics. 
+          These hidden channels mirror the street grid above — 
+          a parallel architecture powering the city’s constant motion. 
+          Con Edison alone manages over 200,000 access points across New York City.
+        </p>
+      </div>
+    </article>
+
+    <!-- Culture -->
+    <article class="chapter">
+      <div class="chapter-text">
+        <h2>Design as Identity</h2>
+        <p>
+          Manholes are unexpected pieces of urban art. 
+          Their geometric patterns — grids, stars, concentric circles — 
+          tell stories of foundries, decades, and utilities. 
+          Artists have turned these designs into prints, rubbings, and textiles, 
+          turning functional objects into cultural icons.
+        </p>
+      </div>
+      <div class="chapter-img right">
+        <img src="E4.jpeg" alt="Artistic manhole pattern">
+      </div>
+    </article>
+
+    <!-- Challenges -->
+    <article class="chapter">
+      <div class="chapter-img left">
+        <img src="E5.jpeg" alt="Smart manhole system">
+      </div>
+      <div class="chapter-text">
+        <h2>Future and Infrastructure</h2>
+        <p>
+          Modern city planning treats manholes as gateways to smart systems — 
+          sensors track flooding, gas leaks, and traffic vibrations. 
+          As the city modernizes, these ancient forms continue to evolve, 
+          balancing safety, accessibility, and design in the world below.
+        </p>
+      </div>
+    </article>
+
+    <footer class="content-footer">
+      <p>
+        From cast iron to smart sensors, Manhattan’s manholes reveal more than what they conceal — 
+        they are windows into the city’s living infrastructure.
+      </p>
+    </footer>
+
+  </div>
+</section>
+
+
+<script>
+
+
+
+// Portal scroll animation — flipping up from the surface
+const portalRows = document.querySelectorAll(".portal-row");
+
+const portalObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    const row = entry.target;
+    const portal = row.querySelector(".portal");
+    const info = row.querySelector(".portal-info");
+
+    if (entry.isIntersecting) {
+      portal.classList.add("active");
+      info.style.opacity = "1";
+      info.style.transform = "translateY(0)";
+    } else {
+      portal.classList.remove("active");
+      info.style.opacity = "0";
+      info.style.transform = "translateY(30px)";
+    }
+  });
+}, { threshold: 0.4 });
+
+portalRows.forEach(row => portalObserver.observe(row));
+
+
+
+// Manhole flip
+const manholeCard = document.querySelector('.manhole-card');
+manholeCard.addEventListener('mouseenter', () => { manholeCard.style.transform = 'rotateY(180deg)'; });
+manholeCard.addEventListener('mouseleave', () => { manholeCard.style.transform = 'rotateY(0deg)'; });
+
+// Outro animation
+const outroText = document.querySelector('.outro p');
+const outroObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) outroText.classList.add('visible');
+    else outroText.classList.remove('visible');
+  });
+}, { threshold: 0.5 });
+outroObserver.observe(outroText);
+
+// Rat Game: Only one rat appears randomly
+const flipHoles = document.querySelectorAll('.flip-hole');
+
+function showRandomRat() {
+  // Remove existing rats
+  flipHoles.forEach(hole => hole.querySelector('.flip-back').innerHTML = '');
+  // Pick random hole
+  const randomIndex = Math.floor(Math.random() * flipHoles.length);
+  const back = flipHoles[randomIndex].querySelector('.flip-back');
+  const rat = document.createElement('img');
+  rat.src = 'rat.webp'; // replace with your rat image
+  rat.classList.add('rat-clickable');
+  back.appendChild(rat);
+  // Click event
+  rat.addEventListener('click', () => {
+    window.location.href = 'under_manhole.html';
+  });
+}
+
+// Trigger when entering the game container
+document.querySelector('.game-container').addEventListener('mouseenter', showRandomRat);
+
+// Optional: reshuffle every few seconds
+// setInterval(showRandomRat, 5000);
+// --------- Ruler Navigation Scroll + Active Highlight ---------
+function updateNavItems() {
+  return {
+    navItems: document.querySelectorAll('.ruler-nav li'),
+    sections: Array.from(document.querySelectorAll('.ruler-nav li')).map(item => document.querySelector(item.dataset.target))
+  };
+}
+
+// initialize
+let { navItems, sections } = updateNavItems();
+
+
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const target = document.querySelector(item.dataset.target);
+    window.scrollTo({
+      top: target.offsetTop,
+      behavior: 'smooth'
+    });
+  });
+});
+
+
+window.addEventListener('scroll', () => {
+  let current = sections.findIndex(sec => {
+    const rect = sec.getBoundingClientRect();
+    return rect.top <= window.innerHeight * 0.4 && rect.bottom >= window.innerHeight * 0.4;
+  });
+
+  navItems.forEach((item, i) => {
+    item.classList.toggle('active', i === current);
+  });
+});
+
+
+</script>
+</body>
+</html>

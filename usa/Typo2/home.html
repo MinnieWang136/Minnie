@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>毛绒球 + 呼吸 动效示例</title>
+  <style>
+    /* 容器按你的海报比例调整 */
+    #poster {
+      position: relative;
+      width: 800px;
+      height: 1200px;
+      margin: 20px auto;
+      background: #fff;
+    }
+
+    /* 包裹 canvas 的毛绒球外壳，用于定位 & 呼吸动画 */
+    .furry-circle {
+      position: absolute;
+      width: var(--size);
+      height: var(--size);
+      top: var(--top);
+      left: var(--left);
+      transform-origin: center center;
+      animation: breathe var(--duration,4s) ease-in-out infinite both;
+    }
+
+    /* 呼吸关键帧 */
+    @keyframes breathe {
+      0%,100% { transform: scale(1); }
+      50%    { transform: scale(1.04); }
+    }
+
+    /* canvas 填满容器 */
+    .furry-circle canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="poster">
+    <!-- 示例：三个毛绒球 -->
+    <div class="furry-circle"
+         data-color="#e91e63"
+         style="--size:200px; --duration:5s; --top:100px; --left:250px;">
+      <canvas></canvas>
+    </div>
+    <div class="furry-circle"
+         data-color="#03a9f4"
+         style="--size:150px; --duration:4s; --top:350px; --left:150px;">
+      <canvas></canvas>
+    </div>
+    <div class="furry-circle"
+         data-color="#ffeb3b"
+         style="--size:180px; --duration:6s; --top:600px; --left:300px;">
+      <canvas></canvas>
+    </div>
+    <!-- 按需继续添加… -->
+  </div>
+
+  <script>
+    /**
+     * 在给定的 canvas 上绘制一个带“毛绒”效果的圆
+     * @param {HTMLCanvasElement} canvas 
+     * @param {number} size 宽高（px）
+     * @param {string} color 填充色
+     */
+    function drawFurCircle(canvas, size, color) {
+      const ctx = canvas.getContext('2d');
+      const r = size / 2;
+      // 设置高分屏支持
+      canvas.width = canvas.height = size * devicePixelRatio;
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+
+      // 实心圆
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(r, r, r, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 绒毛
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1;
+      const hairs = Math.floor(r * 20);
+      for (let i = 0; i < hairs; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const innerR = r - Math.random() * r * 0.1;
+        const outerR = r + Math.random() * r * 0.25;
+        const sx = r + Math.cos(angle) * innerR;
+        const sy = r + Math.sin(angle) * innerR;
+        const ex = r + Math.cos(angle) * outerR;
+        const ey = r + Math.sin(angle) * outerR;
+        ctx.beginPath();
+        ctx.moveTo(sx, sy);
+        ctx.lineTo(ex, ey);
+        ctx.stroke();
+      }
+    }
+
+    // 初始化：为每个 .furry-circle 绘制毛绒
+    document.querySelectorAll('.furry-circle').forEach(div => {
+      const canvas = div.querySelector('canvas');
+      const size = parseInt(getComputedStyle(div).getPropertyValue('--size'));
+      const color = div.dataset.color;
+      drawFurCircle(canvas, size, color);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Weekly Challenge</title>
+	<style>
+		body {
+			margin: 0;
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			font-family: Arial, sans-serif;
+			text-align: center;
+			background-color: #f9f9f9;
+		}
+
+		button {
+			margin: 10px;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+
+		#output {
+			margin-top: 20px;
+			font-size: 24px;
+			max-width: 80%;
+		}
+	</style>
+</head>
+<body>
+
+	<button id="buttonPrev">Previous fortune</button>
+	<button id="buttonNext">Next fortune</button>
+	<button id="buttonRandom">Random fortune</button>
+	<div id="output">You will have a <span style='font-size: 40px; color: blue;'>GLORIOUS</span> day.</div>
+
+	<script>
+		let fortunes = [
+			"You will have a <span style='font-size: 40px; color: blue;'>GLORIOUS</span> day.",
+			"You will consume much <span style='letter-spacing: 1em; color: orange;'>cheese</span>.",
+			"Someone will compliment your <span style='font-style: italic;'>style</span> today.",
+			"An opportunity will arise when you least <span style='text-decoration: underline;'>expect</span> it.",
+			"You'll find joy in the little things — like <span style='color: green;'>leaf shadows</span> dancing.",
+			"A surprise <span style='font-weight: bold; color: purple;'>gift</span> is in your near future.",
+			"Today is the perfect day to <span style='text-transform: uppercase;'>try something new</span>.",
+			"You will reconnect with someone <span style='color: darkred;'>important</span>.",
+			"Great ideas will flow from a simple <span style='color: teal;'>conversation</span>.",
+			"Luck will be your <span style='font-size: 30px;'>shadow</span> today.",
+			"Your creativity is a <span style='color: goldenrod;'>superpower</span>.",
+			"You’ll laugh so hard today you might <span style='font-size: 28px; color: pink;'>snort</span>."
+		];
+
+		let currentFortuneIndex = 0;
+		let output = document.querySelector('#output');
+
+		function nextFortune() {
+			currentFortuneIndex++;
+			if (currentFortuneIndex >= fortunes.length) {
+				currentFortuneIndex = 0;
+			}
+			output.innerHTML = fortunes[currentFortuneIndex];
+		}
+
+		let buttonNext = document.querySelector("#buttonNext");
+		buttonNext.addEventListener('click', nextFortune);
+
+		function prevFortune() {
+			currentFortuneIndex--;
+			if (currentFortuneIndex < 0) {
+				currentFortuneIndex = fortunes.length - 1;
+			}
+			output.innerHTML = fortunes[currentFortuneIndex];
+		}
+
+		let buttonPrev = document.querySelector("#buttonPrev");
+		buttonPrev.addEventListener('click', prevFortune);
+
+		function randomFortune() {
+			let randomIndex = Math.floor(Math.random() * fortunes.length);
+			currentFortuneIndex = randomIndex;
+			output.innerHTML = fortunes[currentFortuneIndex];
+		}
+
+		let buttonRandom = document.querySelector("#buttonRandom");
+		buttonRandom.addEventListener('click', randomFortune);
+	</script>
+	
+</body>
+</html>
