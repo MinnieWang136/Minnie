@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Poem Journey — Folding Buildings (Working)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  /* page layout */
+  html,body{height:100%;margin:0;}
+  body{
+    display:flex;
+    height:100vh;
+    overflow:hidden; /* page doesn't scroll */
+    font-family: "Georgia", serif;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  /* LEFT: poem column (scrollable) */
+  .poem {
+    width:40%;
+    height:100vh;
+    overflow-y:auto;
+    padding:36px;
+    box-sizing:border-box;
+    background:rgba(255,255,255,0.95);
+    z-index:10;
+  }
+  .poem p{
+    margin:5rem 0;
+    font-size:1.15rem;
+    line-height:1.6;
+    color:#111;
+  }
+
+  /* subtle top/bottom fade mask so middle lines feel in focus */
+  .poem {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+  }
+
+  /* RIGHT: canvas container */
+  .canvas-wrap{
+    width:60%;
+    height:100vh;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(#f7f7f7,#e9e9e9);
+  }
+
+  /* ensure canvas fills the right column */
+  canvas{
+    display:block;
+    width:100%;
+    height:100%;
+  }
+
+  /* small debug helper if needed */
+  .debug {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    padding:6px 8px;
+    border-radius:6px;
+    font-size:12px;
+    z-index:20;
+    pointer-events:none;
+  }
+</style>
+</head>
+<body>
+
+  <!-- LEFT: poem scroll area -->
+  <div class="poem" id="poem">
+    <!-- add (or paste) your poem here; enough length to scroll -->
+    <p>Milestone one — the city begins at the waterline, quiet and waiting.</p>
+    <p>Milestone two — an alleyway opens; footsteps collect like coins.</p>
+    <p>Milestone three — a billboard blinks and memory rewrites itself.</p>
+    <p>Milestone four — steel finds its place, glass becomes horizon.</p>
+    <p>Milestone five — someone whistles, the light shifts toward dusk.</p>
+    <p>Milestone six — a passing tram carries a child's bright laugh.</p>
+    <p>Milestone seven — the map folds, new streets appear in the fold.</p>
+    <p>Milestone eight — towers lean into storylines we trace with fingers.</p>
+    <p>Milestone nine — the final step and the silhouette holds.</p>
+    <p>Milestone ten — the city breathes and folds back into quiet.</p>
+  </div>
+
+  <!-- RIGHT: three.js canvas -->
+  <div class="canvas-wrap">
+    <div class="debug" id="dbg">scroll: 0</div>
+    <canvas id="scene"></canvas>
+  </div>
+
+  <!-- Three.js (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
+  <script>
+  (function () {
+    // DOM elements
+    const poem = document.getElementById('poem');
+    const canvas = document.getElementById('scene');
+    const dbg = document.getElementById('dbg');
+
+    // THREE renderer (attach to canvas)
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(window.devicePixelRatio || 1);
+
+    // scene + camera
+    const scene = new THREE.Scene();
+    // We'll set sizes after we know layout
+    let cam;
+
+    // Use MeshBasicMaterial for initial testing so we don't depend on lights
+    const loader = new THREE.TextureLoader();
+
+    // Placeholder images (replace these URLs with your building images or local paths)
+    const imageUrls = [
+      "https://picsum.photos/id/1015/600/900",
+      "https://picsum.photos/id/1016/600/900",
+      "https://picsum.photos/id/1018/600/900",
+      "https://picsum.photos/id/1020/600/900"
+    ];
+
+    const planes = [];
+    const initialX = []; // store starting X positions
+
+    // function to create plane once texture is ready
+    function makePlane(texture, idx) {
+      // plane geometry sized to image aspect (approx)
+      const aspect = texture.image.height / texture.image.width; // H/W
+      const planeW = 2.0; // world-units width
+      const planeH = planeW * aspect;
+
+      const geo = new THREE.PlaneGeometry(planeW, planeH);
+      const mat = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
+
+      const mesh = new THREE.Mesh(geo, mat);
+      // place horizontally across X; Y slightly below center so "ground" is lower
+      const x = idx * 3.2 + 1.5; // spacing
+      mesh.position.set(x, -0.8, 0);
+      mesh.rotation.x = Math.PI / 2; // start flat (folded)
+      scene.add(mesh);
+
+      planes.push(mesh);
+      initialX.push(x);
+    }
+
+    // load textures and create planes
+    let loadedCount = 0;
+    imageUrls.forEach((url, i) => {
+      loader.load(url, (tex) => {
+        makePlane(tex, i);
+        loadedCount++;
+      }, undefined, (err) => {
+        console.error('Texture load error', err);
+        // still create a fallback colored plane so layout is visible
+        const tex = new THREE.Texture(generatePlaceholderCanvas());
+        tex.needsUpdate = true;
+        makePlane(tex, i);
+        loadedCount++;
+      });
+    });
+
+    // fallback dynamic placeholder canvas used if texture fails
+    function generatePlaceholderCanvas() {
+      const c = document.createElement('canvas');
+      c.width = 400; c.height = 600;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#bcd';
+      ctx.fillRect(0,0,c.width,c.height);
+      ctx.fillStyle = '#456';
+      ctx.font = '40px serif';
+      ctx.fillText('image', 30, 80);
+      return c;
+    }
+
+    // resize renderer and camera to layout sizes
+    function resize() {
+      // canvas CSS size is 60% of window width (canvas element is inside .canvas-wrap)
+      // Use canvas.clientWidth/clientHeight (reflects CSS layout)
+      const width = canvas.clientWidth || Math.round(window.innerWidth * 0.6);
+      const height = canvas.clientHeight || window.innerHeight;
+
+      renderer.setSize(width, height, false);
+
+      if (!cam) {
+        cam = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      }
+      cam.aspect = width / height;
+      cam.updateProjectionMatrix();
+      // position camera so planes are visible
+      cam.position.set((initialX.length>0 ? initialX[0] : 0) , 0, 12);
+      cam.lookAt( (initialX.length>0 ? initialX[0] : 0), 0, 0 );
+    }
+
+    // call resize once on load after layout
+    window.addEventListener('load', () => {
+      resize();
+      animate();
+    });
+    // also trigger on window resize
+    window.addEventListener('resize', () => {
+      resize();
+    });
+
+    // helper: clamp
+    const clamp = (v, a=0, b=1) => Math.max(a, Math.min(b, v));
+
+    // map poem scroll to folding progress
+    function onPoemScroll() {
+      const maxScroll = Math.max(poem.scrollHeight - poem.clientHeight, 1);
+      const scrollNorm = poem.scrollTop / maxScroll; // 0..1
+      dbg.textContent = 'scroll: ' + poem.scrollTop.toFixed(0) + ' px — norm: ' + scrollNorm.toFixed(3);
+
+      // We'll use timeline segments for each plane
+      // Each plane gets a start and end portion of the total scroll (normalized)
+      const n = Math.max(planes.length, 1);
+      // spacing: leave a little headroom at start/end
+      const head = 0.05, tail = 0.05;
+      const usable = 1 - head - tail;
+      planes.forEach((p, i) => {
+        const start = head + (i / n) * usable;
+        const end = head + ((i+0.9) / n) * usable; // slight overlap
+        const local = clamp((scrollNorm - start) / (end - start), 0, 1);
+        // rotation X: PI/2 -> 0 (fold flat -> upright)
+        p.rotation.x = (Math.PI / 2) * (1 - local);
+        // slide left when folding a bit (gives journey movement)
+        const slideAmount = 1.6; // world units to move left
+        p.position.x = initialX[i] - slideAmount * local;
+        // change opacity subtly
+        if (p.material) p.material.opacity = clamp(0.2 + local * 1.0, 0.2, 1);
+      });
+    }
+
+    // attach scroll listener
+    poem.addEventListener('scroll', onPoemScroll);
+
+    // render loop
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, cam || new THREE.PerspectiveCamera());
+    }
+
+    // safety: if poem can't be scrolled (very short content), tell user visually
+    // but we've provided long poem so should be fine.
+
+  })();
+  </script>
+</body>
+</html>

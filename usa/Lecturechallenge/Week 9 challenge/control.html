@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novel Interface Control</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222;
+        }
+        .control {
+            width: 80vw;
+            height: 60vh;
+            background-color: #444;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 3rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: transform 0.3s ease, background-color 0.3s ease, font-size 0.3s ease;
+        }
+        .control:hover {
+            background-color: #666;
+            transform: scale(1.05);
+        }
+        .control:active {
+            background-color: #888;
+            transform: scale(0.95);
+        }
+        .slider-container {
+            display: flex;
+            justify-content: space-around;
+            width: 80vw;
+            margin-top: 20px;
+        }
+        input[type="range"] {
+            width: 40%;
+        }
+        @media (max-width: 768px) {
+            .control {
+                width: 90vw;
+                height: 50vh;
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="control" id="control">JUST DO IT</div>
+    <div class="slider-container">
+        <input type="range" id="colorSlider" min="0" max="360" value="0">
+        <input type="range" id="fontSizeSlider" min="20" max="100" value="48">
+    </div>
+    <script>
+        const control = document.getElementById('control');
+        const colorSlider = document.getElementById('colorSlider');
+        const fontSizeSlider = document.getElementById('fontSizeSlider');
+
+        colorSlider.addEventListener('input', () => {
+            const hue = colorSlider.value;
+            control.style.backgroundColor = `hsl(${hue}, 50%, 50%)`;
+        });
+
+        fontSizeSlider.addEventListener('input', () => {
+            control.style.fontSize = fontSizeSlider.value + 'px';
+        });
+    </script>
+</body>
+</html>

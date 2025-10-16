@@ -1,0 +1,79 @@
+/* Page background */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #fff; /* white web background */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Centered poster frame */
+.frame {
+  width: 360px;   /* smaller portrait frame */
+  height: 640px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black; /* poster background */
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+/* Poster contents */
+.poster {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: black;
+  overflow: hidden;
+}
+
+/* Flipping manhole */
+.manhole {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  width: 140px;
+  transform: translate(-50%, -50%);
+  animation: flip 4s infinite linear;
+  z-index: 2;
+}
+
+@keyframes flip {
+  0% { transform: translate(-50%, -50%) rotateX(0deg); }
+  50% { transform: translate(-50%, -50%) rotateX(180deg); }
+  100% { transform: translate(-50%, -50%) rotateX(360deg); }
+}
+
+/* Falling title */
+.title {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 48px;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 4px;
+  animation: fall 3s linear infinite;
+}
+
+@keyframes fall {
+  0% { top: -100px; opacity: 1; }
+  90% { top: 620px; opacity: 1; }
+  100% { top: 650px; opacity: 0; }
+}
+
+/* Info text bottom right */
+.info {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: #aaa;
+  font-size: 13px;
+  text-align: right;
+  line-height: 1.4;
+}
