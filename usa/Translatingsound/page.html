@@ -12,22 +12,23 @@
             box-sizing: border-box;
             font-family: 'Neue Haas Grotesk Text Pro', sans-serif;
         }
-
         :root {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Neue Haas Grotesk Text Pro', sans-serif;
             --black: #111111;
             --white: #FFFFFF;
             --gray: #E5E5E5;
             --accent: #0066FF;
             --transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
-
         body {
             background: var(--black);
             color: var(--white);
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
-
         nav {
             position: fixed;
             top: 0;
@@ -39,7 +40,6 @@
             z-index: 100;
             mix-blend-mode: difference;
         }
-
         .nav-logo a {
             font-size: 1.2rem;
             font-weight: 500;
@@ -47,12 +47,10 @@
             text-decoration: none;
             letter-spacing: -0.02em;
         }
-
         .nav-links {
             display: flex;
             gap: 3rem;
         }
-
         .nav-links a {
             color: var(--white);
             text-decoration: none;
@@ -61,9 +59,8 @@
             position: relative;
             transition: var(--transition);
         }
-
         .nav-links a::after {
-            content: '';
+            content: "";
             position: absolute;
             bottom: -4px;
             left: 0;
@@ -72,11 +69,9 @@
             background: var(--accent);
             transition: var(--transition);
         }
-
         .nav-links a:hover::after {
             width: 100%;
         }
-
         .page {
             min-height: 100vh;
             width: 100%;
@@ -93,13 +88,11 @@
             left: 0;
             pointer-events: none;
         }
-
         .page.active {
             opacity: 1;
             transform: translateY(0);
             pointer-events: all;
         }
-
         /* Simplified Title Animation */
         #home {
             justify-content: center;
@@ -107,12 +100,10 @@
             position: relative;
             overflow: hidden;
         }
-
         .title-container {
             position: relative;
             display: inline-block;
         }
-
         .home-title {
             font-size: clamp(4rem, 12vw, 9rem);
             font-weight: 700;
@@ -123,21 +114,18 @@
             overflow: hidden;
             white-space: nowrap;
             border-right: 2px solid var(--accent);
-            animation: 
+            animation:
                 typing 3.5s steps(40, end) forwards,
                 blink-caret 0.75s step-end infinite;
         }
-
         @keyframes typing {
             from { width: 0 }
-            to { width: 100% }
+            to { width: 100%}
         }
-
         @keyframes blink-caret {
             from, to { border-color: transparent }
             50% { border-color: var(--accent) }
         }
-
         .home-title::after {
             content: '';
             position: absolute;
@@ -149,12 +137,10 @@
             animation: underlineGrow 2s ease 4s forwards;
             opacity: 0;
         }
-
         @keyframes underlineGrow {
             0% { width: 0; opacity: 0; }
             100% { width: 100%; opacity: 1; }
         }
-
         .home-subtitle {
             font-size: clamp(1rem, 2vw, 1.25rem);
             font-weight: 400;
@@ -164,12 +150,10 @@
             opacity: 0;
             animation: fadeIn 1s ease 5s forwards;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         .gallery-transition {
             position: fixed;
             top: 0;
@@ -185,29 +169,25 @@
             pointer-events: none;
             transition: var(--transition);
         }
-
         .gallery-transition.active {
             opacity: 1;
             pointer-events: all;
         }
-
         .transition-video {
             width: 100%;
             height: 100%;
             object-fit: cover;
             opacity: 0.8;
         }
-
         .transition-text {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%,-50%);
             width: 100%;
             padding: 0 5%;
             z-index: 201;
         }
-
         .concept-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -215,7 +195,6 @@
             max-width: 1200px;
             margin: 0 auto;
         }
-
         .concept-card {
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(8px);
@@ -225,37 +204,31 @@
             transform: translateY(30px);
             transition: var(--transition) 0.4s;
         }
-
         .concept-card.active {
             opacity: 1;
             transform: translateY(0);
         }
-
         .concept-card h3 {
             font-size: 1.5rem;
             font-weight: 500;
             margin-bottom: 1rem;
         }
-
         .concept-card p {
             font-size: 1rem;
             color: var(--gray);
             line-height: 1.6;
         }
-
         #gallery {
             padding-top: 10rem;
             padding-bottom: 5rem;
             justify-content: flex-start;
         }
-
         /* TWO-LEVEL FILTER STYLES */
         .filter-container {
             width: 100%;
             max-width: 1400px;
             margin-bottom: 3rem;
         }
-
         .main-filters {
             display: flex;
             gap: 2rem;
@@ -263,7 +236,6 @@
             flex-wrap: wrap;
             justify-content: center;
         }
-
         .period-filters {
             display: flex;
             gap: 1.5rem;
@@ -273,12 +245,10 @@
             pointer-events: none;
             transition: var(--transition);
         }
-
         .period-filters.active {
             opacity: 1;
             pointer-events: all;
         }
-
         .filter-btn {
             background: transparent;
             border: none;
@@ -290,11 +260,9 @@
             position: relative;
             transition: var(--transition);
         }
-
         .filter-btn.active {
             color: var(--accent);
         }
-
         .filter-btn::after {
             content: '';
             position: absolute;
@@ -306,22 +274,18 @@
             background: var(--accent);
             transition: var(--transition);
         }
-
         .filter-btn.active::after {
             width: 80%;
         }
-
         /* Main filter buttons (Line/Shape/Colour/Image) */
         .main-filter-btn {
             font-size: 1.1rem;
             font-weight: 600;
         }
-
         /* Period filter buttons (All/Baroque/Classical etc.) */
         .period-filter-btn {
             font-size: 0.95rem;
         }
-
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -329,7 +293,6 @@
             width: 100%;
             max-width: 1400px;
         }
-
         .gallery-item {
             aspect-ratio: 1/1;
             overflow: hidden;
@@ -339,24 +302,20 @@
             transform: translateY(20px);
             transition: var(--transition) 0.3s;
         }
-
         .gallery-item.active {
             opacity: 1;
             transform: translateY(0);
         }
-
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: var(--transition);
         }
-
         .gallery-item:hover img {
             transform: scale(1.05);
             filter: brightness(0.7);
         }
-
         .gallery-item::after {
             content: attr(data-title);
             position: absolute;
@@ -370,11 +329,9 @@
             opacity: 0;
             transition: var(--transition);
         }
-
         .gallery-item:hover::after {
             opacity: 1;
         }
-
         .artwork-modal {
             position: fixed;
             top: 0;
@@ -391,12 +348,10 @@
             transition: var(--transition);
             padding: 2rem;
         }
-
         .artwork-modal.active {
             opacity: 1;
             pointer-events: all;
         }
-
         .modal-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -406,20 +361,17 @@
             height: 90vh;
             overflow-y: auto;
         }
-
         .modal-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
             border-radius: 4px;
         }
-
         .modal-info {
             display: flex;
             flex-direction: column;
             gap: 2rem;
         }
-
         .modal-close {
             position: absolute;
             top: 2rem;
@@ -431,18 +383,15 @@
             cursor: pointer;
             transition: var(--transition);
         }
-
         .modal-close:hover {
             color: var(--accent);
             transform: rotate(90deg);
         }
-
         .modal-info h2 {
             font-size: 2.5rem;
             font-weight: 500;
             line-height: 1.2;
         }
-
         .period-tag {
             display: inline-block;
             padding: 0.5rem 1rem;
@@ -452,13 +401,11 @@
             font-size: 0.9rem;
             margin-bottom: 1rem;
         }
-
         .modal-info p {
             color: var(--gray);
             line-height: 1.8;
             font-size: 1.1rem;
         }
-
         .spotify-player {
             width: 100%;
             height: 80px;
@@ -466,12 +413,10 @@
             border: none;
             margin-top: 1rem;
         }
-
         #drawing {
             justify-content: flex-start;
             padding-top: 10rem;
         }
-
         .drawing-container {
             width: 100%;
             max-width: 1400px;
@@ -480,24 +425,20 @@
             gap: 3rem;
             align-items: center;
         }
-
         .drawing-info h2 {
             font-size: 2rem;
             font-weight: 500;
             margin-bottom: 2rem;
         }
-
         .drawing-info p {
             color: var(--gray);
             line-height: 1.8;
             margin-bottom: 2rem;
         }
-
         .drawing-controls {
             display: flex;
             gap: 1.5rem;
         }
-
         .btn {
             padding: 1rem 2rem;
             background: transparent;
@@ -508,12 +449,10 @@
             cursor: pointer;
             transition: var(--transition);
         }
-
         .btn:hover {
             background: var(--accent);
             border-color: var(--accent);
         }
-
         #canvas-container {
             width: 100%;
             height: 500px;
@@ -521,26 +460,22 @@
             border-radius: 4px;
             overflow: hidden;
         }
-
         #study {
             padding-top: 10rem;
             justify-content: flex-start;
             max-width: 1000px;
             margin: 0 auto;
         }
-
         .study-content h2 {
             font-size: 2rem;
             font-weight: 500;
             margin-bottom: 3rem;
         }
-
         .study-content p {
             color: var(--gray);
             line-height: 1.8;
             margin-bottom: 2rem;
         }
-
         .study-content blockquote {
             border-left: 2px solid var(--accent);
             padding-left: 2rem;
@@ -548,14 +483,12 @@
             font-style: italic;
             color: var(--white);
         }
-
         #music {
             padding-top: 10rem;
             justify-content: flex-start;
             width: 100%;
             max-width: 1400px;
         }
-
         .music-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -563,31 +496,26 @@
             width: 100%;
             margin-top: 2rem;
         }
-
         .music-card {
             background: #1a1a1a;
             padding: 1.5rem;
             border-radius: 4px;
             transition: var(--transition);
         }
-
         .music-card:hover {
             transform: translateY(-8px);
             background: #222222;
         }
-
         .music-card h3 {
             font-size: 1.2rem;
             font-weight: 500;
             margin-bottom: 1rem;
         }
-
         .music-card p {
             color: var(--gray);
             font-size: 0.9rem;
             margin-bottom: 1.5rem;
         }
-
         .spotify-btn {
             width: 100%;
             padding: 0.8rem;
@@ -598,11 +526,9 @@
             cursor: pointer;
             transition: var(--transition);
         }
-
         .spotify-btn:hover {
             background: #1ed760;
         }
-
         .spotify-embed {
             width: 100%;
             height: 352px;
@@ -611,11 +537,189 @@
             margin-top: 2rem;
             display: none;
         }
-
         .spotify-embed.active {
             display: block;
         }
+        /* REFACTORED: Music Drawing Page - Full Viewport & No Scroll */
+        #music-drawing {
+            padding: 0 5%;
+            height: 100vh;
+            min-height: 600px;
+            max-width: none;
+            justify-content: flex-start;
+            align-items: flex-start;
+            display: flex;
+            flex-direction: column;
+            overflow-y: hidden;
+        }
+        #music-drawing h2 {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-top: 5rem;
+            margin-bottom: 1.5rem;
+            align-self: flex-start;
+        }
+        .music-drawing-container {
+            width: 100%;
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+            height: calc(100% - 2rem); 
+            margin-top: 0;
+            margin-bottom: 2rem;
+        }
+        .drawing-toolbar {
+            background: #1a1a1a;
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            max-height: 100%;
+        }
+        #music-draw-canvas-container {
+            width: 100%;
+            height: 100%;
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .toolbar-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .toolbar-section h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--white);
+            border-bottom: 1px solid var(--gray);
+            padding-bottom: 0.5rem;
+        }
+        .tool-btn {
+            padding: 0.8rem 1rem;
+            background: #222;
+            border: 1px solid #333;
+            color: var(--white);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .tool-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .tool-btn:hover {
+            background: #333;
+        }
+        .slider-control {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .slider-control label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        .slider-control input {
+            width: 100%;
+            accent-color: var(--accent);
+        }
+        /* FIX: New styles for color picker input */
+        .color-control {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .color-control label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            align-self: center; 
+        }
+        .color-control input[type="color"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+        .color-control input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        .color-control input[type="color"]::-webkit-color-swatch {
+            border: none;
+        }
+        /* END FIX: New styles for color picker input */
 
+        .shape-stamps {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+        }
+        .stamp-btn {
+            padding: 0.8rem;
+            background: #222;
+            border: 1px solid #333;
+            color: var(--white);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .stamp-btn:hover {
+            background: #333;
+        }
+        .stamp-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .music-player-box {
+            background: #1a1a1a;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #333;
+        }
+        .music-player-box h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+        .random-music-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: #1DB954;
+            border: none;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-bottom: 0.8rem;
+            transition: var(--transition);
+        }
+        .random-music-btn:hover {
+            background: #1ed760;
+        }
+        #music-draw-canvas {
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+        }
+        
+        /* --- MOBILE MEDIA QUERIES (Enhanced for Responsiveness) --- */
         @media (max-width: 992px) {
             .concept-grid {
                 grid-template-columns: 1fr;
@@ -627,15 +731,6 @@
             .drawing-container {
                 grid-template-columns: 1fr;
             }
-        }
-
-        @media (max-width: 768px) {
-            .home-title {
-                font-size: clamp(2.5rem, 10vw, 6rem);
-            }
-            .nav-links {
-                gap: 1.5rem;
-            }
             #canvas-container {
                 height: 350px;
             }
@@ -644,6 +739,56 @@
             }
             .period-filters {
                 gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* General Mobile adjustments */
+            nav {
+                padding: 1rem 5%;
+            }
+            .home-title {
+                font-size: clamp(2.5rem, 10vw, 6rem);
+            }
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            /* Music Drawing Page Mobile Refactoring */
+            #music-drawing {
+                height: auto;
+                min-height: 100vh;
+                padding-top: 4rem;
+                overflow-y: auto;
+            }
+            #music-drawing h2 {
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+            .music-drawing-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                max-height: none; 
+                margin-bottom: 2rem; 
+                padding-bottom: 2rem;
+            }
+            
+            .drawing-toolbar {
+                order: 2; 
+                overflow-y: visible;
+            }
+
+            #music-draw-canvas-container {
+                order: 1; 
+                height: 50vh;
+            }
+            
+            .music-player-box {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            .shape-stamps {
+                grid-template-columns: repeat(4, 1fr);
             }
         }
     </style>
@@ -656,59 +801,55 @@
         <div class="nav-links">
             <a href="#home" class="nav-link" data-page="home">Home</a>
             <a href="#gallery" class="nav-link" data-page="gallery">Gallery</a>
-            <a href="#drawing" class="nav-link" data-page="drawing">Drawing</a>
+            <a href="#drawing" class="nav-link" data-page="drawing">Sound Drawing</a>
+            <a href="#music-drawing" class="nav-link" data-page="music-drawing">Music Drawing</a>
             <a href="#study" class="nav-link" data-page="study">Study</a>
             <a href="#music" class="nav-link" data-page="music">Music</a>
         </div>
     </nav>
 
+    <div class="page active" id="home">
+        <div class="title-container">
+            <h1 class="home-title">Translating Sound</h1>
+        </div>
+        <p class="home-subtitle">Exploring the universal language of synesthesia by translating classical music compositions into visual art.</p>
+    </div>
+
     <div class="gallery-transition" id="gallery-transition">
         <video class="transition-video" id="transition-video" loop muted>
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-digital-wave-form-2316-large.mp4" type="video/mp4">
+            <source src="DRAW.mp4" type="video/mp4">
         </video>
         <div class="transition-text">
             <div class="concept-grid">
                 <div class="concept-card" data-delay="0.2">
                     <h3>Line - Rhythm</h3>
-                    <p>Linear forms represent musical rhythm—sharp lines for staccato, flowing lines for legato, reflecting the temporal structure of sound across all music periods.</p>
+                    <p>Linear forms represent musical rhythm—sharp lines for staccato, flowing lines for legato.</p>
                 </div>
                 <div class="concept-card" data-delay="0.4">
                     <h3>Shape - Harmony</h3>
-                    <p>Geometric and organic shapes embody harmonic structures—circles for consonance, angular forms for dissonance, visualizing musical balance through history.</p>
+                    <p>Geometric shapes embody harmonic structures—symmetry for consonance, asymmetry for dissonance.</p>
                 </div>
                 <div class="concept-card" data-delay="0.6">
                     <h3>Colour - Timbre</h3>
-                    <p>Color palettes translate instrumental timbre—warm tones for strings, cool tones for woodwinds, capturing the tonal quality of sound in every era.</p>
+                    <p>Hues reflect instrumental timbre and pitch—bright for high brass, deep for low strings.</p>
                 </div>
                 <div class="concept-card" data-delay="0.8">
-                    <h3>Image - Emotion</h3>
-                    <p>Compositional images reflect emotional states—dynamic compositions for joy, muted arrangements for melancholy, visualizing musical affect across time.</p>
+                    <h3>Image - Form</h3>
+                    <p>Overall composition reflects musical form—sonata structure leading to clear visual narratives.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Simplified Animated Title Home Page -->
-    <div class="page active" id="home">
-        <div class="title-container">
-            <h1 class="home-title">Translating Sound</h1>
-        </div>
-        <p class="home-subtitle">Exploring the visual language of sound through neuroscience, art and technology—where audio vibrations become tangible form.</p>
-    </div>
-
     <div class="page" id="gallery">
-        <!-- TWO-LEVEL FILTER SYSTEM -->
         <div class="filter-container">
-            <!-- First Level: Main Visual Style Filters (Line/Shape/Colour/Image) -->
             <div class="main-filters">
-                <button class="filter-btn main-filter-btn" data-style="all">All Styles</button>
+                <button class="filter-btn main-filter-btn active" data-style="all">All Styles</button>
                 <button class="filter-btn main-filter-btn" data-style="Line">Line</button>
                 <button class="filter-btn main-filter-btn" data-style="Shape">Shape</button>
                 <button class="filter-btn main-filter-btn" data-style="Colour">Colour</button>
                 <button class="filter-btn main-filter-btn" data-style="Image">Image</button>
             </div>
-            
-            <!-- Second Level: Music Period Filters (All/Baroque/Classical/Romantic/20th Century) -->
             <div class="period-filters" id="period-filters">
                 <button class="filter-btn period-filter-btn active" data-period="all">All Periods</button>
                 <button class="filter-btn period-filter-btn" data-period="Baroque">Baroque</button>
@@ -717,182 +858,146 @@
                 <button class="filter-btn period-filter-btn" data-period="20th Century">20th Century</button>
             </div>
         </div>
-
+        
         <div class="gallery-grid" id="gallery-grid">
-            <!-- LINE STYLE (All Periods) -->
-            <div class="gallery-item" data-style="Line" data-period="Baroque" data-title="Line Study - Baroque Rhythm" 
-                 data-description="Sharp, ornate linear patterns reflecting the complex rhythmic structures of Bach's Brandenburg Concertos. Each line corresponds to a musical phrase, with density indicating dynamic variation."
-                 data-spotify="https://open.spotify.com/embed/track/0r8fpXj6hpwlV9A7v0D78b?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1577308377269-51096979d700?w=600&auto=format&fit=crop" alt="Line - Baroque">
+            <div class="gallery-item" data-style="Line" data-period="Baroque" data-title="Line Study - Baroque Rhythm" data-description="Sharp, ornate linear patterns reflecting the complex rhythmic structures of Bach's Brandenburg Concertos. Each line corresponds to a musical phrase, with density indicating dynamic variation."
+                data-spotify="https://open.spotify.com/embed/track/1TQ2UYCN7nhfj3cfcFC76V?utm_source=generator">
+                <img src="lineGrace.png" alt="Line - Baroque">
             </div>
-            <div class="gallery-item" data-style="Line" data-period="Baroque" data-title="Line Study - Baroque Ornamentation" 
-                 data-description="Intricate linear ornamentation mirroring Vivaldi's decorative musical phrases—complex flourishes and trills translated into visual form."
-                 data-spotify="https://open.spotify.com/embed/track/2x45xqISlmmDJqxOqr8BuS?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&auto=format&fit=crop" alt="Line - Baroque 2">
+            <div class="gallery-item" data-style="Line" data-period="Baroque" data-title="Line Study - Baroque Ornamentation" data-description="Intricate linear ornamentation mirroring Vivaldi's decorative musical phrases—complex flourishes and trills translated into visual form."
+                data-spotify="https://open.spotify.com/embed/track/1TQ2UYCN7nhfj3cfcFC76V?utm_source=generator">
+                <img src="lineJul.png" alt="Line - Baroque 2">
             </div>
-            <div class="gallery-item" data-style="Line" data-period="Classical" data-title="Line Study - Classical Precision" 
-                 data-description="Clean, symmetrical lines representing Mozart's balanced rhythmic structures—mathematical precision in linear form, reflecting the Classical period's emphasis on order."
-                 data-spotify="https://open.spotify.com/embed/track/1h0CBkIiZp25yQ46nqPq4X?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1546436836-07a91091f160?w=600&auto=format&fit=crop" alt="Line - Classical">
+            <div class="gallery-item" data-style="Line" data-period="Classical" data-title="Line Study - Classical Precision" data-description="Clean, symmetrical lines representing Mozart's balanced rhythmic structures—mathematical precision in linear form, reflecting the Classical period's emphasis on order."
+                data-spotify="https://open.spotify.com/embed/track/2X7LHd75d3EtQgsAiJi1S8?utm_source=generator">
+                <img src="lineKan.png" alt="Line - Classical">
             </div>
-            <div class="gallery-item" data-style="Line" data-period="Classical" data-title="Line Study - Classical Symmetry" 
-                 data-description="Balanced linear symmetry reflecting Haydn's chamber music—equal weight and spacing, embodying Classical proportion and harmony."
-                 data-spotify="https://open.spotify.com/embed/track/58sO3ELBK2SKjf0PNCZ0B4?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1540206395-68808572332f?w=600&auto=format&fit=crop" alt="Line - Classical 2">
+            <div class="gallery-item" data-style="Line" data-period="Classical" data-title="Line Study - Classical Symmetry" data-description="Balanced linear symmetry reflecting Haydn's chamber music—equal weight and spacing, embodying Classical proportion and harmony."
+                data-spotify="https://open.spotify.com/embed/track/2X7LHd75d3EtQgsAiJi1S8?utm_source=generator">
+                <img src="lineKevin.png" alt="Line - Classical 2">
             </div>
-            <div class="gallery-item" data-style="Line" data-period="Romantic" data-title="Line Study - Romantic Flow" 
-                 data-description="Flowing, organic lines capturing Chopin's lyrical rhythms—continuous curves with emotional swells, reflecting the Romantic period's expressive freedom."
-                 data-spotify="https://open.spotify.com/embed/track/3hWW9m9r9Mw5dEuhL4o8xR?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600&auto=format&fit=crop" alt="Line - Romantic">
+            <div class="gallery-item" data-style="Line" data-period="Romantic" data-title="Line Study - Romantic Melodies" data-description="Fluid, expressive lines capturing Chopin's lyrical melodies—curves and dynamic variations reflecting Romantic expressivity and emotion."
+                data-spotify="https://open.spotify.com/embed/track/6AZauFwqbjjBDryjVsNZ9f?utm_source=generator">
+                <img src="lineKay.png" alt="Line - Romantic">
             </div>
-            <div class="gallery-item" data-style="Line" data-period="Romantic" data-title="Line Study - Romantic Passion" 
-                 data-description="Dramatic, sweeping lines capturing Tchaikovsky's emotional intensity—sudden shifts in line weight mirroring dynamic musical contrasts."
-                 data-spotify="https://open.spotify.com/embed/track/2x8y7nXR56w3hXH9OMTwZc?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1578307987501-182358d24174?w=600&auto=format&fit=crop" alt="Line - Romantic 2">
+            <div class="gallery-item" data-style="Line" data-period="Romantic" data-title="Line Study - Romantic Drama" data-description="Bold, contrasting lines reflecting Tchaikovsky's dramatic dynamic shifts—sharp angles and sweeping forms representing emotional intensity."
+                data-spotify="https://open.spotify.com/embed/track/6AZauFwqbjjBDryjVsNZ9f?utm_source=generator">
+                <img src="lineLinda.png" alt="Line - Romantic 2">
             </div>
-            <div class="gallery-item" data-style="Line" data-period="20th Century" data-title="Line Study - Modern Minimalism" 
-                 data-description="Reductive, repetitive lines embodying Steve Reich's minimalist rhythms—endless loops with subtle variations, reflecting modern music's focus on pattern and process."
-                 data-spotify="https://open.spotify.com/embed/track/2r8n8P5SzOW0lb453NRj1c?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1566280542760-414cf705b906?w=600&auto=format&fit=crop" alt="Line - 20th Century">
+            <div class="gallery-item" data-style="Line" data-period="20th Century" data-title="Line Study - Modern Minimalism" data-description="Repetitive, modular lines representing Steve Reich's minimalist structures—grid-like patterns and uniform spacing."
+                data-spotify="https://open.spotify.com/embed/track/7biZOldbger5MgwcgE6CaA?utm_source=generator">
+                <img src="lineSab.png" alt="Line - 20th Century">
             </div>
-            <div class="gallery-item" data-style="Line" data-period="20th Century" data-title="Line Study - Modern Fragmentation" 
-                 data-description="Fragmented, angular lines representing Philip Glass's experimental rhythms—discontinuous forms reflecting modern music's break from tradition."
-                 data-spotify="https://open.spotify.com/embed/track/1Z8h6prGt88l4Xt57Rq9r8?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1516475429286-24121e11191f?w=600&auto=format&fit=crop" alt="Line - 20th Century 2">
+            <div class="gallery-item" data-style="Line" data-period="20th Century" data-title="Line Study - Modern Fragmentation" data-description="Jagged, disconnected lines reflecting Philip Glass's fragmented, avant-garde textures—broken and asymmetrical compositions."
+                data-spotify="https://open.spotify.com/embed/track/7biZOldbger5MgwcgE6CaA?utm_source=generator">
+                <img src="lineTina.png" alt="Line - 20th Century 2">
             </div>
 
-            <!-- SHAPE STYLE (All Periods) -->
-            <div class="gallery-item" data-style="Shape" data-period="Baroque" data-title="Shape Study - Baroque Complexity" 
-                 data-description="Intricate, layered geometric shapes reflecting Bach's contrapuntal complexity—interlocking forms representing musical counterpoint."
-                 data-spotify="https://open.spotify.com/embed/track/0r8fpXj6hpwlV9A7v0D78b?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1545239351-ef35f43d514b?w=600&auto=format&fit=crop" alt="Shape - Baroque">
+            <div class="gallery-item" data-style="Shape" data-period="Baroque" data-title="Shape Study - Baroque Counterpoint" data-description="Intricate, layered geometric shapes reflecting Bach's contrapuntal complexity—interlocking forms representing musical counterpoint."
+                data-spotify="https://open.spotify.com/embed/track/1TQ2UYCN7nhfj3cfcFC76V?utm_source=generator">
+                <img src="Sdavid.jpg" alt="Shape - Baroque">
             </div>
-            <div class="gallery-item" data-style="Shape" data-period="Baroque" data-title="Shape Study - Baroque Grandeur" 
-                 data-description="Voluminous, ornate shapes mirroring Vivaldi's grand orchestral arrangements—expansive forms with decorative detailing."
-                 data-spotify="https://open.spotify.com/embed/track/2x45xqISlmmDJqxOqr8BuS?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1516298773066-c48f8e9bd92b?w=600&auto=format&fit=crop" alt="Shape - Baroque 2">
+            <div class="gallery-item" data-style="Shape" data-period="Baroque" data-title="Shape Study - Baroque Grandeur" data-description="Voluminous, ornate shapes mirroring Vivaldi's grand orchestral arrangements—expansive forms with decorative detailing."
+                data-spotify="https://open.spotify.com/embed/track/1TQ2UYCN7nhfj3cfcFC76V?utm_source=generator">
+                <img src="SGra.png" alt="Shape - Baroque 2">
             </div>
-            <div class="gallery-item" data-style="Shape" data-period="Classical" data-title="Shape Study - Classical Balance" 
-                 data-description="Perfectly symmetrical shapes embodying Mozart's harmonic balance—circular forms with equal radial distribution, reflecting Classical equilibrium."
-                 data-spotify="https://open.spotify.com/embed/track/1h0CBkIiZp25yQ46nqPq4X?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=600&auto=format&fit=crop" alt="Shape - Classical">
+            <div class="gallery-item" data-style="Shape" data-period="Classical" data-title="Shape Study - Classical Balance" data-description="Perfectly symmetrical shapes embodying Mozart's harmonic balance—circular forms with equal radial distribution, reflecting Classical equilibrium."
+                data-spotify="https://open.spotify.com/embed/track/2X7LHd75d3EtQgsAiJi1S8?utm_source=generator">
+                <img src="Sjul.jpg" alt="Shape - Classical">
             </div>
-            <div class="gallery-item" data-style="Shape" data-period="Classical" data-title="Shape Study - Classical Simplicity" 
-                 data-description="Minimal, pure shapes reflecting Haydn's elegant simplicity—basic geometric forms with no unnecessary ornamentation."
-                 data-spotify="https://open.spotify.com/embed/track/58sO3ELBK2SKjf0PNCZ0B4?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1596464716171-991591d44960?w=600&auto=format&fit=crop" alt="Shape - Classical 2">
+            <div class="gallery-item" data-style="Shape" data-period="Classical" data-title="Shape Study - Classical Simplicity" data-description="Minimal, pure shapes reflecting Haydn's elegant simplicity—basic geometric forms with no unnecessary ornamentation."
+                data-spotify="https://open.spotify.com/embed/track/2X7LHd75d3EtQgsAiJi1S8?utm_source=generator">
+                <img src="Skan.png" alt="Shape - Classical 2">
             </div>
-            <div class="gallery-item" data-style="Shape" data-period="Romantic" data-title="Shape Study - Romantic Organicity" 
-                 data-description="Organic, irregular shapes capturing Chopin's emotional harmonies—fluid forms that evolve and transform, reflecting Romantic expressivity."
-                 data-spotify="https://open.spotify.com/embed/track/3hWW9m9r9Mw5dEuhL4o8xR?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1518709414767-1a927e2e8798?w=600&auto=format&fit=crop" alt="Shape - Romantic">
+            <div class="gallery-item" data-style="Shape" data-period="Romantic" data-title="Shape Study - Romantic Organicity" data-description="Organic, irregular shapes capturing Chopin's emotional harmonies—fluid forms that evolve and transform, reflecting Romantic expressivity."
+                data-spotify="https://open.spotify.com/embed/track/6AZauFwqbjjBDryjVsNZ9f?utm_source=generator">
+                <img src="SKay.png" alt="Shape - Romantic">
             </div>
-            <div class="gallery-item" data-style="Shape" data-period="Romantic" data-title="Shape Study - Romantic Drama" 
-                 data-description="Dramatic, contrasting shapes capturing Tchaikovsky's emotional extremes—juxtaposition of large and small forms reflecting dynamic shifts."
-                 data-spotify="https://open.spotify.com/embed/track/2x8y7nXR56w3hXH9OMTwZc?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1547637579-9000fe9b7812?w=600&auto=format&fit=crop" alt="Shape - Romantic 2">
+            <div class="gallery-item" data-style="Shape" data-period="Romantic" data-title="Shape Study - Romantic Drama" data-description="Dramatic, contrasting shapes capturing Tchaikovsky's emotional extremes—juxtaposition of large and small forms reflecting dynamic shifts."
+                data-spotify="https://open.spotify.com/embed/track/6AZauFwqbjjBDryjVsNZ9f?utm_source=generator">
+                <img src="SKevin.png" alt="Shape - Romantic 2">
             </div>
-            <div class="gallery-item" data-style="Shape" data-period="20th Century" data-title="Shape Study - Modern Modularity" 
-                 data-description="Modular, block-like shapes representing Steve Reich's repetitive structures—interlocking cubes with precise mathematical relationships."
-                 data-spotify="https://open.spotify.com/embed/track/2r8n8P5SzOW0lb453NRj1c?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1527333776632-856e86c8927d?w=600&auto=format&fit=crop" alt="Shape - 20th Century">
+            <div class="gallery-item" data-style="Shape" data-period="20th Century" data-title="Shape Study - Modern Abstraction" data-description="Abstract, deconstructed shapes representing Stravinsky's rhythmic complexity—angular, asymmetrical forms reflecting modern innovation."
+                data-spotify="https://open.spotify.com/embed/track/7biZOldbger5MgwcgE6CaA?utm_source=generator">
+                <img src="SLem.png" alt="Shape - 20th Century">
             </div>
-            <div class="gallery-item" data-style="Shape" data-period="20th Century" data-title="Shape Study - Modern Abstraction" 
-                 data-description="Abstract, deconstructed shapes representing Philip Glass's experimental harmonies—fragmented forms that challenge traditional structure."
-                 data-spotify="https://open.spotify.com/embed/track/1Z8h6prGt88l4Xt57Rq9r8?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&auto=format&fit=crop" alt="Shape - 20th Century 2">
+            <div class="gallery-item" data-style="Shape" data-period="20th Century" data-title="Shape Study - Modern Minimalism" data-description="Reductive, geometric shapes representing Philip Glass's minimalist aesthetic—repetition of simple forms and empty space."
+                data-spotify="https://open.spotify.com/embed/track/7biZOldbger5MgwcgE6CaA?utm_source=generator">
+                <img src="Ssab.png" alt="Shape - 20th Century 2">
             </div>
-
-            <!-- COLOUR STYLE (All Periods) -->
-            <div class="gallery-item" data-style="Colour" data-period="Baroque" data-title="Colour Study - Baroque Opulence" 
-                 data-description="Rich, saturated colours reflecting Baroque's luxurious tonal palette—deep purples and golds mirroring Bach's rich harmonies."
-                 data-spotify="https://open.spotify.com/embed/track/0r8fpXj6hpwlV9A7v0D78b?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1544841893-049080be8b41?w=600&auto=format&fit=crop" alt="Colour - Baroque">
+            
+            <div class="gallery-item" data-style="Colour" data-period="Baroque" data-title="Colour Study - Baroque Richness" data-description="Deep, saturated colours reflecting Bach's dense, rich polyphony—complex combinations of primary and secondary hues."
+                data-spotify="https://open.spotify.com/embed/track/1TQ2UYCN7nhfj3cfcFC76V?utm_source=generator">
+                <img src="C1.png" alt="Colour - Baroque">
             </div>
-            <div class="gallery-item" data-style="Colour" data-period="Baroque" data-title="Colour Study - Baroque Drama" 
-                 data-description="Dramatic chiaroscuro colours mirroring Vivaldi's dynamic contrasts—strong light/dark contrasts reflecting Baroque theatricality."
-                 data-spotify="https://open.spotify.com/embed/track/2x45xqISlmmDJqxOqr8BuS?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1585076647030-17a44355d99c?w=600&auto=format&fit=crop" alt="Colour - Baroque 2">
+            <div class="gallery-item" data-style="Colour" data-period="Baroque" data-title="Colour Study - Baroque Warmth" data-description="Warm, glowing colours mirroring Vivaldi's vibrant melodic lines—bright yellows and reds reflecting energy and emotion."
+                data-spotify="https://open.spotify.com/embed/track/1TQ2UYCN7nhfj3cfcFC76V?utm_source=generator">
+                <img src="C2.png" alt="Colour - Baroque 2">
             </div>
-            <div class="gallery-item" data-style="Colour" data-period="Classical" data-title="Colour Study - Classical Clarity" 
-                 data-description="Clear, balanced colours embodying Mozart's transparent tonality—soft pastels with equal chromatic weight, reflecting Classical clarity."
-                 data-spotify="https://open.spotify.com/embed/track/1h0CBkIiZp25yQ46nqPq4X?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&auto=format&fit=crop" alt="Colour - Classical">
+            <div class="gallery-item" data-style="Colour" data-period="Classical" data-title="Colour Study - Classical Clarity" data-description="Clear, pure colours reflecting Mozart's transparent harmonies—simple, well-defined hues with minimal blending."
+                data-spotify="https://open.spotify.com/embed/track/2X7LHd75d3EtQgsAiJi1S8?utm_source=generator">
+                <img src="C3.jpg" alt="Colour - Classical">
             </div>
-            <div class="gallery-item" data-style="Colour" data-period="Classical" data-title="Colour Study - Classical Restraint" 
-                 data-description="Muted, restrained colours reflecting Haydn's elegant restraint—soft earth tones with minimal chromatic variation."
-                 data-spotify="https://open.spotify.com/embed/track/58sO3ELBK2SKjf0PNCZ0B4?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1519689680025-283054545247?w=600&auto=format&fit=crop" alt="Colour - Classical 2">
+            <div class="gallery-item" data-style="Colour" data-period="Classical" data-title="Colour Study - Classical Restraint" data-description="Muted, restrained colours reflecting Haydn's elegant restraint—soft earth tones with minimal chromatic variation."
+                data-spotify="https://open.spotify.com/embed/track/2X7LHd75d3EtQgsAiJi1S8?utm_source=generator">
+                <img src="C4.jpg" alt="Colour - Classical 2">
             </div>
-            <div class="gallery-item" data-style="Colour" data-period="Romantic" data-title="Colour Study - Romantic Intensity" 
-                 data-description="Vibrant, emotional colours capturing Chopin's expressive timbre—warm reds and oranges reflecting Romantic passion and intensity."
-                 data-spotify="https://open.spotify.com/embed/track/3hWW9m9r9Mw5dEuhL4o8xR?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1516627145497-ae69b597e450?w=600&auto=format&fit=crop" alt="Colour - Romantic">
+            <div class="gallery-item" data-style="Colour" data-period="Romantic" data-title="Colour Study - Romantic Intensity" data-description="Vibrant, emotional colours capturing Chopin's expressive timbre—warm reds and oranges reflecting Romantic passion and intensity."
+                data-spotify="https://open.spotify.com/embed/track/6AZauFwqbjjBDryjVsNZ9f?utm_source=generator">
+                <img src="C5.png" alt="Colour - Romantic">
             </div>
-            <div class="gallery-item" data-style="Colour" data-period="Romantic" data-title="Colour Study - Romantic Melancholy" 
-                 data-description="Moody, atmospheric colours capturing Tchaikovsky's melancholic tone—deep blues and purples reflecting Romantic introspection."
-                 data-spotify="https://open.spotify.com/embed/track/2x8y7nXR56w3hXH9OMTwZc?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&auto=format&fit=crop" alt="Colour - Romantic 2">
+            <div class="gallery-item" data-style="Colour" data-period="Romantic" data-title="Colour Study - Romantic Melancholy" data-description="Moody, atmospheric colours capturing Tchaikovsky's melancholic tone—deep blues and purples reflecting Romantic introspection."
+                data-spotify="https://open.spotify.com/embed/track/6AZauFwqbjjBDryjVsNZ9f?utm_source=generator">
+                <img src="C6.png" alt="Colour - Romantic 2">
             </div>
-            <div class="gallery-item" data-style="Colour" data-period="20th Century" data-title="Colour Study - Modern Minimalism" 
-                 data-description="Monochromatic, high-contrast colours representing Steve Reich's minimalist timbre—black, white and gray with subtle tonal variations."
-                 data-spotify="https://open.spotify.com/embed/track/2r8n8P5SzOW0lb453NRj1c?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600&auto=format&fit=crop" alt="Colour - 20th Century">
+            <div class="gallery-item" data-style="Colour" data-period="20th Century" data-title="Colour Study - Modern Minimalism" data-description="Monochromatic, high-contrast colours representing Steve Reich's minimalist timbre—black, white and gray with subtle tonal variations."
+                data-spotify="https://open.spotify.com/embed/track/7biZOldbger5MgwcgE6CaA?utm_source=generator">
+                <img src="C7.png" alt="Colour - 20th Century">
             </div>
-            <div class="gallery-item" data-style="Colour" data-period="20th Century" data-title="Colour Study - Modern Experimentation" 
-                 data-description="Experimental, clashing colours representing Philip Glass's avant-garde timbre—jarring chromatic combinations reflecting modern innovation."
-                 data-spotify="https://open.spotify.com/embed/track/1Z8h6prGt88l4Xt57Rq9r8?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1530587191328-9fe1b9e7892b?w=600&auto=format&fit=crop" alt="Colour - 20th Century 2">
+            <div class="gallery-item" data-style="Colour" data-period="20th Century" data-title="Colour Study - Modern Experimentation" data-description="Experimental, clashing colours representing Philip Glass's avant-garde timbre—jarring chromatic combinations reflecting modern innovation."
+                data-spotify="https://open.spotify.com/embed/track/7biZOldbger5MgwcgE6CaA?utm_source=generator">
+                <img src="C8.png" alt="Colour - 20th Century 2">
             </div>
 
-            <!-- IMAGE STYLE (All Periods) -->
-            <div class="gallery-item" data-style="Image" data-period="Baroque" data-title="Image Study - Baroque Grandeur" 
-                 data-description="Dramatic, ornate compositions reflecting Baroque's grand aesthetic—dynamic diagonal arrangements mirroring Bach's elaborate musical structures."
-                 data-spotify="https://open.spotify.com/embed/track/0r8fpXj6hpwlV9A7v0D78b?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1618788372246-79faff0c3742?w=600&auto=format&fit=crop" alt="Image - Baroque">
+            <div class="gallery-item" data-style="Image" data-period="Baroque" data-title="Image Study - Baroque Complexity" data-description="Detailed, highly composed images reflecting Bach's contrapuntal structure—multiple layers and interwoven elements."
+                data-spotify="https://open.spotify.com/embed/track/1TQ2UYCN7nhfj3cfcFC76V?utm_source=generator">
+                <img src="IDavid.jpg" alt="Image - Baroque">
             </div>
-            <div class="gallery-item" data-style="Image" data-period="Baroque" data-title="Image Study - Baroque Theatricality" 
-                 data-description="Theatrical, dramatic compositions mirroring Vivaldi's programmatic music—narrative-driven arrangements with strong emotional impact."
-                 data-spotify="https://open.spotify.com/embed/track/2x45xqISlmmDJqxOqr8BuS?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?w=600&auto=format&fit=crop" alt="Image - Baroque 2">
+            <div class="gallery-item" data-style="Image" data-period="Baroque" data-title="Image Study - Baroque Formality" data-description="Formal, balanced compositions mirroring Handel's majestic style—symmetrical arrangements and clear structural hierarchy."
+                data-spotify="https://open.spotify.com/embed/track/1TQ2UYCN7nhfj3cfcFC76V?utm_source=generator">
+                <img src="IAlex.jpg" alt="Image - Baroque 2">
             </div>
-            <div class="gallery-item" data-style="Image" data-period="Classical" data-title="Image Study - Classical Order" 
-                 data-description="Balanced, symmetrical compositions embodying Classical order—centralized arrangements reflecting Mozart's structural perfection."
-                 data-spotify="https://open.spotify.com/embed/track/1h0CBkIiZp25yQ46nqPq4X?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=600&auto=format&fit=crop" alt="Image - Classical">
+            <div class="gallery-item" data-style="Image" data-period="Classical" data-title="Image Study - Classical Harmony" data-description="Symmetrical, clean compositions reflecting Mozart's harmonic balance—images built around clear, central focal points."
+                data-spotify="https://open.spotify.com/embed/track/2X7LHd75d3EtQgsAiJi1S8?utm_source=generator">
+                <img src="IChris.jpg" alt="Image - Classical">
             </div>
-            <div class="gallery-item" data-style="Image" data-period="Classical" data-title="Image Study - Classical Elegance" 
-                 data-description="Elegant, refined compositions reflecting Haydn's courtly aesthetic—minimal decoration with perfect proportional relationships."
-                 data-spotify="https://open.spotify.com/embed/track/58sO3ELBK2SKjf0PNCZ0B4?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1547891654-5dd03a8ecb98?w=600&auto=format&fit=crop" alt="Image - Classical 2">
+            <div class="gallery-item" data-style="Image" data-period="Classical" data-title="Image Study - Classical Order" data-description="Orderly, structured compositions reflecting Haydn's elegant simplicity—clear divisions and rational use of space."
+                data-spotify="https://open.spotify.com/embed/track/2X7LHd75d3EtQgsAiJi1S8?utm_source=generator">
+                <img src="IEmil.jpg" alt="Image - Classical 2">
             </div>
-            <div class="gallery-item" data-style="Image" data-period="Romantic" data-title="Image Study - Romantic Nature" 
-                 data-description="Organic, natural compositions capturing Romanticism's connection to nature—flowing, landscape-inspired forms reflecting Chopin's naturalistic expression."
-                 data-spotify="https://open.spotify.com/embed/track/3hWW9m9r9Mw5dEuhL4o8xR?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1622547907506-719f34008569?w=600&auto=format&fit=crop" alt="Image - Romantic">
+            <div class="gallery-item" data-style="Image" data-period="Romantic" data-title="Image Study - Romantic Lyricality" data-description="Soft, flowing compositions capturing Chopin's lyrical melodies—images with a sense of movement and emotional depth."
+                data-spotify="https://open.spotify.com/embed/track/6AZauFwqbjjBDryjVsNZ9f?utm_source=generator">
+                <img src="IJully.png" alt="Image - Romantic">
             </div>
-            <div class="gallery-item" data-style="Image" data-period="Romantic" data-title="Image Study - Romantic Emotion" 
-                 data-description="Expressive, emotional compositions capturing Tchaikovsky's passionate style—dynamic, unbalanced arrangements reflecting emotional intensity."
-                 data-spotify="https://open.spotify.com/embed/track/2x8y7nXR56w3hXH9OMTwZc?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1614332960893-9e612b034f7d?w=600&auto=format&fit=crop" alt="Image - Romantic 2">
+            <div class="gallery-item" data-style="Image" data-period="Romantic" data-title="Image Study - Romantic Emotion" data-description="Expressive, emotional compositions capturing Tchaikovsky's passionate style—dynamic, unbalanced arrangements reflecting emotional intensity."
+                data-spotify="https://open.spotify.com/embed/track/6AZauFwqbjjBDryjVsNZ9f?utm_source=generator">
+                <img src="IMin.png" alt="Image - Romantic 2">
             </div>
-            <div class="gallery-item" data-style="Image" data-period="20th Century" data-title="Image Study - Modern Fragmentation" 
-                 data-description="Fragmented, deconstructed compositions representing modern music's break from tradition—asymmetrical arrangements reflecting Steve Reich's experimental approach."
-                 data-spotify="https://open.spotify.com/embed/track/2r8n8P5SzOW0lb453NRj1c?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&auto=format&fit=crop" alt="Image - 20th Century">
+            <div class="gallery-item" data-style="Image" data-period="20th Century" data-title="Image Study - Modern Fragmentation" data-description="Fragmented, deconstructed compositions representing modern music's break from tradition—asymmetrical arrangements reflecting Steve Reich's experimental approach."
+                data-spotify="https://open.spotify.com/embed/track/7biZOldbger5MgwcgE6CaA?utm_source=generator">
+                <img src="IMinn.JPG" alt="Image - 20th Century">
             </div>
-            <div class="gallery-item" data-style="Image" data-period="20th Century" data-title="Image Study - Modern Minimalism" 
-                 data-description="Minimal, reductive compositions representing Philip Glass's minimalist aesthetic—empty space and basic forms reflecting modern restraint."
-                 data-spotify="https://open.spotify.com/embed/track/1Z8h6prGt88l4Xt57Rq9r8?utm_source=generator">
-                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&auto=format&fit=crop" alt="Image - 20th Century 2">
+            <div class="gallery-item" data-style="Image" data-period="20th Century" data-title="Image Study - Modern Minimalism" data-description="Minimal, reductive compositions representing Philip Glass's minimalist aesthetic—empty space and basic forms reflecting modern restraint."
+                data-spotify="https://open.spotify.com/embed/track/7biZOldbger5MgwcgE6CaA?utm_source=generator">
+                <img src="IMiran.jpg" alt="Image - 20th Century 2">
             </div>
         </div>
     </div>
 
     <div class="artwork-modal" id="artwork-modal">
-        <button class="modal-close" id="modal-close">&times;</button>
+        <button class="modal-close" id="modal-close">×</button>
         <div class="modal-content" id="modal-content">
-        </div>
+            </div>
     </div>
 
     <div class="page" id="drawing">
@@ -902,7 +1007,6 @@
                 <p>Capture your voice through the microphone and transform it into unique visual graphics in real-time. Different pitches, rhythms, and volumes generate distinct lines, colors, and shapes—experience the direct dialogue between sound and vision.</p>
                 <div class="drawing-controls">
                     <button class="btn" id="start-draw">Start Capture</button>
-                    <button class="btn" id="clear-draw">Clear Canvas</button>
                 </div>
             </div>
             <div id="canvas-container">
@@ -911,18 +1015,93 @@
         </div>
     </div>
 
+    <div class="page" id="music-drawing">
+        <h2>Music Draw Interactive</h2>
+        <div class="music-drawing-container">
+            <div class="drawing-toolbar">
+                <div class="music-player-box">
+                    <h3>Music Player</h3>
+                    <button id="random-music-btn" class="random-music-btn">🎲 Random Music</button>
+                    <iframe class="spotify-embed active" id="music-draw-spotify-embed"
+                        src="https://open.spotify.com/embed/track/1TQ2UYCN7nhfj3cfcFC76V?utm_source=generator"
+                        width="100%" height="352"
+                        frameborder="0" allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy">
+                    </iframe>
+                </div>
+
+                <div class="toolbar-section">
+                    <h3>Tool Selection</h3>
+                    <button class="tool-btn active" data-tool="pen">✏️ Pen</button>
+                    <button class="tool-btn" data-tool="eraser">🧽 Eraser</button>
+                    <button class="tool-btn" data-tool="shape">🔷 Shape</button>
+                    <button class="tool-btn" data-tool="stamp">⭐ Stamp</button>
+                    <button class="tool-btn" data-tool="clear">🗑️ Clear Canvas</button>
+                </div>
+
+                <div class="toolbar-section" id="pen-settings" style="display: flex;">
+                    <h3>Pen Settings</h3>
+                    <div class="slider-control">
+                        <label>Size: <span id="pen-size-value">5</span>px</label>
+                        <input type="range" id="pen-size" min="1" max="50" value="5">
+                    </div>
+                    <div class="slider-control">
+                        <label>Opacity: <span id="pen-opacity-value">100</span>%</label>
+                        <input type="range" id="pen-opacity" min="1" max="100" value="100">
+                    </div>
+                    <div class="color-control">
+                        <label for="pen-color-picker">Color:</label>
+                        <input type="color" id="pen-color-picker" value="#0066FF">
+                    </div>
+                </div>
+
+                <div class="toolbar-section" id="eraser-settings" style="display: none;">
+                    <h3>Eraser Settings</h3>
+                    <div class="slider-control">
+                        <label>Size: <span id="eraser-size-value">20</span>px</label>
+                        <input type="range" id="eraser-size" min="5" max="100" value="20">
+                    </div>
+                </div>
+
+                <div class="toolbar-section" id="stamp-settings" style="display: none;">
+                    <h3>Stamp Settings</h3>
+                    <div class="shape-stamps">
+                        <button class="stamp-btn active" data-shape="circle">⚫ Circle</button>
+                        <button class="stamp-btn" data-shape="rectangle">🟫 Square</button>
+                        <button class="stamp-btn" data-shape="line">➖ Line</button>
+                        <button class="stamp-btn" data-shape="star">⭐ Star</button>
+                    </div>
+                    <div class="slider-control">
+                        <label>Stamp Size: <span id="stamp-size-value">30</span>px</label>
+                        <input type="range" id="stamp-size" min="10" max="100" value="30">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div id="music-draw-canvas-container">
+                    <canvas id="music-draw-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="page" id="study">
         <div class="study-content">
             <h2>Translating Sound: Research & Findings</h2>
-            <p>Why do we instinctively associate specific colors, shapes, or movements with music? This phenomenon is not mere artistic imagination but rooted in the brain's cross-sensory integration mechanisms. Over the past half-century, neuroscientific research and experimental validation have gradually uncovered the hidden translation rules between sound and vision.</p>
-            
+            <p>Why do we instinctively associate specific colors, shapes, or movements with music? This phenomenon is not mere artistic imagination but rooted in the brain's cross-sensory integration mechanisms. Over the past half century, neuroscientific research and experimental validation have gradually uncovered the hidden translation rules between sound and vision.</p>
             <blockquote>
-                "Synesthetes do not 'see sounds'—instead, the brain encodes the physical properties of sound (pitch, volume, rhythm) into visual features (color, shape, movement). This is the underlying logic of the human sensory system, only made explicit in synesthetes." — Richard Cytowic
+                "Synesthetes do not 'see sounds'—instead, the brain encodes the physical properties of sound (pitch, volume, rhythm) into visual features (color, shape, movement). This is the underlying logic of the human sensory system, only made explicit in synesthetes."
+                — Richard Cytowic
             </blockquote>
-            
             <p>Synesthesia research has identified universal rules that govern sound-visual translation: high pitches correspond to upper frame positions and bright colors; low pitches map to lower positions and deep hues. Volume correlates with size and density—louder sounds create larger, more dense visual forms—while rhythm dictates movement patterns, with fast tempos producing jagged, rapid motion and slow tempos creating smooth, flowing lines.</p>
-            
-            <p>These rules transcend culture and medium, from NASA's cosmic sonification projects to experimental optical soundtrack films by artists like Lis Rhodes. What was once considered "artistic intuition" is now verifiable science—proving that sound and vision are two languages for the same sensory experience.</p>
+            <p>These rules transcend culture and medium, from NASA's cosmic sonification projects to experimental optical soundtrack films by artists like Lis Rhodes. What was once considered "artistic intuition" is now verifiable science —proving that sound and vision are two languages for the same sensory experience.</p>
+            <p>Auditory-visual synesthetes experience sound as tangible visuals: a trumpet’s blare might bloom into scarlet triangles, a whisper soften into pale blue mist. For decades, this phenomenon was dismissed as “artistic fancy”—until science proved it to be the first clue in understanding how sound and sight are hardwired to speak the same language. This chapter is the story of that proof. It traces how researchers, engineers, and artists turned intuition into evidence, uncovering rules that govern how sound’s properties—pitch, rhythm, volume—translate to visual elements like color, line, and movement. </p>
+            <p>These discoveries are not just academic; they are the foundation of every film score that makes your heart race, every data visualization that turns noise into meaning, and every artwork that feels “musical” without a single note being played.​If the brain was nature’s translator, humans would build machines to do the same. </p>
+            <p>The first attempt came in 1927, when Scottish inventor John Logie Baird patented Phonovision: a system that recorded television signals onto gramophone records, syncing sound and visuals in a single medium .</p>
+            <p>Baird’s discs encoded visual data as tiny grooves, which a “phono visor” was supposed to convert back into images. The quality was abysmal—he could play back the “sound of the vision signal” to audiences, but never clear pictures . </p>
+            <p>Using software to correct the mechanical distortions Baird had fought, McLean did what the inventor never could: he turned the grooves back into images. </p>
+            <p>Decades later, artists weaponized this idea with optical soundtracks. In 1971, filmmaker Lis Rhodes created Dresden Dynamo, a film where sound waveforms were printed directly onto the frame as flashing red zigzags, blue sine waves, and yellow pulses . </p>
         </div>
     </div>
 
@@ -932,33 +1111,70 @@
             <div class="music-card">
                 <h3>Bach - Brandenburg Concerto No.5</h3>
                 <p>Ornate ornamentation and contrapuntal structure translated into complex spiral curves and rich purple tones.</p>
-                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/0r8fpXj6hpwlV9A7v0D78b?utm_source=generator">Play on Spotify</button>
+                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/1TQ2UYCN7nhfj3cfcFC76V?utm_source=generator">Play on Spotify</button>
             </div>
-            
             <div class="music-card">
-                <h3>Mozart - Symphony No.40</h3>
+                <h3>Mozart - Piano Sonata No. 16</h3>
                 <p>Balanced structure and clear melodic lines mapped to symmetrical geometric forms and soft green tones.</p>
-                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/1h0CBkIiZp25yQ46nqPq4X?utm_source=generator">Play on Spotify</button>
+                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/2X7LHd75d3EtQgsAiJi1S8?utm_source=generator">Play on Spotify</button>
             </div>
-            
             <div class="music-card">
                 <h3>Chopin - Nocturne Op.9 No.1</h3>
                 <p>Flowing melodies and emotional harmonies translated into gradient orange curves and organic forms.</p>
-                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/3hWW9m9r9Mw5dEuhL4o8xR?utm_source=generator">Play on Spotify</button>
+                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/6AZauFwqbjjBDryjVsNZ9f?utm_source=generator">Play on Spotify</button>
             </div>
-            
             <div class="music-card">
                 <h3>Steve Reich - Piano Phase</h3>
                 <p>Minimal repetitive rhythms translated into high-contrast gray geometric lines and modular patterns.</p>
-                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/2r8n8P5SzOW0lb453NRj1c?utm_source=generator">Play on Spotify</button>
+                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/7biZOldbger5MgwcgE6CaA?utm_source=generator">Play on Spotify</button>
+            </div>
+            <div class="music-card">
+                <h3>Johann Sebastian Bach: Cello Suite No. 1 in G Major, Prelude</h3>
+                <p>A piece known for its graceful simplicity and continuous melodic flow, representative of the Baroque focus on structure and counterpoint.</p>
+                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/4GFuyvrYOQYDS497hffJXT?utm_source=generator">Play on Spotify</button>
+            </div>
+            <div class="music-card">
+                <h3>Antonio Vivaldi: The Four Seasons, Spring (Movement I)</h3>
+                <p>A joyful, virtuosic concerto that uses vivid string techniques to evoke the sounds and sensations of the natural world.</p>
+                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/0VdVbXAH9HOTWfnuJGhSlV?utm_source=generator">Play on Spotify</button>
+            </div>
+            <div class="music-card">
+                <h3>Frédéric Chopin: Nocturne in E-flat Major, Op. 9, No. 2</h3>
+                <p>One of the most famous and lyrical piano pieces, defined by its highly emotive, expressive melody and beautiful ornamentation, a hallmark of Romanticism.</p>
+                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/0fpqOyC5DLDe5gAYKBB6X7?utm_source=generator">Play on Spotify</button>
+            </div>
+            <div class="music-card">
+                <h3>Pyotr Ilyich Tchaikovsky: The Nutcracker Suite, Waltz of the Flowers</h3>
+                <p>A grand, sweeping orchestral waltz with a powerful build-up and lush instrumentation, perfectly capturing the era's dramatic scale and richness.</p>
+                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/1TQ2UYCN7nhfj3cfcFC76V?utm_source=generator">Play on Spotify</button>
+            </div>
+            <div class="music-card">
+                <h3>Wolfgang Amadeus Mozart: Symphony No. 40 in G Minor, K. 550 (Movement I)</h3>
+                <p>A masterpiece of clarity, balance, and formal elegance. Its instantly recognizable, restless theme introduces the emotional depth of the Classical era.</p>
+                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/2kyEgPaAW8wdpvevPnkf0Z?utm_source=generator">Play on Spotify</button>
+            </div>
+            <div class="music-card">
+                <h3>Ludwig van Beethoven: Piano Sonata No. 14, "Moonlight" (Movement I)</h3>
+                <p>OA slow, hauntingly beautiful piece that broke traditional forms, acting as a bridge between the balanced Classical period and the expressive Romantic period.</p>
+                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/7n92QzQomRCLlciO14X0kd?utm_source=generator">Play on Spotify</button>
+            </div>
+            <div class="music-card">
+                <h3>Igor Stravinsky: The Rite of Spring, Sacrificial Dance<h3>
+                <p>A revolutionary work famous for its aggressive, dissonant harmonies and jarring, unpredictable rhythmic complexity.</p>
+                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/5PtmAQ3m2jxhUkDVFQAJag?utm_source=generator">Play on Spotify</button>
+            </div>
+            <div class="music-card">
+                <h3>Claude Debussy: Clair de Lune</h3>
+                <p>A dreamy, impressionistic piece that focuses on atmosphere, color, and shifting harmonies rather than traditional melody, evoking a soft, moonlight scene.</p>
+                <button class="spotify-btn" data-embed="https://open.spotify.com/embed/track/0aRiMAA8tDopLimDxIKTaB?utm_source=generator">Play on Spotify</button>
             </div>
         </div>
-        
         <iframe class="spotify-embed" id="spotify-embed" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
     </div>
+    
 
     <script>
-        // Page Navigation
+        // ---------- 0. Global Setup ----------
         const navLinks = document.querySelectorAll('.nav-link');
         const pages = document.querySelectorAll('.page');
         const galleryTransition = document.getElementById('gallery-transition');
@@ -967,24 +1183,19 @@
 
         function switchPage(targetId) {
             pages.forEach(page => page.classList.remove('active'));
-            
             if (targetId === 'gallery') {
                 galleryTransition.classList.add('active');
                 transitionVideo.play();
-                
                 conceptCards.forEach(card => {
                     const delay = parseFloat(card.getAttribute('data-delay'));
                     setTimeout(() => card.classList.add('active'), delay * 1000);
                 });
-                
                 setTimeout(() => {
                     galleryTransition.classList.remove('active');
                     conceptCards.forEach(card => card.classList.remove('active'));
                     document.getElementById('gallery').classList.add('active');
                     transitionVideo.pause();
                     transitionVideo.currentTime = 0;
-                    
-                    // Show all gallery items initially
                     setTimeout(() => {
                         document.querySelectorAll('.gallery-item').forEach(item => {
                             item.classList.add('active');
@@ -993,81 +1204,69 @@
                 }, 5000);
             } else {
                 document.getElementById(targetId).classList.add('active');
+                window.scrollTo(0, 0);
             }
         }
 
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                switchPage(link.getAttribute('data-page'));
+                const targetId = link.getAttribute('data-page');
+                switchPage(targetId);
             });
         });
 
-        // Simplified Title Animation (only load trigger)
-        window.addEventListener('load', () => {
-            document.getElementById('home').classList.add('active');
-        });
+        // Initialize Home Page
+        switchPage('home');
 
-        // TWO-LEVEL FILTER LOGIC
+        // ---------- 1. Gallery Filter Logic ----------
+        const galleryItems = document.querySelectorAll('.gallery-item');
         const mainFilterBtns = document.querySelectorAll('.main-filter-btn');
         const periodFilterBtns = document.querySelectorAll('.period-filter-btn');
         const periodFiltersContainer = document.getElementById('period-filters');
-        const galleryItems = document.querySelectorAll('.gallery-item');
-        
+
         let activeStyle = 'all';
         let activePeriod = 'all';
 
-        // Main Filter (Visual Style: Line/Shape/Colour/Image)
         mainFilterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Update active main filter
                 mainFilterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 activeStyle = btn.getAttribute('data-style');
-                
-                // Activate period filters (enable interaction)
-                periodFiltersContainer.classList.add('active');
-                
-                // Reset period filter to "All Periods"
-                periodFilterBtns.forEach(b => b.classList.remove('active'));
-                document.querySelector('.period-filter-btn[data-period="all"]').classList.add('active');
-                activePeriod = 'all';
-                
-                // Filter gallery items
-                filterGalleryItems();
+
+                if (activeStyle === 'all') {
+                    periodFiltersContainer.classList.add('active');
+                } else {
+                    periodFiltersContainer.classList.remove('active');
+                    activePeriod = 'all';
+                    periodFilterBtns.forEach(b => b.classList.remove('active'));
+                    document.querySelector('.period-filter-btn[data-period="all"]').classList.add('active');
+                }
+
+                filterGallery();
             });
         });
 
-        // Period Filter (Music Period: All/Baroque/Classical/Romantic/20th Century)
         periodFilterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Update active period filter
                 periodFilterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 activePeriod = btn.getAttribute('data-period');
-                
-                // Filter gallery items
-                filterGalleryItems();
+                filterGallery();
             });
         });
 
-        // Core Filter Function
-        function filterGalleryItems() {
-            // Animate items out first
-            galleryItems.forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Animate relevant items in after short delay
+        function filterGallery() {
+            galleryItems.forEach(item => item.classList.remove('active'));
+
             setTimeout(() => {
                 galleryItems.forEach(item => {
                     const itemStyle = item.getAttribute('data-style');
                     const itemPeriod = item.getAttribute('data-period');
-                    
-                    // Check if item matches active filters
+
                     const styleMatch = activeStyle === 'all' || itemStyle === activeStyle;
                     const periodMatch = activePeriod === 'all' || itemPeriod === activePeriod;
-                    
+
                     if (styleMatch && periodMatch) {
                         item.classList.add('active');
                     }
@@ -1075,20 +1274,20 @@
             }, 300);
         }
 
-        // Artwork Modal
+        // ---------- 2. Artwork Modal ----------
         const artworkModal = document.getElementById('artwork-modal');
         const modalContent = document.getElementById('modal-content');
         const modalClose = document.getElementById('modal-close');
-        
+
         galleryItems.forEach(item => {
             item.addEventListener('click', () => {
                 const title = item.getAttribute('data-title');
                 const period = item.getAttribute('data-period');
                 const style = item.getAttribute('data-style');
                 const description = item.getAttribute('data-description');
-                const spotifyUrl = item.getAttribute('data-spotify');
+                const spotifyUrl = item.getAttribute('data-spotify'); 
                 const imageSrc = item.querySelector('img').src;
-                
+
                 modalContent.innerHTML = `
                     <img src="${imageSrc}" alt="${title}" class="modal-image">
                     <div class="modal-info">
@@ -1098,17 +1297,16 @@
                         <iframe class="spotify-player" src="${spotifyUrl}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                     </div>
                 `;
-                
                 artworkModal.classList.add('active');
                 document.body.style.overflow = 'hidden';
             });
         });
-        
+
         modalClose.addEventListener('click', () => {
             artworkModal.classList.remove('active');
             document.body.style.overflow = 'auto';
         });
-        
+
         artworkModal.addEventListener('click', (e) => {
             if (e.target === artworkModal) {
                 artworkModal.classList.remove('active');
@@ -1116,29 +1314,28 @@
             }
         });
 
-        // Sound Visualization
+        // ---------- 3. Sound Visualization (Original) ----------
+        const canvasContainer = document.getElementById('canvas-container');
         const canvas = document.getElementById('sound-canvas');
-        const ctx = canvas.getContext('2d');
+        let ctx = canvas?.getContext('2d');
         let audioContext, analyser, microphone, dataArray;
         let isDrawing = false;
 
         function resizeCanvas() {
-            const container = document.getElementById('canvas-container');
-            canvas.width = container.offsetWidth;
-            canvas.height = container.offsetHeight;
+            if (canvas && canvasContainer) {
+                canvas.width = canvasContainer.offsetWidth;
+                canvas.height = canvasContainer.offsetHeight;
+            }
         }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        document.getElementById('clear-draw').addEventListener('click', () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        });
-
-        document.getElementById('start-draw').addEventListener('click', async () => {
+        document.getElementById('start-draw')?.addEventListener('click', async () => {
             if (isDrawing) {
-                audioContext.close();
                 isDrawing = false;
-                document.getElementById('start-draw').textContent = 'Start Capture';
+                microphone?.disconnect();
+                audioContext?.close();
+                document.getElementById('start-draw').textContent = '🎤 Start Capture';
                 return;
             }
 
@@ -1146,8 +1343,7 @@
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 analyser = audioContext.createAnalyser();
                 analyser.fftSize = 2048;
-                const bufferLength = analyser.frequencyBinCount;
-                dataArray = new Uint8Array(bufferLength);
+                dataArray = new Uint8Array(analyser.fftSize);
 
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 microphone = audioContext.createMediaStreamSource(stream);
@@ -1163,9 +1359,10 @@
         });
 
         function drawVisualization() {
-            if (!isDrawing) return;
+            if (!isDrawing || !ctx) return;
 
             requestAnimationFrame(drawVisualization);
+
             analyser.getByteTimeDomainData(dataArray);
 
             ctx.fillStyle = 'rgba(26, 26, 26, 0.1)';
@@ -1181,7 +1378,9 @@
             for (let i = 0; i < dataArray.length; i++) {
                 const v = dataArray[i] / 128.0;
                 const y = v * canvas.height / 2;
+
                 i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+
                 x += sliceWidth;
             }
 
@@ -1189,18 +1388,340 @@
             ctx.stroke();
         }
 
-        // Spotify Embed
+        // ---------- 4. Spotify Embed (Music Library) ----------
         const spotifyButtons = document.querySelectorAll('.spotify-btn');
         const spotifyEmbed = document.getElementById('spotify-embed');
 
         spotifyButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 const embedUrl = btn.getAttribute('data-embed');
+                if (btn.id === 'random-music-btn') return; 
+
                 spotifyEmbed.src = embedUrl;
                 spotifyEmbed.classList.add('active');
                 spotifyEmbed.scrollIntoView({ behavior: 'smooth' });
             });
         });
+
+        // ---------- 5. Music + Interactive Drawing Logic ----------
+        const musicDrawCanvas = document.getElementById('music-draw-canvas');
+        const musicDrawCtx = musicDrawCanvas?.getContext('2d');
+        const musicDrawCanvasContainer = document.getElementById('music-draw-canvas-container');
+
+        // Resize function for music draw canvas, preserving content
+        function resizeCanvasPreserve() {
+            if (!musicDrawCanvas || !musicDrawCanvasContainer || !musicDrawCtx) return;
+            
+            // save current content
+            const dataUrl = musicDrawCanvas.toDataURL(); 
+
+            // resize
+            musicDrawCanvas.width = musicDrawCanvasContainer.offsetWidth;
+            musicDrawCanvas.height = musicDrawCanvasContainer.offsetHeight; 
+
+            // restore content
+            const img = new Image();
+            img.onload = () => {
+                musicDrawCtx.clearRect(0, 0, musicDrawCanvas.width, musicDrawCanvas.height);
+                musicDrawCtx.drawImage(img, 0, 0, musicDrawCanvas.width, musicDrawCanvas.height);
+            };
+            img.src = dataUrl;
+        }
+
+        window.addEventListener('resize', () => {
+            clearTimeout(window._mdResizeTimer);
+            window._mdResizeTimer = setTimeout(resizeCanvasPreserve, 80);
+        });
+
+        // Initial resize for Music Draw canvas
+        window.addEventListener('load', resizeCanvasPreserve);
+
+
+        // ---------- Random Spotify embed ----------
+        const randomMusicBtn = document.getElementById('random-music-btn');
+        const musicDrawSpotifyEmbed = document.getElementById('music-draw-spotify-embed');
+
+        const randomMusicUrls = [
+            "https://open.spotify.com/embed/track/1TQ2UYCN7nhfj3cfcFC76V?utm_source=generator", 
+            "https://open.spotify.com/embed/track/2X7LHd75d3EtQgsAiJi1S8?utm_source=generator", 
+            "https://open.spotify.com/embed/track/6AZauFwqbjjBDryjVsNZ9f?utm_source=generator", 
+            "https://open.spotify.com/embed/track/7biZOldbger5MgwcgE6CaA?utm_source=generator", 
+        ];
+
+        if (randomMusicBtn) {
+            randomMusicBtn.addEventListener('click', () => {
+                const randomIndex = Math.floor(Math.random() * randomMusicUrls.length);
+                const randomUrl = randomMusicUrls[randomIndex];
+
+                if (musicDrawSpotifyEmbed) {
+                    musicDrawSpotifyEmbed.src = randomUrl;
+                    musicDrawSpotifyEmbed.classList.add('active'); 
+                }
+            });
+        }
+
+
+        // ---------- 6. State & DOM references for Drawing Tool ----------
+        let isDrawingActive = false;
+        let currentTool = 'pen'; 
+        let currentShape = 'circle'; 
+        let penSize = 5;
+        let penOpacity = 100;
+        let penColor = '#0066FF'; // Initial Color
+        let eraserSize = 20;
+        let stampSize = 30; 
+        let startX = 0;
+        let startY = 0;
+        let savedCanvasState = null;
+
+        const toolBtns = document.querySelectorAll('.tool-btn');
+        const penSettings = document.getElementById('pen-settings');
+        const eraserSettings = document.getElementById('eraser-settings');
+        const stampSettings = document.getElementById('stamp-settings');
+
+        const penSizeSlider = document.getElementById('pen-size');
+        const penSizeValue = document.getElementById('pen-size-value');
+        const penOpacitySlider = document.getElementById('pen-opacity');
+        const penOpacityValue = document.getElementById('pen-opacity-value');
+        const penColorPicker = document.getElementById('pen-color-picker');
+        const eraserSizeSlider = document.getElementById('eraser-size');
+        const eraserSizeValue = document.getElementById('eraser-size-value');
+        const stampBtns = document.querySelectorAll('.stamp-btn');
+        const stampSizeSlider = document.getElementById('stamp-size');
+        const stampSizeValue = document.getElementById('stamp-size-value');
+
+        // ---------- 7. Tool Selection Handlers ----------
+        toolBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                toolBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const tool = btn.getAttribute('data-tool');
+                currentTool = tool;
+                
+                // Hide all settings, then show the relevant one
+                [penSettings, eraserSettings, stampSettings].forEach(s => s ? s.style.display = 'none' : null);
+
+                if (tool === 'pen') {
+                    if(penSettings) penSettings.style.display = 'flex';
+                } else if (tool === 'eraser') {
+                    if(eraserSettings) eraserSettings.style.display = 'flex';
+                } else if (tool === 'stamp' || tool === 'shape') {
+                    if(stampSettings) stampSettings.style.display = 'flex';
+                } else if (tool === 'clear') {
+                    clearCanvas();
+                    // Revert to 'pen' tool after clearing
+                    const lastActiveTool = document.querySelector('.tool-btn.active');
+                    if(lastActiveTool) lastActiveTool.classList.remove('active');
+                    currentTool = 'pen'; 
+                    document.querySelector('.tool-btn[data-tool="pen"]').classList.add('active');
+                    if (penSettings) penSettings.style.display = 'flex';
+                }
+            });
+        });
+
+        // Control Listeners
+        if (penSizeSlider) penSizeSlider.addEventListener('input', () => { penSize = +penSizeSlider.value; if (penSizeValue) penSizeValue.textContent = penSize; });
+        if (penOpacitySlider) penOpacitySlider.addEventListener('input', () => { penOpacity = +penOpacitySlider.value; if (penOpacityValue) penOpacityValue.textContent = penOpacity; });
+        
+        // FIX: The critical line that updates the penColor variable from the color picker input
+        if (penColorPicker) penColorPicker.addEventListener('input', () => { 
+            penColor = penColorPicker.value; 
+        });
+        
+        if (eraserSizeSlider) eraserSizeSlider.addEventListener('input', () => { eraserSize = +eraserSizeSlider.value; if (eraserSizeValue) eraserSizeValue.textContent = eraserSize; });
+        if (stampBtns && stampBtns.length) {
+            stampBtns.forEach(b => {
+                b.addEventListener('click', () => {
+                    stampBtns.forEach(x => x.classList.remove('active'));
+                    b.classList.add('active');
+                    const s = b.getAttribute('data-shape');
+                    currentShape = s || currentShape;
+                });
+            });
+        }
+        if (stampSizeSlider) stampSizeSlider.addEventListener('input', () => { stampSize = +stampSizeSlider.value; if (stampSizeValue) stampSizeValue.textContent = stampSize; });
+
+        // ---------- 8. utility: get coords ----------
+        function getCanvasCoordinates(e) {
+            const rect = musicDrawCanvas.getBoundingClientRect();
+            if (e.touches && e.touches[0]) {
+                return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+            } else {
+                return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+            }
+        }
+
+        // ---------- 9. utility: draw shapes ----------
+        function drawShape(mode, x, y, endX, endY) {
+            if (!musicDrawCtx) return;
+
+            musicDrawCtx.save();
+            // Use the currently selected color and opacity
+            musicDrawCtx.globalAlpha = penOpacity / 100;
+            musicDrawCtx.strokeStyle = penColor;
+            musicDrawCtx.fillStyle = penColor;
+            musicDrawCtx.lineWidth = penSize;
+            
+            const shape = mode === 'stamp' ? currentShape : currentShape;
+            const size = mode === 'stamp' ? stampSize : 0;
+            
+            if (mode === 'shape' && savedCanvasState) {
+                // For shape drawing, restore the saved state before drawing the new shape
+                musicDrawCtx.putImageData(savedCanvasState, 0, 0);
+            }
+
+            if (shape === 'rectangle') {
+                musicDrawCtx.beginPath();
+                musicDrawCtx.rect(x, y, endX - x, endY - y);
+                musicDrawCtx.stroke();
+            } else if (shape === 'circle') {
+                const dx = endX - x;
+                const dy = endY - y;
+                const radius = Math.sqrt(dx * dx + dy * dy) / 2;
+                musicDrawCtx.beginPath();
+                musicDrawCtx.arc(x + dx/2, y + dy/2, radius, 0, Math.PI * 2);
+                mode === 'stamp' ? musicDrawCtx.fill() : musicDrawCtx.stroke();
+            } else if (shape === 'line') {
+                musicDrawCtx.beginPath();
+                musicDrawCtx.moveTo(x, y);
+                musicDrawCtx.lineTo(endX, endY);
+                musicDrawCtx.stroke();
+            } else if (shape === 'star') {
+                if (mode === 'stamp') {
+                    musicDrawCtx.beginPath();
+                    const outerRadius = size / 2;
+                    const innerRadius = outerRadius / 2.5;
+                    let rot = Math.PI / 2 * 3;
+                    let cx = x;
+                    let cy = y;
+                    let steps = 5;
+
+                    musicDrawCtx.moveTo(cx, cy - outerRadius)
+                    for (let i = 0; i < steps; i++) {
+                        rot += Math.PI / steps;
+                        musicDrawCtx.lineTo(cx + Math.cos(rot) * innerRadius, cy + Math.sin(rot) * innerRadius);
+                        rot += Math.PI / steps;
+                        musicDrawCtx.lineTo(cx + Math.cos(rot) * outerRadius, cy + Math.sin(rot) * outerRadius);
+                    }
+                    musicDrawCtx.closePath();
+                    musicDrawCtx.fill();
+                }
+            }
+            musicDrawCtx.restore();
+        }
+
+        // ---------- 10-12. Input handlers: Down, Move, Up ----------
+        function onPointerDown(e) {
+            if (!musicDrawCtx) return;
+            e.preventDefault();
+            isDrawingActive = true;
+            const coords = getCanvasCoordinates(e);
+
+            if (currentTool === 'shape') {
+                startX = coords.x;
+                startY = coords.y;
+                // Save the canvas state *before* drawing the shape outline
+                savedCanvasState = musicDrawCtx.getImageData(0, 0, musicDrawCanvas.width, musicDrawCanvas.height);
+                return;
+            }
+
+            if (currentTool === 'pen') {
+                musicDrawCtx.beginPath();
+                musicDrawCtx.moveTo(coords.x, coords.y);
+                musicDrawCtx.lineWidth = penSize;
+                // FIX: This line ensures the stroke starts with the LATEST penColor value
+                musicDrawCtx.strokeStyle = penColor; 
+                musicDrawCtx.globalAlpha = penOpacity / 100;
+                musicDrawCtx.lineCap = 'round';
+                musicDrawCtx.lineJoin = 'round';
+            } else if (currentTool === 'eraser') {
+                // Immediate clear action for the first click
+                musicDrawCtx.clearRect( coords.x - eraserSize/2, coords.y - eraserSize/2, eraserSize, eraserSize );
+            } else if (currentTool === 'stamp') {
+                drawShape('stamp', coords.x, coords.y, null, null);
+                isDrawingActive = false; // Stamps are single-click operations
+            }
+        }
+
+        function onPointerMove(e) {
+            if (!isDrawingActive || !musicDrawCtx) return;
+            const coords = getCanvasCoordinates(e);
+
+            if (currentTool === 'pen') {
+                musicDrawCtx.lineTo(coords.x, coords.y);
+                musicDrawCtx.stroke();
+            } else if (currentTool === 'eraser') {
+                musicDrawCtx.clearRect( coords.x - eraserSize/2, coords.y - eraserSize/2, eraserSize, eraserSize );
+            } else if (currentTool === 'shape') {
+                // Continuously redraw the shape outline over the saved state
+                drawShape('shape', startX, startY, coords.x, coords.y);
+            }
+        }
+
+        function onPointerUp(e) {
+            if (!isDrawingActive || !musicDrawCtx) return;
+            
+            if (currentTool === 'shape') {
+                const coords = getCanvasCoordinates(e);
+                // Final draw of the shape
+                drawShape('shape', startX, startY, coords.x, coords.y);
+                savedCanvasState = null; 
+            }
+            isDrawingActive = false;
+        }
+
+        // Attach listeners
+        musicDrawCanvas?.addEventListener('mousedown', onPointerDown);
+        musicDrawCanvas?.addEventListener('mousemove', onPointerMove);
+        musicDrawCanvas?.addEventListener('mouseup', onPointerUp);
+        musicDrawCanvas?.addEventListener('mouseleave', onPointerUp);
+        musicDrawCanvas?.addEventListener('touchstart', onPointerDown, {passive: false});
+        musicDrawCanvas?.addEventListener('touchmove', onPointerMove, {passive: false});
+        musicDrawCanvas?.addEventListener('touchend', onPointerUp);
+
+        // ---------- 13. Clear button function ----------
+        function clearCanvas() {
+            if (musicDrawCtx) {
+                musicDrawCtx.clearRect(0, 0, musicDrawCanvas.width, musicDrawCanvas.height);
+            }
+        }
+
+        // ---------- 14. Optional: keyboard shortcuts ----------
+        window.addEventListener('keydown', (e) => {
+            // Only execute if not currently typing in an input field (e.g., color picker)
+            if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+                return;
+            }
+
+            if (e.key === 'e') { 
+                currentTool = 'eraser';
+                toolBtns.forEach(b => b.classList.remove('active'));
+                document.querySelector('.tool-btn[data-tool="eraser"]').classList.add('active');
+            } else if (e.key === 'p') { 
+                currentTool = 'pen';
+                toolBtns.forEach(b => b.classList.remove('active'));
+                document.querySelector('.tool-btn[data-tool="pen"]').classList.add('active');
+            } else if (e.key === 's') { 
+                currentTool = 'shape';
+                toolBtns.forEach(b => b.classList.remove('active'));
+                document.querySelector('.tool-btn[data-tool="shape"]').classList.add('active');
+            } else if (e.key === 'c') { 
+                clearCanvas();
+            }
+        });
+
+        // ---------- 15-16. Initial UI State Setup ----------
+        if (penSettings) penSettings.style.display = 'flex';
+        if (eraserSettings) eraserSettings.style.display = 'none';
+        if (stampSettings) stampSettings.style.display = 'none';
+
+        if (penSizeSlider) penSizeSlider.value = penSize;
+        if (penSizeValue) penSizeValue.textContent = penSize;
+        if (penOpacitySlider) penOpacitySlider.value = penOpacity;
+        if (penOpacityValue) penOpacityValue.textContent = penOpacity;
+        if (penColorPicker) penColorPicker.value = penColor;
+        if (eraserSizeSlider) eraserSizeSlider.value = eraserSize;
     </script>
 </body>
 </html>

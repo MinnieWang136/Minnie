@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Music + Interactive Drawing</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="music-drawing" class="page">
+  <main class="app">
+    <header class="toolbar">
+      <div class="music-controls">
+        <button id="random-music-btn" class="btn">Shuffle Track</button>
+        <div class="spotify-embed">
+          <iframe id="random-spotify-embed" style="border-radius:12px"
+            src="https://open.spotify.com/embed/track/1TQ2UYCN7nhfj3cfcFC76V?utm_source=generator"
+            width="300" height="80" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <div class="tool-controls">
+        <div class="tools-row">
+          <button class="tool-btn active" data-tool="pen">Pen</button>
+          <button class="tool-btn" data-tool="eraser">Eraser</button>
+          <button class="tool-btn" data-tool="shape">Shape</button>
+          <button class="tool-btn" data-tool="stamp">Stamp</button>
+          <button class="tool-btn" data-tool="clear">Clear</button>
+        </div>
+
+        <div class="tool-params">
+          <div id="pen-settings" class="settings">
+            <label>Size <input id="pen-size" type="range" min="1" max="40" value="5"></label>
+            <span id="pen-size-value">5</span>
+            <label>Opacity <input id="pen-opacity" type="range" min="10" max="100" value="100"></label>
+            <span id="pen-opacity-value">100</span>
+            <label>Color <input id="pen-color" type="color" value="#0066FF"></label>
+          </div>
+
+          <div id="eraser-settings" class="settings" style="display:none">
+            <label>Eraser <input id="eraser-size" type="range" min="5" max="80" value="20"></label>
+            <span id="eraser-size-value">20</span>
+          </div>
+
+          <div id="shape-settings" class="settings" style="display:none">
+            <label>Shape:
+              <select id="shape-select">
+                <option value="rectangle">Rectangle</option>
+                <option value="circle" selected>Circle</option>
+                <option value="line">Line</option>
+                <option value="triangle">Triangle</option>
+              </select>
+            </label>
+            <label>Fill: <input id="shape-fill" type="checkbox" checked></label>
+            <label>Stroke Width <input id="shape-stroke" type="range" min="1" max="20" value="2"></label>
+          </div>
+
+          <div id="stamp-settings" class="settings" style="display:none">
+            <label>Stamp:
+              <select id="stamp-select">
+                <option value="circle">Circle</option>
+                <option value="triangle">Triangle</option>
+                <option value="star">Star</option>
+                <option value="heart">Heart</option>
+              </select>
+            </label>
+            <label>Size <input id="stamp-size" type="range" min="6" max="120" value="30"></label>
+            <span id="stamp-size-value">30</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="canvas-controls">
+        <label>Canvas scale
+          <input id="canvas-scale" type="range" min="50" max="200" value="100">
+        </label>
+        <span id="canvas-scale-value">100%</span>
+      </div>
+    </header>
+
+    <section id="music-draw-canvas-container" class="canvas-area">
+      <canvas id="music-draw-canvas"></canvas>
+    </section>
+
+    <footer class="notes">
+      <small>Tools: pen, eraser, shape (rectangle/circle/line/triangle), stamp (circle/triangle/star/heart). Drag for live preview on shapes. Canvas scaling preserves content.</small>
+    </footer>
+  </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
