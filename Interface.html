@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>DreamNoise</title>
 
   <style>
@@ -35,8 +35,9 @@
       height:100svh;
       height:100dvh;
       overflow:hidden;
-      display:grid;
-      place-items:center;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       background:linear-gradient(180deg,#f7f5f9,#eef2fb);
       font-family:Inter,Arial,sans-serif;
       color:var(--text);
@@ -45,9 +46,9 @@
     }
 
     .app{
-      width:min(390px,calc(100vw - 18px));
-      height:min(780px,calc(100dvh - 18px));
-      max-height:calc(100dvh - 18px);
+      width:min(390px,calc(100vw - 16px));
+      height:min(780px,calc(100dvh - 16px));
+      max-height:calc(100dvh - 16px);
       position:relative;
       overflow:hidden;
       border-radius:34px;
@@ -110,6 +111,7 @@
       border:1px solid var(--border);
       box-shadow:0 10px 25px rgba(152,160,196,.14);
       backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
     }
 
     .topbar{
@@ -322,6 +324,7 @@
       cursor:pointer;
       transform:rotate(var(--knobRotate,35deg));
       transition:transform .18s ease;
+      touch-action:none;
     }
 
     .knob:after{
@@ -440,151 +443,151 @@
     @media (max-width:430px), (max-height:760px){
       .app{
         width:calc(100vw - 14px);
-        height:calc(100dvh - 14px);
-        max-height:calc(100dvh - 14px);
-        padding:10px;
-        gap:6px;
-        border-radius:26px;
+        height:calc(100svh - 14px);
+        max-height:calc(100svh - 14px);
+        padding:8px;
+        gap:5px;
+        border-radius:24px;
       }
 
       .brand{
-        font-size:18px;
+        font-size:17px;
       }
 
-      .brand small{
-        font-size:9px;
-      }
-
-      .pill{
+      .brand small,
+      .pill,
+      .note{
         display:none;
       }
 
       .hero{
-        padding:10px;
-        border-radius:20px;
+        padding:9px;
+        border-radius:18px;
       }
 
       .hero-top{
-        margin-bottom:4px;
+        margin-bottom:2px;
       }
 
       .label{
-        font-size:11px;
+        font-size:10px;
       }
 
       .mood{
-        font-size:20px;
+        font-size:18px;
       }
 
       .meta{
-        font-size:10px;
+        font-size:9px;
       }
 
       .orb-shell{
-        height:84px;
+        height:66px;
       }
 
       .orb{
-        width:64px;
-        height:64px;
+        width:52px;
+        height:52px;
       }
 
       .orb-ring{
-        width:90px;
-        height:90px;
+        width:72px;
+        height:72px;
       }
 
       .summary{
-        font-size:10px;
+        font-size:9px;
+      }
+
+      .presets{
+        gap:5px;
       }
 
       .preset{
-        padding:7px 5px;
-        font-size:12px;
+        padding:6px 4px;
+        font-size:11px;
+        border-radius:12px;
       }
 
       .panel{
-        padding:9px;
-        border-radius:20px;
+        flex:0 0 auto;
+        padding:8px;
+        border-radius:18px;
       }
 
       .control{
-        margin-bottom:6px;
+        margin-bottom:5px;
       }
 
       .head{
-        font-size:11px;
-        margin-bottom:3px;
+        font-size:10px;
+        margin-bottom:2px;
       }
 
       input[type=range]{
-        height:6px;
+        height:5px;
       }
 
       input[type=range]::-webkit-slider-thumb{
-        width:18px;
-        height:18px;
+        width:16px;
+        height:16px;
       }
 
       .knob-row{
-        gap:9px;
-        margin-top:5px;
+        margin-top:4px;
+        gap:8px;
       }
 
       .knob-wrap{
-        width:68px;
+        width:58px;
       }
 
       .knob{
-        width:58px;
-        height:58px;
+        width:50px;
+        height:50px;
       }
 
       .knob:after{
-        top:7px;
-        height:16px;
-        width:6px;
+        top:6px;
+        width:5px;
+        height:14px;
       }
 
       .knob-info{
-        font-size:10px;
-        line-height:1.25;
+        font-size:9px;
+        line-height:1.2;
       }
 
       .knob-info strong{
-        font-size:12px;
+        font-size:11px;
         margin-bottom:1px;
       }
 
       .footer{
-        padding:9px;
-        border-radius:20px;
+        padding:8px;
+        border-radius:18px;
       }
 
       .play-row{
-        margin-bottom:5px;
+        margin-bottom:4px;
       }
 
       .play{
-        width:46px;
-        height:46px;
-        font-size:16px;
+        width:44px;
+        height:44px;
+        font-size:15px;
       }
 
       .play-title{
-        font-size:13px;
+        font-size:12px;
       }
 
       .play-sub{
-        font-size:10px;
+        font-size:9px;
       }
 
       .visualizer{
-        height:22px;
-      }
-
-      .note{
-        display:none;
+        height:18px;
       }
     }
 
@@ -594,8 +597,8 @@
       }
 
       .app{
-        height:min(780px,calc(100svh - 18px));
-        max-height:calc(100svh - 18px);
+        height:min(780px,calc(100svh - 16px));
+        max-height:calc(100svh - 16px);
       }
     }
   </style>
@@ -842,6 +845,8 @@
 
       masterFilter.type = 'lowpass';
       masterFilter.frequency.value = 2300;
+      masterFilter.Q.value = 0.2;
+
       masterGain.gain.value = 0;
 
       mixBus.connect(masterFilter);
@@ -894,10 +899,12 @@
       blp.connect(brownGainNode);
       brownGainNode.connect(mixBus);
 
-      r.start();
-      o.start();
-      b.start();
-      lfo.start();
+      r.start(0);
+      o.start(0);
+      b.start(0);
+      lfo.start(0);
+
+      updateSound();
     }
 
     function updateUI(){
@@ -912,10 +919,10 @@
 
       mixSummary.textContent = `Rain ${rain.value} · Ocean ${ocean.value} · Brown ${brown.value}`;
 
-      const rVal = +rain.value;
-      const oVal = +ocean.value;
-      const bVal = +brown.value;
-      const brVal = +brightness.value;
+      const rVal = Number(rain.value);
+      const oVal = Number(ocean.value);
+      const bVal = Number(brown.value);
+      const brVal = Number(brightness.value);
       const avg = (rVal + oVal + bVal) / 3;
 
       orb.style.setProperty('--orbScale',(0.88 + avg / 270).toFixed(2));
@@ -968,20 +975,21 @@
       if(!audioCtx) return;
 
       const now = audioCtx.currentTime;
-      const r = +rain.value / 100;
-      const o = +ocean.value / 100;
-      const b = +brown.value / 100;
-      const br = +brightness.value / 100;
+      const r = Number(rain.value) / 100;
+      const o = Number(ocean.value) / 100;
+      const b = Number(brown.value) / 100;
+      const br = Number(brightness.value) / 100;
       const t = tone / 100;
 
-      rainGainNode.gain.setTargetAtTime(r * .45,now,.08);
-      oceanGainNode.gain.setTargetAtTime(o * .28,now,.08);
-      oceanLfoDepth.gain.setTargetAtTime(o * .08,now,.08);
-      brownGainNode.gain.setTargetAtTime(b * .35,now,.08);
+      rainGainNode.gain.setTargetAtTime(r * 0.45, now, 0.08);
+      oceanGainNode.gain.setTargetAtTime(o * 0.28, now, 0.08);
+      oceanLfoDepth.gain.setTargetAtTime(o * 0.08, now, 0.08);
+      brownGainNode.gain.setTargetAtTime(b * 0.35, now, 0.08);
 
-      masterFilter.frequency.setTargetAtTime(300 + br * 3600 + t * 2600,now,.1);
-      masterFilter.Q.setTargetAtTime(.15 + t * .8,now,.1);
-      masterGain.gain.setTargetAtTime(isPlaying ? .9 : 0,now,.12);
+      masterFilter.frequency.setTargetAtTime(300 + br * 3600 + t * 2600, now, 0.1);
+      masterFilter.Q.setTargetAtTime(0.15 + t * 0.8, now, 0.1);
+
+      masterGain.gain.setTargetAtTime(isPlaying ? 0.9 : 0, now, 0.12);
     }
 
     function setPreset(name){
@@ -1045,28 +1053,19 @@
       updateSound();
     }
 
-    function unlockIOSAudio(){
-      if(!audioCtx) return;
+    async function startAudio(){
+      if(!audioCtx){
+        buildAudio();
+      }
 
-      const buffer = audioCtx.createBuffer(1,1,22050);
-      const source = audioCtx.createBufferSource();
-
-      source.buffer = buffer;
-      source.connect(audioCtx.destination);
-      source.start(0);
+      if(audioCtx.state !== 'running'){
+        await audioCtx.resume();
+      }
     }
 
     async function togglePlay(){
       try{
-        if(!audioCtx){
-          buildAudio();
-        }
-
-        unlockIOSAudio();
-
-        if(audioCtx.state === 'suspended'){
-          await audioCtx.resume();
-        }
+        await startAudio();
 
         isPlaying = !isPlaying;
 
@@ -1080,31 +1079,22 @@
           : 'Tap play, then adjust live.';
 
         updateSound();
+
       } catch(error){
         console.log(error);
         playSub.textContent = 'Tap again, turn up volume, and check silent mode.';
       }
     }
 
-    let lastPlayTouch = 0;
-
-    function handlePlayPress(e){
-      if(e){
-        e.preventDefault();
-      }
-
-      const now = Date.now();
-
-      if(now - lastPlayTouch < 500){
-        return;
-      }
-
-      lastPlayTouch = now;
+    function handlePlay(e){
+      e.preventDefault();
       togglePlay();
     }
 
     function setToneStart(e){
-      toneKnob.setPointerCapture?.(e.pointerId);
+      if(toneKnob.setPointerCapture){
+        toneKnob.setPointerCapture(e.pointerId);
+      }
       setToneFromPointer(e);
     }
 
@@ -1122,20 +1112,12 @@
     toneKnob.addEventListener('pointerdown',setToneStart);
 
     toneKnob.addEventListener('pointermove',e=>{
-      if(e.pressure > 0 || e.buttons){
+      if(e.buttons || e.pressure > 0){
         setToneFromPointer(e);
       }
     });
 
-    playBtn.addEventListener('touchend',handlePlayPress,{passive:false});
-
-    playBtn.addEventListener('click',e=>{
-      if(Date.now() - lastPlayTouch < 700){
-        return;
-      }
-
-      handlePlayPress(e);
-    });
+    playBtn.addEventListener('pointerdown',handlePlay);
 
     updateUI();
   </script>
