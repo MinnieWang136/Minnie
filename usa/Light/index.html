@@ -3,1910 +3,926 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>A Measure of Daylight</title>
-
 <style>
-
-:root {
-    --wall: #e8e4dc;
-    --floor: #bda98d;
-    --ink: #181816;
-    --paper: #f7f6f1;
-    --line: rgba(24,24,22,.18);
+:root{
+  --wall:#e8e4dc;
+  --floor:#bda98d;
+  --ink:#181816;
+  --paper:#f7f6f1;
+  --line:rgba(24,24,22,.18);
 }
-
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--paper)}
+button,input{font:inherit}
+.app{min-height:100vh;display:grid;grid-template-columns:minmax(0,1.65fr) minmax(340px,.85fr)}
+.room-section{position:relative;overflow:hidden;min-height:100vh;background:#ddd}
+.room{position:absolute;inset:0;overflow:hidden;transition:filter .25s ease}
+.wall{position:absolute;inset:0 0 28% 0;background:var(--wall);transition:background-color .25s ease}
+.floor{
+  position:absolute;left:-10%;right:-10%;bottom:-15%;height:50%;
+  background:var(--floor);transform:perspective(800px) rotateX(58deg);
+  transform-origin:center top;transition:background-color .25s ease
 }
-
-html,
-body {
-    margin: 0;
-    min-height: 100%;
-    font-family: Arial, Helvetica, sans-serif;
-    color: var(--ink);
-    background: var(--paper);
+.corner-line{position:absolute;left:0;right:0;top:72%;height:1px;background:rgba(0,0,0,.08)}
+.window{
+  position:absolute;width:35%;height:57%;left:12%;top:13%;
+  background:linear-gradient(180deg,#bfd7e4 0%,#e8ead7 72%,#c7c3a5 100%);
+  border:10px solid rgba(248,248,242,.96);overflow:hidden;
+  box-shadow:0 8px 35px rgba(0,0,0,.06)
 }
-
-button,
-input {
-    font: inherit;
+.window:before,.window:after{content:"";position:absolute;background:rgba(248,248,242,.96);z-index:7}
+.window:before{left:50%;top:0;width:7px;height:100%;transform:translateX(-50%)}
+.window:after{left:0;top:50%;width:100%;height:7px;transform:translateY(-50%)}
+.sky{position:absolute;inset:0;background:linear-gradient(180deg,#bdd6e5 0%,#e9ebdc 72%,#c7c6a8 100%)}
+.diffusion{position:absolute;inset:0;background:rgba(255,255,255,.78);opacity:.42;backdrop-filter:blur(7px);z-index:4;transition:.25s}
+.curtain{
+  position:absolute;left:0;top:0;width:30%;height:100%;z-index:5;
+  background:repeating-linear-gradient(90deg,rgba(248,247,239,.94) 0 12px,rgba(225,224,214,.72) 22px,rgba(248,247,239,.9) 34px);
+  box-shadow:8px 0 20px rgba(0,0,0,.05);transition:width .25s ease
 }
-
-/* =========================
-   MAIN LAYOUT
-========================= */
-
-.app {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns:
-        minmax(0, 1.65fr)
-        minmax(340px, .85fr);
+.light-beam{
+  position:absolute;width:77%;height:72%;left:26%;top:30%;z-index:2;
+  background:linear-gradient(110deg,rgba(255,242,183,.72),rgba(255,248,218,.23),rgba(255,255,255,0) 68%);
+  clip-path:polygon(0 0,44% 0,100% 100%,20% 100%);filter:blur(10px);opacity:.55;
+  transform-origin:top left;transition:.25s;mix-blend-mode:screen;pointer-events:none
 }
-
-
-/* =========================
-   ROOM
-========================= */
-
-.room-section {
-    position: relative;
-    overflow: hidden;
-    min-height: 100vh;
-    background: #ddd;
+.shadow{
+  position:absolute;width:56%;height:18%;left:22%;bottom:8%;z-index:3;
+  background:rgba(54,51,44,.18);transform:skewX(-28deg);filter:blur(14px);transition:.25s;pointer-events:none
 }
-
-.room {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    transition: filter .25s ease;
+.chair{position:absolute;right:20%;bottom:20%;width:112px;height:150px;z-index:4;filter:drop-shadow(12px 18px 10px rgba(0,0,0,.12))}
+.chair-back{position:absolute;width:100%;height:72px;bottom:75px;background:#7f7a70;border-radius:2px}
+.chair-seat{position:absolute;width:100%;height:18px;bottom:58px;background:#6f6b63}
+.leg{position:absolute;width:7px;height:62px;bottom:0;background:#504d47}
+.leg.left{left:15px}
+.leg.right{right:15px}
+.room-info{position:absolute;top:32px;left:36px;z-index:20}
+.project-name{font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.step{margin-top:7px;font-size:11px;opacity:.52}
+.controls{
+  padding:38px 40px 32px;display:flex;flex-direction:column;min-height:100vh;
+  background:rgba(250,249,245,.98);border-left:1px solid var(--line);overflow:auto
 }
-
-
-/* WALL */
-
-.wall {
-    position: absolute;
-    inset: 0 0 28% 0;
-
-    background: var(--wall);
-
-    transition:
-        background-color .25s ease;
+.prompt-label,.section-label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;opacity:.5}
+.prompt-label{margin-top:26px}
+h1{font-size:clamp(46px,5vw,76px);font-weight:400;letter-spacing:-.045em;margin:8px 0 38px}
+.section-label{padding-top:18px;margin-bottom:20px;border-top:1px solid var(--line)}
+.control{margin-bottom:25px}
+.control-header{display:flex;justify-content:space-between;font-size:10px;text-transform:uppercase;letter-spacing:.09em;margin-bottom:11px}
+.value{opacity:.48;font-variant-numeric:tabular-nums}
+.range-labels{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.06em;opacity:.42;margin-top:7px}
+input[type=range]{appearance:none;width:100%;height:1px;background:#5c5b56;outline:none}
+input[type=range]::-webkit-slider-thumb{appearance:none;width:14px;height:14px;border-radius:50%;background:#171715;cursor:pointer}
+.swatch-title{font-size:10px;text-transform:uppercase;letter-spacing:.09em;margin-bottom:11px}
+.record-button{
+  margin-top:12px;width:100%;padding:16px;border:1px solid #171715;background:transparent;
+  font-size:10px;letter-spacing:.12em;cursor:pointer;transition:.2s
 }
+.record-button:hover{background:#171715;color:white}
+.results{display:none;padding:50px;min-height:100vh;background:var(--paper)}
+.results h2{font-weight:400;font-size:clamp(38px,5vw,68px);letter-spacing:-.04em;margin:22px 0 10px}
+.results-intro{max-width:620px;font-size:14px;line-height:1.5;opacity:.65}
+.result-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:48px}
+.result-card{border-top:1px solid #222;padding-top:12px}
+.result-preview{height:150px;margin-bottom:18px;position:relative;overflow:hidden;border:1px solid rgba(0,0,0,.08)}
+.result-preview .mini-wall{position:absolute;inset:0 0 30% 0}
+.result-preview .mini-floor{position:absolute;left:0;right:0;bottom:0;height:30%}
+.result-preview .mini-light{position:absolute;inset:0;background:radial-gradient(circle at 28% 35%,rgba(255,248,207,.9),transparent 58%)}
+.result-emotion{font-size:25px;margin-bottom:18px}
+.result-data{font-size:10px;line-height:1.9;letter-spacing:.04em;text-transform:uppercase}
+.restart,.gallery-link{margin-top:45px;background:transparent;border:1px solid #111;padding:14px 24px;cursor:pointer}
+.note{font-size:9px;line-height:1.45;opacity:.45;margin-top:14px}
 
-
-/* FLOOR */
-
-.floor {
-    position: absolute;
-
-    left: -10%;
-    right: -10%;
-    bottom: -15%;
-
-    height: 50%;
-
-    background: var(--floor);
-
-    transform:
-        perspective(800px)
-        rotateX(58deg);
-
-    transform-origin: center top;
-
-    transition:
-        background-color .25s ease;
+.color-pickers{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:28px}
+.color-picker{min-width:0}
+.color-ring{
+  position:relative;width:148px;height:148px;max-width:100%;aspect-ratio:1;
+  border-radius:50%;margin:16px auto 22px;
+  background:conic-gradient(from 90deg,red,#ff0,#0f0,#0ff,#00f,#f0f,red);
+  touch-action:none;cursor:crosshair;outline-offset:5px
 }
-
-
-/* WALL / FLOOR EDGE */
-
-.corner-line {
-    position: absolute;
-
-    left: 0;
-    right: 0;
-    top: 72%;
-
-    height: 1px;
-
-    background:
-        rgba(0,0,0,.08);
+.color-ring:before{content:"";position:absolute;inset:22px;border-radius:50%;background:var(--paper)}
+.color-ring-center{position:absolute;inset:42px;border-radius:50%;border:1px solid #0002;pointer-events:none}
+.color-marker{
+  position:absolute;width:16px;height:16px;border:2px solid white;
+  box-shadow:0 0 0 1px #222;border-radius:50%;
+  transform:translate(-50%,-50%);pointer-events:none
 }
+.color-picker label{display:block;font-size:10px;margin:14px 0 8px}
+.color-code{width:100%;padding:8px;background:transparent;border:1px solid var(--line);font-size:12px;text-transform:uppercase}
+.color-picker input[type=color]{width:28px;height:28px;padding:0;border:0;background:none;cursor:pointer}
+.color-entry{display:flex;gap:8px;align-items:center}
+button:focus-visible,input:focus-visible{outline:2px solid #171715;outline-offset:4px}
 
-
-/* =========================
-   WINDOW
-========================= */
-
-.window {
-    position: absolute;
-
-    width: 35%;
-    height: 57%;
-
-    left: 12%;
-    top: 13%;
-
-    background:
-        linear-gradient(
-            180deg,
-            #bfd7e4 0%,
-            #e8ead7 72%,
-            #c7c3a5 100%
-        );
-
-    border:
-        10px solid
-        rgba(248,248,242,.96);
-
-    overflow: hidden;
-
-    box-shadow:
-        0 8px 35px
-        rgba(0,0,0,.06);
+.gallery{display:none;padding:40px;min-height:100vh}
+.gallery h2{font-size:48px;font-weight:400;letter-spacing:-.04em;margin-bottom:12px}
+.gallery-actions{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}
+.gallery-actions button,.save-panel button,.saved-card button{
+  border:1px solid #181816;background:transparent;padding:12px 18px;
+  cursor:pointer;font:inherit;font-size:12px
 }
-
-
-/* WINDOW FRAME */
-
-.window::before,
-.window::after {
-    content: "";
-
-    position: absolute;
-
-    background:
-        rgba(248,248,242,.96);
-
-    z-index: 7;
+.save-panel{margin-top:32px;max-width:600px;border-top:1px solid var(--line);padding-top:24px}
+.save-panel label{display:block;font-size:12px;margin:12px 0 6px}
+.save-panel input,.save-panel textarea{
+  width:100%;border:1px solid var(--line);padding:12px;
+  background:transparent;font:inherit
 }
+.save-panel button{margin-top:16px}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.saved-card{border:1px solid var(--line);padding:20px}
+.saved-card h3{font-size:22px;font-weight:400;margin:16px 0 6px;overflow-wrap:anywhere}
+.saved-card p{font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.saved-card time{font-size:11px;opacity:.6}
+.saved-previews{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.saved-previews .result-preview{height:90px;margin:0}
+.saved-preview-label{position:absolute;bottom:7px;left:8px;font-size:9px;background:#fffC;padding:3px}
+.gallery-status{font-size:12px;line-height:1.5;min-height:18px}
+.gallery-link{margin-top:12px}
+.empty-gallery{padding:35px 0;opacity:.6}
 
-.window::before {
-    left: 50%;
-    top: 0;
-
-    width: 7px;
-    height: 100%;
-
-    transform:
-        translateX(-50%);
+@media(max-width:900px){
+  .app{grid-template-columns:1fr}
+  .room-section{min-height:58vh}
+  .controls{min-height:auto;border-left:0;border-top:1px solid var(--line)}
+  .result-grid{grid-template-columns:1fr 1fr}
 }
-
-.window::after {
-    left: 0;
-    top: 50%;
-
-    width: 100%;
-    height: 7px;
-
-    transform:
-        translateY(-50%);
+@media(max-width:560px){
+  .result-grid{grid-template-columns:1fr}
+  .controls{padding:28px 24px}
+  .results{padding:30px 24px}
+  .gallery{padding:28px 24px}
+  .gallery h2{font-size:38px}
 }
-
-
-/* SKY */
-
-.sky {
-    position: absolute;
-    inset: 0;
-
-    background:
-        linear-gradient(
-            180deg,
-            #bdd6e5 0%,
-            #e9ebdc 72%,
-            #c7c6a8 100%
-        );
+@media(max-width:380px){
+  .color-pickers{grid-template-columns:1fr}
+  .color-ring{width:148px}
 }
-
-
-/* =========================
-   DIFFUSION
-========================= */
-
-.diffusion {
-    position: absolute;
-    inset: 0;
-
-    background:
-        rgba(255,255,255,.78);
-
-    opacity: .42;
-
-    backdrop-filter:
-        blur(7px);
-
-    z-index: 4;
-
-    transition: .25s;
-}
-
-
-/* =========================
-   CURTAIN
-========================= */
-
-.curtain {
-    position: absolute;
-
-    left: 0;
-    top: 0;
-
-    width: 30%;
-    height: 100%;
-
-    z-index: 5;
-
-    background:
-        repeating-linear-gradient(
-            90deg,
-            rgba(248,247,239,.94)
-            0 12px,
-
-            rgba(225,224,214,.72)
-            22px,
-
-            rgba(248,247,239,.9)
-            34px
-        );
-
-    box-shadow:
-        8px 0 20px
-        rgba(0,0,0,.05);
-
-    transition:
-        width .25s ease;
-}
-
-
-/* =========================
-   LIGHT
-========================= */
-
-.light-beam {
-    position: absolute;
-
-    width: 77%;
-    height: 72%;
-
-    left: 26%;
-    top: 30%;
-
-    z-index: 2;
-
-    background:
-        linear-gradient(
-            110deg,
-
-            rgba(255,242,183,.72),
-
-            rgba(255,248,218,.23),
-
-            rgba(255,255,255,0)
-            68%
-        );
-
-    clip-path:
-        polygon(
-            0 0,
-            44% 0,
-            100% 100%,
-            20% 100%
-        );
-
-    filter:
-        blur(10px);
-
-    opacity: .55;
-
-    transform-origin:
-        top left;
-
-    transition: .25s;
-
-    mix-blend-mode:
-        screen;
-
-    pointer-events: none;
-}
-
-
-/* SHADOW */
-
-.shadow {
-    position: absolute;
-
-    width: 56%;
-    height: 18%;
-
-    left: 22%;
-    bottom: 8%;
-
-    z-index: 3;
-
-    background:
-        rgba(54,51,44,.18);
-
-    transform:
-        skewX(-28deg);
-
-    filter:
-        blur(14px);
-
-    transition: .25s;
-
-    pointer-events: none;
-}
-
-
-/* =========================
-   CHAIR
-========================= */
-
-.chair {
-    position: absolute;
-
-    right: 20%;
-    bottom: 20%;
-
-    width: 112px;
-    height: 150px;
-
-    z-index: 4;
-
-    filter:
-        drop-shadow(
-            12px 18px 10px
-            rgba(0,0,0,.12)
-        );
-}
-
-.chair-back {
-    position: absolute;
-
-    width: 100%;
-    height: 72px;
-
-    bottom: 75px;
-
-    background: #7f7a70;
-
-    border-radius: 2px;
-}
-
-.chair-seat {
-    position: absolute;
-
-    width: 100%;
-    height: 18px;
-
-    bottom: 58px;
-
-    background: #6f6b63;
-}
-
-.leg {
-    position: absolute;
-
-    width: 7px;
-    height: 62px;
-
-    bottom: 0;
-
-    background: #504d47;
-}
-
-.leg.left {
-    left: 15px;
-}
-
-.leg.right {
-    right: 15px;
-}
-
-
-/* =========================
-   PROJECT INFO
-========================= */
-
-.room-info {
-    position: absolute;
-
-    top: 32px;
-    left: 36px;
-
-    z-index: 20;
-}
-
-.project-name {
-    font-size: 11px;
-
-    letter-spacing:
-        .14em;
-
-    text-transform:
-        uppercase;
-}
-
-.step {
-    margin-top: 7px;
-
-    font-size: 11px;
-
-    opacity: .52;
-}
-
-
-/* =========================
-   CONTROL PANEL
-========================= */
-
-.controls {
-    padding:
-        38px 40px 32px;
-
-    display: flex;
-
-    flex-direction:
-        column;
-
-    min-height: 100vh;
-
-    background:
-        rgba(250,249,245,.98);
-
-    border-left:
-        1px solid var(--line);
-
-    overflow: auto;
-}
-
-.prompt-label,
-.section-label {
-
-    font-size: 10px;
-
-    text-transform:
-        uppercase;
-
-    letter-spacing:
-        .14em;
-
-    opacity: .5;
-}
-
-.prompt-label {
-    margin-top: 26px;
-}
-
-h1 {
-    font-size:
-        clamp(46px,5vw,76px);
-
-    font-weight: 400;
-
-    letter-spacing:
-        -.045em;
-
-    margin:
-        8px 0 38px;
-}
-
-.section-label {
-
-    padding-top: 18px;
-
-    margin-bottom: 20px;
-
-    border-top:
-        1px solid var(--line);
-}
-
-
-/* =========================
-   SLIDERS
-========================= */
-
-.control {
-    margin-bottom: 25px;
-}
-
-.control-header {
-
-    display: flex;
-
-    justify-content:
-        space-between;
-
-    font-size: 10px;
-
-    text-transform:
-        uppercase;
-
-    letter-spacing:
-        .09em;
-
-    margin-bottom: 11px;
-}
-
-.value {
-    opacity: .48;
-
-    font-variant-numeric:
-        tabular-nums;
-}
-
-.range-labels {
-
-    display: flex;
-
-    justify-content:
-        space-between;
-
-    font-size: 9px;
-
-    letter-spacing:
-        .06em;
-
-    opacity: .42;
-
-    margin-top: 7px;
-}
-
-input[type="range"] {
-
-    appearance: none;
-
-    width: 100%;
-
-    height: 1px;
-
-    background: #5c5b56;
-
-    outline: none;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-
-    appearance: none;
-
-    width: 14px;
-    height: 14px;
-
-    border-radius: 50%;
-
-    background: #171715;
-
-    cursor: pointer;
-}
-
-
-/* =========================
-   COLOR SWATCHES
-========================= */
-
-.swatch-title {
-
-    font-size: 10px;
-
-    text-transform:
-        uppercase;
-
-    letter-spacing:
-        .09em;
-
-    margin-bottom: 11px;
-}
-
-.swatch-row {
-
-    display: flex;
-
-    gap: 10px;
-
-    flex-wrap: wrap;
-
-    margin:
-        0 0 25px;
-}
-
-.swatch {
-
-    width: 28px;
-    height: 28px;
-
-    border-radius: 50%;
-
-    border:
-        1px solid
-        rgba(0,0,0,.16);
-
-    cursor: pointer;
-
-    position: relative;
-
-    transition:
-        transform .15s ease;
-}
-
-.swatch:hover {
-    transform:
-        scale(1.08);
-}
-
-.swatch.active::after {
-
-    content: "";
-
-    position: absolute;
-
-    inset: -5px;
-
-    border:
-        1px solid #171715;
-
-    border-radius: 50%;
-}
-
-
-/* =========================
-   BUTTON
-========================= */
-
-.record-button {
-
-    margin-top: 12px;
-
-    width: 100%;
-
-    padding: 16px;
-
-    border:
-        1px solid #171715;
-
-    background:
-        transparent;
-
-    font-size: 10px;
-
-    letter-spacing:
-        .12em;
-
-    cursor: pointer;
-
-    transition: .2s;
-}
-
-.record-button:hover {
-
-    background: #171715;
-
-    color: white;
-}
-
-.note {
-
-    font-size: 9px;
-
-    line-height: 1.45;
-
-    opacity: .45;
-
-    margin-top: 14px;
-}
-
-
-/* =========================
-   RESULTS
-========================= */
-
-.results {
-
-    display: none;
-
-    padding: 50px;
-
-    min-height: 100vh;
-
-    background:
-        var(--paper);
-}
-
-.results h2 {
-
-    font-weight: 400;
-
-    font-size:
-        clamp(38px,5vw,68px);
-
-    letter-spacing:
-        -.04em;
-
-    margin:
-        22px 0 10px;
-}
-
-.results-intro {
-
-    max-width: 620px;
-
-    font-size: 14px;
-
-    line-height: 1.5;
-
-    opacity: .65;
-}
-
-.result-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            4,
-            minmax(0,1fr)
-        );
-
-    gap: 18px;
-
-    margin-top: 48px;
-}
-
-.result-card {
-
-    border-top:
-        1px solid #222;
-
-    padding-top: 12px;
-}
-
-.result-preview {
-
-    height: 150px;
-
-    margin-bottom: 18px;
-
-    position: relative;
-
-    overflow: hidden;
-
-    border:
-        1px solid
-        rgba(0,0,0,.08);
-}
-
-.mini-wall {
-
-    position: absolute;
-
-    inset:
-        0 0 30% 0;
-}
-
-.mini-floor {
-
-    position: absolute;
-
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    height: 30%;
-}
-
-.mini-light {
-
-    position: absolute;
-
-    inset: 0;
-
-    background:
-        radial-gradient(
-            circle at 28% 35%,
-            rgba(255,248,207,.9),
-            transparent 58%
-        );
-}
-
-.result-emotion {
-
-    font-size: 25px;
-
-    margin-bottom: 18px;
-}
-
-.result-data {
-
-    font-size: 10px;
-
-    line-height: 1.9;
-
-    letter-spacing:
-        .04em;
-
-    text-transform:
-        uppercase;
-}
-
-.restart {
-
-    margin-top: 45px;
-
-    background:
-        transparent;
-
-    border:
-        1px solid #111;
-
-    padding:
-        14px 24px;
-
-    cursor: pointer;
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width:900px) {
-
-    .app {
-        grid-template-columns:
-            1fr;
-    }
-
-    .room-section {
-        min-height: 58vh;
-    }
-
-    .controls {
-        min-height: auto;
-
-        border-left: 0;
-
-        border-top:
-            1px solid var(--line);
-    }
-
-    .result-grid {
-        grid-template-columns:
-            1fr 1fr;
-    }
-}
-
-@media (max-width:560px) {
-
-    .result-grid {
-        grid-template-columns:
-            1fr;
-    }
-
-    .controls {
-        padding:
-            28px 24px;
-    }
-
-    .results {
-        padding:
-            30px 24px;
-    }
-}
-
 </style>
 </head>
-
-
 <body>
 
-<!-- =========================
-     EXPERIMENT
-========================= -->
-
 <div class="app" id="experiment">
-
-
-<section class="room-section">
-
+  <section class="room-section">
     <div class="room-info">
-
-        <div class="project-name">
-            A Measure of Daylight
-        </div>
-
-        <div class="step" id="step">
-            01 / 04
-        </div>
-
+      <div class="project-name">A Measure of Daylight</div>
+      <div class="step" id="step">01 / 04</div>
     </div>
-
 
     <div class="room" id="room">
-
-        <div
-            class="wall"
-            id="wall">
-        </div>
-
-        <div
-            class="floor"
-            id="floor">
-        </div>
-
-        <div class="corner-line"></div>
-
-
-        <!-- WINDOW -->
-
-        <div class="window">
-
-            <div class="sky"></div>
-
-            <div
-                class="diffusion"
-                id="diffusionLayer">
-            </div>
-
-            <div
-                class="curtain"
-                id="curtain">
-            </div>
-
-        </div>
-
-
-        <!-- LIGHT -->
-
-        <div
-            class="light-beam"
-            id="beam">
-        </div>
-
-        <div
-            class="shadow"
-            id="shadow">
-        </div>
-
-
-        <!-- CHAIR -->
-
-        <div class="chair">
-
-            <div class="chair-back"></div>
-
-            <div class="chair-seat"></div>
-
-            <div class="leg left"></div>
-
-            <div class="leg right"></div>
-
-        </div>
-
+      <div class="wall" id="wall"></div>
+      <div class="floor" id="floor"></div>
+      <div class="corner-line"></div>
+      <div class="window">
+        <div class="sky"></div>
+        <div class="diffusion" id="diffusionLayer"></div>
+        <div class="curtain" id="curtain"></div>
+      </div>
+      <div class="light-beam" id="beam"></div>
+      <div class="shadow" id="shadow"></div>
+      <div class="chair">
+        <div class="chair-back"></div>
+        <div class="chair-seat"></div>
+        <div class="leg left"></div>
+        <div class="leg right"></div>
+      </div>
     </div>
+  </section>
 
-</section>
+  <section class="controls">
+    <div class="prompt-label">Make this space feel</div>
+    <h1 id="emotion">CALM</h1>
 
-
-
-<!-- =========================
-     CONTROL PANEL
-========================= -->
-
-<section class="controls">
-
-    <div class="prompt-label">
-        Make this space feel
-    </div>
-
-    <h1 id="emotion">
-        CALM
-    </h1>
-
-
-    <!-- DAYLIGHT -->
-
-    <div class="section-label">
-        01 — Daylight
-    </div>
-
-
-    <!-- INTENSITY -->
+    <div class="section-label">01 — Daylight</div>
 
     <div class="control">
-
-        <div class="control-header">
-
-            <span>
-                Intensity
-            </span>
-
-            <span
-                class="value"
-                id="intensityValue">
-                50
-            </span>
-
-        </div>
-
-        <input
-            id="intensity"
-            type="range"
-            min="0"
-            max="100"
-            value="50">
-
-        <div class="range-labels">
-
-            <span>DIM</span>
-
-            <span>BRIGHT</span>
-
-        </div>
-
+      <div class="control-header">
+        <span>Intensity</span>
+        <span class="value" id="intensityValue">50</span>
+      </div>
+      <input id="intensity" type="range" min="0" max="100" value="50">
+      <div class="range-labels"><span>DIM</span><span>BRIGHT</span></div>
     </div>
-
-
-    <!-- DIFFUSION -->
 
     <div class="control">
-
-        <div class="control-header">
-
-            <span>
-                Diffusion
-            </span>
-
-            <span
-                class="value"
-                id="diffusionValue">
-                50
-            </span>
-
-        </div>
-
-        <input
-            id="diffusion"
-            type="range"
-            min="0"
-            max="100"
-            value="50">
-
-        <div class="range-labels">
-
-            <span>DIRECT</span>
-
-            <span>SOFT</span>
-
-        </div>
-
+      <div class="control-header">
+        <span>Diffusion</span>
+        <span class="value" id="diffusionValue">50</span>
+      </div>
+      <input id="diffusion" type="range" min="0" max="100" value="50">
+      <div class="range-labels"><span>DIRECT</span><span>SOFT</span></div>
     </div>
-
-
-    <!-- OPENNESS -->
 
     <div class="control">
-
-        <div class="control-header">
-
-            <span>
-                Openness
-            </span>
-
-            <span
-                class="value"
-                id="opennessValue">
-                50
-            </span>
-
-        </div>
-
-        <input
-            id="openness"
-            type="range"
-            min="0"
-            max="100"
-            value="50">
-
-        <div class="range-labels">
-
-            <span>FILTERED</span>
-
-            <span>OPEN</span>
-
-        </div>
-
+      <div class="control-header">
+        <span>Openness</span>
+        <span class="value" id="opennessValue">50</span>
+      </div>
+      <input id="openness" type="range" min="0" max="100" value="50">
+      <div class="range-labels"><span>FILTERED</span><span>OPEN</span></div>
     </div>
-
-
-    <!-- DIRECTION -->
 
     <div class="control">
+      <div class="control-header">
+        <span>Direction</span>
+        <span class="value" id="directionValue">50</span>
+      </div>
+      <input id="direction" type="range" min="0" max="100" value="50">
+      <div class="range-labels"><span>INDIRECT</span><span>DIRECT</span></div>
+    </div>
 
-        <div class="control-header">
+    <div class="section-label">02 — Surface</div>
 
-            <span>
-                Direction
-            </span>
+    <div class="color-pickers">
+      <div class="color-picker" id="wallPicker">
+        <div class="swatch-title">Wall</div>
 
-            <span
-                class="value"
-                id="directionValue">
-                50
-            </span>
-
+        <div class="color-ring" role="slider" tabindex="0"
+             aria-label="Wall hue" aria-valuemin="0"
+             aria-valuemax="359" aria-valuenow="0">
+          <div class="color-ring-center"></div>
+          <div class="color-marker"></div>
         </div>
 
-        <input
-            id="direction"
-            type="range"
-            min="0"
-            max="100"
-            value="50">
+        <label for="wallSaturation">Saturation <output></output></label>
+        <input id="wallSaturation" class="saturation"
+               type="range" min="0" max="100" value="0">
 
-        <div class="range-labels">
+        <label for="wallBrightness">Brightness <output></output></label>
+        <input id="wallBrightness" class="color-brightness"
+               type="range" min="0" max="100" value="100">
 
-            <span>INDIRECT</span>
+        <label for="wallHex">Exact color</label>
+        <div class="color-entry">
+          <input type="color" value="#e8e4dc" aria-label="Wall color picker">
+          <input id="wallHex" class="color-code" value="#e8e4dc"
+                 maxlength="7" aria-label="Wall hexadecimal color"
+                 spellcheck="false">
+        </div>
+      </div>
 
-            <span>DIRECT</span>
+      <div class="color-picker" id="floorPicker">
+        <div class="swatch-title">Floor</div>
 
+        <div class="color-ring" role="slider" tabindex="0"
+             aria-label="Floor hue" aria-valuemin="0"
+             aria-valuemax="359" aria-valuenow="0">
+          <div class="color-ring-center"></div>
+          <div class="color-marker"></div>
         </div>
 
+        <label for="floorSaturation">Saturation <output></output></label>
+        <input id="floorSaturation" class="saturation"
+               type="range" min="0" max="100" value="0">
+
+        <label for="floorBrightness">Brightness <output></output></label>
+        <input id="floorBrightness" class="color-brightness"
+               type="range" min="0" max="100" value="100">
+
+        <label for="floorHex">Exact color</label>
+        <div class="color-entry">
+          <input type="color" value="#bda98d" aria-label="Floor color picker">
+          <input id="floorHex" class="color-code" value="#bda98d"
+                 maxlength="7" aria-label="Floor hexadecimal color"
+                 spellcheck="false">
+        </div>
+      </div>
     </div>
-
-
-
-    <!-- =========================
-         SURFACES
-    ========================= -->
-
-    <div class="section-label">
-        02 — Surface
-    </div>
-
-
-    <!-- WALL -->
-
-    <div class="swatch-title">
-        Wall
-    </div>
-
-    <div
-        class="swatch-row"
-        id="wallSwatches">
-
-        <button
-            class="swatch active"
-            data-color="#e8e4dc"
-            style="background:#e8e4dc"
-            aria-label="Warm white">
-        </button>
-
-        <button
-            class="swatch"
-            data-color="#d7d3c8"
-            style="background:#d7d3c8"
-            aria-label="Stone">
-        </button>
-
-        <button
-            class="swatch"
-            data-color="#c7b69d"
-            style="background:#c7b69d"
-            aria-label="Beige">
-        </button>
-
-        <button
-            class="swatch"
-            data-color="#b8c3bd"
-            style="background:#b8c3bd"
-            aria-label="Sage">
-        </button>
-
-        <button
-            class="swatch"
-            data-color="#b8c5d0"
-            style="background:#b8c5d0"
-            aria-label="Pale blue">
-        </button>
-
-    </div>
-
-
-    <!-- FLOOR -->
-
-    <div class="swatch-title">
-        Floor
-    </div>
-
-    <div
-        class="swatch-row"
-        id="floorSwatches">
-
-        <button
-            class="swatch active"
-            data-color="#bda98d"
-            style="background:#bda98d"
-            aria-label="Light wood">
-        </button>
-
-        <button
-            class="swatch"
-            data-color="#8c735d"
-            style="background:#8c735d"
-            aria-label="Dark wood">
-        </button>
-
-        <button
-            class="swatch"
-            data-color="#b8b4aa"
-            style="background:#b8b4aa"
-            aria-label="Concrete">
-        </button>
-
-        <button
-            class="swatch"
-            data-color="#d0c1a8"
-            style="background:#d0c1a8"
-            aria-label="Warm beige">
-        </button>
-
-        <button
-            class="swatch"
-            data-color="#e4e1d9"
-            style="background:#e4e1d9"
-            aria-label="Light neutral">
-        </button>
-
-    </div>
-
-
-    <!-- SUBMIT -->
-
-    <button
-        class="record-button"
-        id="recordButton">
-
-        THIS IS THE SPACE I NEED
-
-    </button>
 
     <div class="note">
-
-        There is no correct setting.
-        Adjust the room until it matches
-        your own interpretation of the word.
-
+      Drag the ring to choose a hue. Adjust saturation and brightness for any
+      shade. Arrow keys also adjust the ring.
     </div>
 
-</section>
-
-</div>
-
-
-
-<!-- =========================
-     RESULTS
-========================= -->
-
-<section
-    class="results"
-    id="results">
-
-    <div class="project-name">
-        A Measure of Daylight
-    </div>
-
-    <h2>
-        Your Light Portrait
-    </h2>
-
-    <div class="results-intro">
-
-        Four emotional prompts,
-        four different relationships
-        between daylight and the
-        surfaces around it.
-
-    </div>
-
-    <div
-        class="result-grid"
-        id="resultGrid">
-    </div>
-
-    <button
-        class="restart"
-        onclick="location.reload()">
-
-        START AGAIN
-
+    <button class="record-button" id="recordButton">
+      THIS IS THE SPACE I NEED
     </button>
 
+    <button class="gallery-link" id="openGallery">VIEW SAVED GALLERY</button>
+
+    <div class="note">
+      There is no correct setting. Adjust the room until it matches your own
+      interpretation of the word.
+    </div>
+  </section>
+</div>
+
+<section class="results" id="results">
+  <div class="project-name">A Measure of Daylight</div>
+  <h2>Your Light Portrait</h2>
+
+  <div class="results-intro">
+    Four emotional prompts, four different relationships between daylight
+    and the surfaces around it.
+  </div>
+
+  <div class="result-grid" id="resultGrid"></div>
+
+  <div class="save-panel" id="savePanel">
+    <label for="portraitTitle">Name your light portrait (optional)</label>
+    <input id="portraitTitle" maxlength="80" placeholder="My afternoon light">
+
+    <label for="portraitNote">
+      What do these spaces remind you of? (optional)
+    </label>
+    <textarea id="portraitNote" maxlength="500" rows="3"
+              placeholder="A place, a feeling, or a memory…"></textarea>
+
+    <button id="savePortrait">SAVE TO GALLERY</button>
+    <p class="gallery-status" id="saveStatus" role="status"></p>
+
+    <p class="note">
+      Saved on this browser and device. Download a copy to keep or share
+      your results.
+    </p>
+  </div>
+
+  <div class="gallery-actions">
+    <button id="resultsGallery">VIEW GALLERY</button>
+    <button id="downloadCurrent">DOWNLOAD RESULTS</button>
+    <button class="restart" onclick="location.reload()">START AGAIN</button>
+  </div>
 </section>
 
+<section class="gallery" id="gallery">
+  <div class="project-name">A Measure of Daylight</div>
+  <h2>The Light Library</h2>
 
+  <p class="results-intro">
+    Different people, different needs. A collection of light, color,
+    and emotional comfort.
+  </p>
+
+  <p class="note">
+    This gallery belongs to this browser. It is not shared across devices.
+    Clearing browser data removes saved portraits.
+  </p>
+
+  <div class="gallery-actions">
+    <button id="closeGallery">BACK TO EXPERIMENT</button>
+    <button id="exportGallery">DOWNLOAD GALLERY</button>
+  </div>
+
+  <p class="gallery-status" id="galleryStatus" role="status"></p>
+  <div class="gallery-grid" id="galleryGrid"></div>
+</section>
 
 <script>
-
-/* =========================
-   EXPERIMENT
-========================= */
-
-const emotions = [
-    "CALM",
-    "SAFE",
-    "FOCUSED",
-    "ENERGIZED"
-];
-
+const emotions = ["CALM", "SAFE", "FOCUSED", "ENERGIZED"];
 let currentEmotion = 0;
-
 const results = [];
 
+const intensity = document.getElementById("intensity");
+const diffusion = document.getElementById("diffusion");
+const openness = document.getElementById("openness");
+const direction = document.getElementById("direction");
+const room = document.getElementById("room");
+const wall = document.getElementById("wall");
+const floor = document.getElementById("floor");
+const diffusionLayer = document.getElementById("diffusionLayer");
+const curtain = document.getElementById("curtain");
+const beam = document.getElementById("beam");
+const shadow = document.getElementById("shadow");
 
-/* =========================
-   ELEMENTS
-========================= */
-
-const intensity =
-    document.getElementById("intensity");
-
-const diffusion =
-    document.getElementById("diffusion");
-
-const openness =
-    document.getElementById("openness");
-
-const direction =
-    document.getElementById("direction");
-
-
-const room =
-    document.getElementById("room");
-
-const wall =
-    document.getElementById("wall");
-
-const floor =
-    document.getElementById("floor");
-
-const diffusionLayer =
-    document.getElementById(
-        "diffusionLayer"
-    );
-
-const curtain =
-    document.getElementById(
-        "curtain"
-    );
-
-const beam =
-    document.getElementById(
-        "beam"
-    );
-
-const shadow =
-    document.getElementById(
-        "shadow"
-    );
-
-
-/* =========================
-   COLORS
-========================= */
-
-let wallColor =
-    "#e8e4dc";
-
-let floorColor =
-    "#bda98d";
-
-
-/* =========================
-   UPDATE LIGHT
-========================= */
+let wallColor = "#e8e4dc";
+let floorColor = "#bda98d";
 
 function updateLight() {
+  const i = Number(intensity.value);
+  const d = Number(diffusion.value);
+  const o = Number(openness.value);
+  const dir = Number(direction.value);
 
-    const i =
-        Number(intensity.value);
+  const brightness = .48 + (i / 100) * 1.12;
+  room.style.filter = `brightness(${brightness})`;
 
-    const d =
-        Number(diffusion.value);
+  diffusionLayer.style.opacity = d / 120;
+  diffusionLayer.style.backdropFilter = `blur(${d / 7}px)`;
 
-    const o =
-        Number(openness.value);
+  beam.style.filter = `blur(${3 + d / 4}px)`;
+  shadow.style.filter = `blur(${3 + d / 3}px)`;
+  curtain.style.width = `${100 - o}%`;
 
-    const dir =
-        Number(direction.value);
+  const rotation = -18 + (dir / 100) * 38;
+  beam.style.transform = `rotate(${rotation}deg)`;
+  beam.style.opacity = .18 + (dir / 100) * .72;
 
+  shadow.style.transform = `skewX(${-40 + dir / 2}deg)`;
+  shadow.style.opacity = .10 + (dir / 100) * .24;
 
-    /* BRIGHTNESS */
-
-    const brightness =
-        .48 +
-        (i / 100) * 1.12;
-
-    room.style.filter =
-        `brightness(${brightness})`;
-
-
-    /* DIFFUSION */
-
-    diffusionLayer.style.opacity =
-        d / 120;
-
-    diffusionLayer.style.backdropFilter =
-        `blur(${d / 7}px)`;
-
-
-    beam.style.filter =
-        `blur(${3 + d / 4}px)`;
-
-
-    shadow.style.filter =
-        `blur(${3 + d / 3}px)`;
-
-
-    /* OPENNESS */
-
-    curtain.style.width =
-        `${100 - o}%`;
-
-
-    /* DIRECTION */
-
-    const rotation =
-        -18 +
-        (dir / 100) * 38;
-
-    beam.style.transform =
-        `rotate(${rotation}deg)`;
-
-
-    beam.style.opacity =
-        .18 +
-        (dir / 100) * .72;
-
-
-    shadow.style.transform =
-        `skewX(${-40 + dir / 2}deg)`;
-
-
-    shadow.style.opacity =
-        .10 +
-        (dir / 100) * .24;
-
-
-    /* DISPLAY NUMBERS */
-
-    document.getElementById(
-        "intensityValue"
-    ).textContent = i;
-
-
-    document.getElementById(
-        "diffusionValue"
-    ).textContent = d;
-
-
-    document.getElementById(
-        "opennessValue"
-    ).textContent = o;
-
-
-    document.getElementById(
-        "directionValue"
-    ).textContent = dir;
-
+  document.getElementById("intensityValue").textContent = i;
+  document.getElementById("diffusionValue").textContent = d;
+  document.getElementById("opennessValue").textContent = o;
+  document.getElementById("directionValue").textContent = dir;
 }
 
+function hexToHSV(hex) {
+  const rgb = hex.match(/\w\w/g).map(x => parseInt(x, 16) / 255);
+  const [r, g, b] = rgb;
+  const max = Math.max(...rgb);
+  const min = Math.min(...rgb);
+  const delta = max - min;
 
-/* =========================
-   COLOR SWATCHES
-========================= */
+  let h = 0;
 
-function setSwatches(
-    containerId,
-    target
-) {
+  if (delta) {
+    if (max === r) h = ((g - b) / delta) % 6;
+    else if (max === g) h = (b - r) / delta + 2;
+    else h = (r - g) / delta + 4;
 
-    document
-        .querySelectorAll(
-            `#${containerId} .swatch`
-        )
-        .forEach(button => {
+    h = (h * 60 + 360) % 360;
+  }
 
-            button.addEventListener(
-                "click",
-                () => {
-
-                    document
-                        .querySelectorAll(
-                            `#${containerId} .swatch`
-                        )
-                        .forEach(item => {
-
-                            item.classList
-                                .remove(
-                                    "active"
-                                );
-
-                        });
-
-
-                    button.classList
-                        .add("active");
-
-
-                    const color =
-                        button.dataset.color;
-
-
-                    if (
-                        target === "wall"
-                    ) {
-
-                        wallColor =
-                            color;
-
-                        wall.style
-                            .backgroundColor =
-                            color;
-
-                    }
-
-                    else {
-
-                        floorColor =
-                            color;
-
-                        floor.style
-                            .backgroundColor =
-                            color;
-
-                    }
-
-                }
-            );
-
-        });
-
+  return {
+    h,
+    s: max ? delta / max * 100 : 0,
+    v: max * 100
+  };
 }
 
+function hsvToHex({ h, s, v }) {
+  s /= 100;
+  v /= 100;
 
-/* =========================
-   RESET
-========================= */
+  const c = v * s;
+  const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+  const m = v - c;
+
+  const rgb =
+    h < 60 ? [c, x, 0] :
+    h < 120 ? [x, c, 0] :
+    h < 180 ? [0, c, x] :
+    h < 240 ? [0, x, c] :
+    h < 300 ? [x, 0, c] :
+    [c, 0, x];
+
+  return "#" + rgb.map(n =>
+    Math.round((n + m) * 255).toString(16).padStart(2, "0")
+  ).join("");
+}
+
+const colorPickers = {};
+
+function setupColorPicker(target, initial) {
+  const root = document.getElementById(target + "Picker");
+  const ring = root.querySelector(".color-ring");
+  const marker = root.querySelector(".color-marker");
+  const saturation = root.querySelector(".saturation");
+  const brightness = root.querySelector(".color-brightness");
+  const hex = root.querySelector(".color-code");
+  const native = root.querySelector("[type=color]");
+
+  let state = hexToHSV(initial);
+
+  function render(exact) {
+    const color = exact || hsvToHex(state);
+    const rad = state.h * Math.PI / 180;
+
+    marker.style.left = (50 + 42.5 * Math.cos(rad)) + "%";
+    marker.style.top = (50 + 42.5 * Math.sin(rad)) + "%";
+
+    root.querySelector(".color-ring-center").style.background = color;
+
+    ring.setAttribute("aria-valuenow", Math.round(state.h));
+    ring.setAttribute("aria-valuetext", Math.round(state.h) + " degrees");
+
+    saturation.value = Math.round(state.s);
+    brightness.value = Math.round(state.v);
+
+    root.querySelectorAll("output")[0].textContent =
+      Math.round(state.s) + "%";
+    root.querySelectorAll("output")[1].textContent =
+      Math.round(state.v) + "%";
+
+    hex.value = color;
+    hex.setCustomValidity("");
+    native.value = color;
+
+    if (target === "wall") {
+      wallColor = color;
+      wall.style.backgroundColor = color;
+    } else {
+      floorColor = color;
+      floor.style.backgroundColor = color;
+    }
+  }
+
+  function point(e) {
+    const r = ring.getBoundingClientRect();
+
+    state.h = (
+      Math.atan2(
+        e.clientY - r.top - r.height / 2,
+        e.clientX - r.left - r.width / 2
+      ) * 180 / Math.PI + 360
+    ) % 360;
+
+    render();
+  }
+
+  ring.addEventListener("pointerdown", e => {
+    ring.setPointerCapture(e.pointerId);
+    point(e);
+  });
+
+  ring.addEventListener("pointermove", e => {
+    if (ring.hasPointerCapture(e.pointerId)) point(e);
+  });
+
+  ring.addEventListener("keydown", e => {
+    const keys = [
+      "ArrowLeft", "ArrowDown", "ArrowRight", "ArrowUp", "Home", "End"
+    ];
+
+    if (!keys.includes(e.key)) return;
+
+    e.preventDefault();
+
+    if (e.key === "Home") state.h = 0;
+    else if (e.key === "End") state.h = 359;
+    else {
+      const step = e.shiftKey ? 10 : 1;
+      const sign = ["ArrowLeft", "ArrowDown"].includes(e.key) ? -1 : 1;
+      state.h = (state.h + sign * step + 360) % 360;
+    }
+
+    render();
+  });
+
+  saturation.addEventListener("input", () => {
+    state.s = Number(saturation.value);
+    render();
+  });
+
+  brightness.addEventListener("input", () => {
+    state.v = Number(brightness.value);
+    render();
+  });
+
+  function setColor(color) {
+    state = hexToHSV(color);
+    render(color.toLowerCase());
+  }
+
+  native.addEventListener("input", () => setColor(native.value));
+
+  hex.addEventListener("input", () => {
+    let color = hex.value;
+
+    if (!color.startsWith("#")) color = "#" + color;
+
+    if (/^#[0-9a-f]{6}$/i.test(color)) {
+      setColor(color);
+    } else {
+      hex.setCustomValidity(
+        "Enter a six-digit color, such as #aabbcc."
+      );
+    }
+  });
+
+  hex.addEventListener("change", () => {
+    if (!hex.checkValidity()) hex.reportValidity();
+  });
+
+  colorPickers[target] = setColor;
+  render(initial);
+}
 
 function resetControls() {
+  intensity.value = 50;
+  diffusion.value = 50;
+  openness.value = 50;
+  direction.value = 50;
 
-    intensity.value = 50;
+  wallColor = "#e8e4dc";
+  floorColor = "#bda98d";
 
-    diffusion.value = 50;
+  wall.style.backgroundColor = wallColor;
+  floor.style.backgroundColor = floorColor;
 
-    openness.value = 50;
+  colorPickers.wall(wallColor);
+  colorPickers.floor(floorColor);
 
-    direction.value = 50;
-
-
-    wallColor =
-        "#e8e4dc";
-
-    floorColor =
-        "#bda98d";
-
-
-    wall.style.backgroundColor =
-        wallColor;
-
-    floor.style.backgroundColor =
-        floorColor;
-
-
-    document
-        .querySelectorAll(
-            "#wallSwatches .swatch"
-        )
-        .forEach(
-            (item,index) => {
-
-                item.classList.toggle(
-                    "active",
-                    index === 0
-                );
-
-            }
-        );
-
-
-    document
-        .querySelectorAll(
-            "#floorSwatches .swatch"
-        )
-        .forEach(
-            (item,index) => {
-
-                item.classList.toggle(
-                    "active",
-                    index === 0
-                );
-
-            }
-        );
-
-
-    updateLight();
-
+  updateLight();
 }
 
+document.getElementById("recordButton").addEventListener("click", () => {
+  results.push({
+    emotion: emotions[currentEmotion],
+    intensity: Number(intensity.value),
+    diffusion: Number(diffusion.value),
+    openness: Number(openness.value),
+    direction: Number(direction.value),
+    wallColor,
+    floorColor,
+    preview: captureRoom()
+  });
 
-/* =========================
-   RECORD RESPONSE
-========================= */
+  currentEmotion++;
 
-document
-    .getElementById(
-        "recordButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
+  if (currentEmotion < emotions.length) {
+    document.getElementById("emotion").textContent =
+      emotions[currentEmotion];
 
-            results.push({
+    document.getElementById("step").textContent =
+      `0${currentEmotion + 1} / 04`;
 
-                emotion:
-                    emotions[
-                        currentEmotion
-                    ],
+    resetControls();
+  } else {
+    showResults();
+  }
+});
 
-                intensity:
-                    Number(
-                        intensity.value
-                    ),
+function captureRoom() {
+  const clone = room.cloneNode(true);
 
-                diffusion:
-                    Number(
-                        diffusion.value
-                    ),
+  clone.querySelectorAll("[id]").forEach(el =>
+    el.removeAttribute("id")
+  );
 
-                openness:
-                    Number(
-                        openness.value
-                    ),
+  clone.removeAttribute("id");
+  clone.style.width = "100%";
+  clone.style.height = "100%";
 
-                direction:
-                    Number(
-                        direction.value
-                    ),
-
-                wallColor:
-                    wallColor,
-
-                floorColor:
-                    floorColor
-
-            });
-
-
-            currentEmotion++;
-
-
-            if (
-                currentEmotion <
-                emotions.length
-            ) {
-
-                document
-                    .getElementById(
-                        "emotion"
-                    )
-                    .textContent =
-                    emotions[
-                        currentEmotion
-                    ];
-
-
-                document
-                    .getElementById(
-                        "step"
-                    )
-                    .textContent =
-                    `0${currentEmotion + 1} / 04`;
-
-
-                resetControls();
-
-            }
-
-            else {
-
-                showResults();
-
-            }
-
-        }
-    );
-
-
-/* =========================
-   RESULTS
-========================= */
+  return clone.outerHTML;
+}
 
 function showResults() {
+  document.getElementById("experiment").style.display = "none";
+  document.getElementById("results").style.display = "block";
 
-    document
-        .getElementById(
-            "experiment"
-        )
-        .style.display =
-        "none";
+  const grid = document.getElementById("resultGrid");
+  grid.innerHTML = "";
 
+  results.forEach(r => {
+    const card = document.createElement("div");
+    card.className = "result-card";
 
-    document
-        .getElementById(
-            "results"
-        )
-        .style.display =
-        "block";
+    const lightStrength = .18 + (r.intensity / 100) * .72;
 
+    card.innerHTML = `
+      <div class="result-preview">
+        <div class="mini-wall" style="background:${r.wallColor}"></div>
+        <div class="mini-floor" style="background:${r.floorColor}"></div>
+        <div class="mini-light" style="opacity:${lightStrength}"></div>
+      </div>
+      <div class="result-emotion">${r.emotion}</div>
+      <div class="result-data">
+        Intensity ${r.intensity}%<br>
+        Diffusion ${r.diffusion}%<br>
+        Openness ${r.openness}%<br>
+        Direction ${r.direction}%<br>
+        Wall ${r.wallColor}<br>
+        Floor ${r.floorColor}
+      </div>
+    `;
 
-    const grid =
-        document.getElementById(
-            "resultGrid"
-        );
+    if (r.preview) {
+      card.querySelector(".result-preview").innerHTML = r.preview;
+    }
 
-
-    grid.innerHTML = "";
-
-
-    results.forEach(
-        result => {
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-
-            card.className =
-                "result-card";
-
-
-            const lightStrength =
-                .18 +
-                (
-                    result.intensity /
-                    100
-                ) * .72;
-
-
-            card.innerHTML = `
-
-                <div
-                    class="result-preview">
-
-                    <div
-                        class="mini-wall"
-                        style="
-                        background:
-                        ${result.wallColor};
-                        ">
-                    </div>
-
-                    <div
-                        class="mini-floor"
-                        style="
-                        background:
-                        ${result.floorColor};
-                        ">
-                    </div>
-
-                    <div
-                        class="mini-light"
-                        style="
-                        opacity:
-                        ${lightStrength};
-                        ">
-                    </div>
-
-                </div>
-
-
-                <div
-                    class="result-emotion">
-
-                    ${result.emotion}
-
-                </div>
-
-
-                <div
-                    class="result-data">
-
-                    Intensity
-                    ${result.intensity}%
-                    <br>
-
-                    Diffusion
-                    ${result.diffusion}%
-                    <br>
-
-                    Openness
-                    ${result.openness}%
-                    <br>
-
-                    Direction
-                    ${result.direction}%
-                    <br>
-
-                    Wall
-                    ${result.wallColor}
-                    <br>
-
-                    Floor
-                    ${result.floorColor}
-
-                </div>
-
-            `;
-
-
-            grid.appendChild(
-                card
-            );
-
-        }
-    );
-
+    grid.appendChild(card);
+  });
 }
 
+const galleryKey = "daylight-light-library-v1";
+let galleryReturn = "experiment";
+let savedPortraitId = null;
 
-/* =========================
-   SLIDER LISTENERS
-========================= */
+function readGallery() {
+  try {
+    const value = JSON.parse(
+      localStorage.getItem(galleryKey) || "[]"
+    );
 
-[
-    intensity,
-    diffusion,
-    openness,
-    direction
-]
-.forEach(
-    slider => {
+    if (!Array.isArray(value)) throw Error();
 
-        slider.addEventListener(
-            "input",
-            updateLight
+    return value;
+  } catch (e) {
+    document.getElementById("galleryStatus").textContent =
+      "Saved portraits could not be read. Your current results can still be downloaded.";
+
+    return null;
+  }
+}
+
+function downloadJSON(data, name) {
+  const blob = new Blob(
+    [JSON.stringify(data, null, 2)],
+    { type: "application/json" }
+  );
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+
+  a.href = url;
+  a.download = name;
+  a.click();
+
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function currentPortrait() {
+  return {
+    id: savedPortraitId || (
+      globalThis.crypto && crypto.randomUUID
+        ? crypto.randomUUID()
+        : Date.now().toString(36)
+    ),
+    title: document.getElementById("portraitTitle").value.trim()
+      || "Untitled light portrait",
+    note: document.getElementById("portraitNote").value.trim(),
+    createdAt: new Date().toISOString(),
+    results: results.map(r => ({ ...r }))
+  };
+}
+
+function openGallery() {
+  galleryReturn =
+    document.getElementById("results").style.display === "block"
+      ? "results"
+      : "experiment";
+
+  document.getElementById(galleryReturn).style.display = "none";
+  document.getElementById("gallery").style.display = "block";
+
+  renderGallery();
+  window.scrollTo(0, 0);
+}
+
+function renderGallery() {
+  const grid = document.getElementById("galleryGrid");
+  grid.replaceChildren();
+
+  const portraits = readGallery();
+
+  if (!portraits) return;
+
+  if (!portraits.length) {
+    const p = document.createElement("p");
+    p.className = "empty-gallery";
+    p.textContent =
+      "Your gallery is empty. Finish the four prompts, then save your light portrait.";
+
+    grid.append(p);
+    return;
+  }
+
+  portraits.slice().reverse().forEach(p => {
+    const card = document.createElement("article");
+    card.className = "saved-card";
+
+    const previews = document.createElement("div");
+    previews.className = "saved-previews";
+
+    (p.results || []).forEach(r => {
+      const box = document.createElement("div");
+      box.className = "result-preview";
+
+      const w = document.createElement("div");
+      w.className = "mini-wall";
+      w.style.backgroundColor = r.wallColor;
+
+      const f = document.createElement("div");
+      f.className = "mini-floor";
+      f.style.backgroundColor = r.floorColor;
+
+      const l = document.createElement("div");
+      l.className = "mini-light";
+      l.style.opacity = .18 + r.intensity / 100 * .72;
+
+      const label = document.createElement("span");
+      label.className = "saved-preview-label";
+      label.textContent = r.emotion;
+
+      box.append(w, f, l, label);
+      previews.append(box);
+    });
+
+    const title = document.createElement("h3");
+    title.textContent = p.title;
+
+    const date = document.createElement("time");
+    date.textContent = new Date(p.createdAt).toLocaleString();
+
+    const note = document.createElement("p");
+    note.textContent = p.note;
+
+    const actions = document.createElement("div");
+    actions.className = "gallery-actions";
+
+    const view = document.createElement("button");
+    view.textContent = "VIEW PORTRAIT";
+
+    view.onclick = () => {
+      results.splice(0, results.length, ...p.results);
+      savedPortraitId = p.id;
+
+      document.getElementById("portraitTitle").value = p.title;
+      document.getElementById("portraitNote").value = p.note || "";
+      document.getElementById("gallery").style.display = "none";
+
+      showResults();
+
+      document.getElementById("savePanel").style.display = "none";
+      window.scrollTo(0, 0);
+    };
+
+    const dl = document.createElement("button");
+    dl.textContent = "DOWNLOAD";
+    dl.onclick = () => downloadJSON(p, "light-portrait.json");
+
+    const del = document.createElement("button");
+    del.textContent = "DELETE";
+
+    del.onclick = () => {
+      if (!confirm("Delete this portrait from this browser?")) return;
+
+      const all = readGallery();
+      if (!all) return;
+
+      try {
+        localStorage.setItem(
+          galleryKey,
+          JSON.stringify(all.filter(x => x.id !== p.id))
         );
 
-    }
+        renderGallery();
+      } catch {
+        document.getElementById("galleryStatus").textContent =
+          "Could not delete the portrait.";
+      }
+    };
+
+    actions.append(view, dl, del);
+    card.append(previews, title, date, note, actions);
+    grid.append(card);
+  });
+}
+
+document.getElementById("savePortrait").onclick = () => {
+  const status = document.getElementById("saveStatus");
+
+  if (savedPortraitId) {
+    status.textContent = "This portrait is already saved.";
+    return;
+  }
+
+  const all = readGallery();
+
+  if (!all) {
+    status.textContent =
+      "Cannot access saved portraits. Download your results instead.";
+    return;
+  }
+
+  const p = currentPortrait();
+
+  try {
+    localStorage.setItem(
+      galleryKey,
+      JSON.stringify([...all, p])
+    );
+
+    savedPortraitId = p.id;
+    status.textContent =
+      "Your four room designs are saved. Open the gallery to see them.";
+
+    document.getElementById("savePortrait").disabled = true;
+  } catch {
+    status.textContent =
+      "This browser could not save the portrait. Download your results to keep a copy.";
+  }
+};
+
+document.getElementById("openGallery").onclick = openGallery;
+document.getElementById("resultsGallery").onclick = openGallery;
+
+document.getElementById("closeGallery").onclick = () => {
+  document.getElementById("gallery").style.display = "none";
+
+  document.getElementById(galleryReturn).style.display =
+    galleryReturn === "experiment" ? "grid" : "block";
+
+  window.scrollTo(0, 0);
+};
+
+document.getElementById("downloadCurrent").onclick = () =>
+  downloadJSON(currentPortrait(), "light-portrait.json");
+
+document.getElementById("exportGallery").onclick = () => {
+  const all = readGallery();
+
+  if (all) downloadJSON(all, "daylight-gallery.json");
+};
+
+[intensity, diffusion, openness, direction].forEach(slider =>
+  slider.addEventListener("input", updateLight)
 );
 
-
-/* COLOR CONTROLS */
-
-setSwatches(
-    "wallSwatches",
-    "wall"
-);
-
-setSwatches(
-    "floorSwatches",
-    "floor"
-);
-
-
-/* INITIAL STATE */
-
+setupColorPicker("wall", wallColor);
+setupColorPicker("floor", floorColor);
 updateLight();
-
 </script>
-
 </body>
 </html>
