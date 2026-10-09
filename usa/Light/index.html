@@ -2,184 +2,584 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>A Measure of Daylight</title>
+
 <style>
-:root{
-  --wall:#e8e4dc;
-  --floor:#bda98d;
-  --ink:#181816;
-  --paper:#f7f6f1;
-  --line:rgba(24,24,22,.18);
+:root {
+  --ink: #181816;
+  --paper: #f7f6f1;
+  --line: rgba(24,24,22,.18);
 }
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--paper)}
-button,input{font:inherit}
-.app{min-height:100vh;display:grid;grid-template-columns:minmax(0,1.65fr) minmax(340px,.85fr)}
-.room-section{position:relative;overflow:hidden;min-height:100vh;background:#ddd}
-.room{position:absolute;inset:0;overflow:hidden;transition:filter .25s ease}
-.wall{position:absolute;inset:0 0 28% 0;background:var(--wall);transition:background-color .25s ease}
-.floor{
-  position:absolute;left:-10%;right:-10%;bottom:-15%;height:50%;
-  background:var(--floor);transform:perspective(800px) rotateX(58deg);
-  transform-origin:center top;transition:background-color .25s ease
-}
-.corner-line{position:absolute;left:0;right:0;top:72%;height:1px;background:rgba(0,0,0,.08)}
-.window{
-  position:absolute;width:35%;height:57%;left:12%;top:13%;
-  background:linear-gradient(180deg,#bfd7e4 0%,#e8ead7 72%,#c7c3a5 100%);
-  border:10px solid rgba(248,248,242,.96);overflow:hidden;
-  box-shadow:0 8px 35px rgba(0,0,0,.06)
-}
-.window:before,.window:after{content:"";position:absolute;background:rgba(248,248,242,.96);z-index:7}
-.window:before{left:50%;top:0;width:7px;height:100%;transform:translateX(-50%)}
-.window:after{left:0;top:50%;width:100%;height:7px;transform:translateY(-50%)}
-.sky{position:absolute;inset:0;background:linear-gradient(180deg,#bdd6e5 0%,#e9ebdc 72%,#c7c6a8 100%)}
-.diffusion{position:absolute;inset:0;background:rgba(255,255,255,.78);opacity:.42;backdrop-filter:blur(7px);z-index:4;transition:.25s}
-.curtain{
-  position:absolute;left:0;top:0;width:30%;height:100%;z-index:5;
-  background:repeating-linear-gradient(90deg,rgba(248,247,239,.94) 0 12px,rgba(225,224,214,.72) 22px,rgba(248,247,239,.9) 34px);
-  box-shadow:8px 0 20px rgba(0,0,0,.05);transition:width .25s ease
-}
-.light-beam{
-  position:absolute;width:77%;height:72%;left:26%;top:30%;z-index:2;
-  background:linear-gradient(110deg,rgba(255,242,183,.72),rgba(255,248,218,.23),rgba(255,255,255,0) 68%);
-  clip-path:polygon(0 0,44% 0,100% 100%,20% 100%);filter:blur(10px);opacity:.55;
-  transform-origin:top left;transition:.25s;mix-blend-mode:screen;pointer-events:none
-}
-.shadow{
-  position:absolute;width:56%;height:18%;left:22%;bottom:8%;z-index:3;
-  background:rgba(54,51,44,.18);transform:skewX(-28deg);filter:blur(14px);transition:.25s;pointer-events:none
-}
-.chair{position:absolute;right:20%;bottom:20%;width:112px;height:150px;z-index:4;filter:drop-shadow(12px 18px 10px rgba(0,0,0,.12))}
-.chair-back{position:absolute;width:100%;height:72px;bottom:75px;background:#7f7a70;border-radius:2px}
-.chair-seat{position:absolute;width:100%;height:18px;bottom:58px;background:#6f6b63}
-.leg{position:absolute;width:7px;height:62px;bottom:0;background:#504d47}
-.leg.left{left:15px}
-.leg.right{right:15px}
-.room-info{position:absolute;top:32px;left:36px;z-index:20}
-.project-name{font-size:11px;letter-spacing:.14em;text-transform:uppercase}
-.step{margin-top:7px;font-size:11px;opacity:.52}
-.controls{
-  padding:38px 40px 32px;display:flex;flex-direction:column;min-height:100vh;
-  background:rgba(250,249,245,.98);border-left:1px solid var(--line);overflow:auto
-}
-.prompt-label,.section-label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;opacity:.5}
-.prompt-label{margin-top:26px}
-h1{font-size:clamp(46px,5vw,76px);font-weight:400;letter-spacing:-.045em;margin:8px 0 38px}
-.section-label{padding-top:18px;margin-bottom:20px;border-top:1px solid var(--line)}
-.control{margin-bottom:25px}
-.control-header{display:flex;justify-content:space-between;font-size:10px;text-transform:uppercase;letter-spacing:.09em;margin-bottom:11px}
-.value{opacity:.48;font-variant-numeric:tabular-nums}
-.range-labels{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.06em;opacity:.42;margin-top:7px}
-input[type=range]{appearance:none;width:100%;height:1px;background:#5c5b56;outline:none}
-input[type=range]::-webkit-slider-thumb{appearance:none;width:14px;height:14px;border-radius:50%;background:#171715;cursor:pointer}
-.swatch-title{font-size:10px;text-transform:uppercase;letter-spacing:.09em;margin-bottom:11px}
-.record-button{
-  margin-top:12px;width:100%;padding:16px;border:1px solid #171715;background:transparent;
-  font-size:10px;letter-spacing:.12em;cursor:pointer;transition:.2s
-}
-.record-button:hover{background:#171715;color:white}
-.results{display:none;padding:50px;min-height:100vh;background:var(--paper)}
-.results h2{font-weight:400;font-size:clamp(38px,5vw,68px);letter-spacing:-.04em;margin:22px 0 10px}
-.results-intro{max-width:620px;font-size:14px;line-height:1.5;opacity:.65}
-.result-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin-top:48px}
-.result-card{border-top:1px solid #222;padding-top:12px}
-.result-preview{height:150px;margin-bottom:18px;position:relative;overflow:hidden;border:1px solid rgba(0,0,0,.08)}
-.result-preview .mini-wall{position:absolute;inset:0 0 30% 0}
-.result-preview .mini-floor{position:absolute;left:0;right:0;bottom:0;height:30%}
-.result-preview .mini-light{position:absolute;inset:0;background:radial-gradient(circle at 28% 35%,rgba(255,248,207,.9),transparent 58%)}
-.result-emotion{font-size:25px;margin-bottom:18px}
-.result-data{font-size:10px;line-height:1.9;letter-spacing:.04em;text-transform:uppercase}
-.restart,.gallery-link{margin-top:45px;background:transparent;border:1px solid #111;padding:14px 24px;cursor:pointer}
-.note{font-size:9px;line-height:1.45;opacity:.45;margin-top:14px}
 
-.color-pickers{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:28px}
-.color-picker{min-width:0}
-.color-ring{
-  position:relative;width:148px;height:148px;max-width:100%;aspect-ratio:1;
-  border-radius:50%;margin:16px auto 22px;
-  background:conic-gradient(from 90deg,red,#ff0,#0f0,#0ff,#00f,#f0f,red);
-  touch-action:none;cursor:crosshair;outline-offset:5px
-}
-.color-ring:before{content:"";position:absolute;inset:22px;border-radius:50%;background:var(--paper)}
-.color-ring-center{position:absolute;inset:42px;border-radius:50%;border:1px solid #0002;pointer-events:none}
-.color-marker{
-  position:absolute;width:16px;height:16px;border:2px solid white;
-  box-shadow:0 0 0 1px #222;border-radius:50%;
-  transform:translate(-50%,-50%);pointer-events:none
-}
-.color-picker label{display:block;font-size:10px;margin:14px 0 8px}
-.color-code{width:100%;padding:8px;background:transparent;border:1px solid var(--line);font-size:12px;text-transform:uppercase}
-.color-picker input[type=color]{width:28px;height:28px;padding:0;border:0;background:none;cursor:pointer}
-.color-entry{display:flex;gap:8px;align-items:center}
-button:focus-visible,input:focus-visible{outline:2px solid #171715;outline-offset:4px}
+* { box-sizing: border-box; }
 
-.gallery{display:none;padding:40px;min-height:100vh}
-.gallery h2{font-size:48px;font-weight:400;letter-spacing:-.04em;margin-bottom:12px}
-.gallery-actions{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}
-.gallery-actions button,.save-panel button,.saved-card button{
-  border:1px solid #181816;background:transparent;padding:12px 18px;
-  cursor:pointer;font:inherit;font-size:12px
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
 }
-.save-panel{margin-top:32px;max-width:600px;border-top:1px solid var(--line);padding-top:24px}
-.save-panel label{display:block;font-size:12px;margin:12px 0 6px}
-.save-panel input,.save-panel textarea{
-  width:100%;border:1px solid var(--line);padding:12px;
-  background:transparent;font:inherit
-}
-.save-panel button{margin-top:16px}
-.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
-.saved-card{border:1px solid var(--line);padding:20px}
-.saved-card h3{font-size:22px;font-weight:400;margin:16px 0 6px;overflow-wrap:anywhere}
-.saved-card p{font-size:13px;line-height:1.5;overflow-wrap:anywhere}
-.saved-card time{font-size:11px;opacity:.6}
-.saved-previews{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.saved-previews .result-preview{height:90px;margin:0}
-.saved-preview-label{position:absolute;bottom:7px;left:8px;font-size:9px;background:#fffC;padding:3px}
-.gallery-status{font-size:12px;line-height:1.5;min-height:18px}
-.gallery-link{margin-top:12px}
-.empty-gallery{padding:35px 0;opacity:.6}
 
-@media(max-width:900px){
-  .app{grid-template-columns:1fr}
-  .room-section{min-height:58vh}
-  .controls{min-height:auto;border-left:0;border-top:1px solid var(--line)}
-  .result-grid{grid-template-columns:1fr 1fr}
+button, input, textarea { font: inherit; }
+button { cursor: pointer; }
+button:disabled { opacity: .4; cursor: default; }
+
+button:focus-visible, input:focus-visible,
+textarea:focus-visible, .color-ring:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
 }
-@media(max-width:560px){
-  .result-grid{grid-template-columns:1fr}
-  .controls{padding:28px 24px}
-  .results{padding:30px 24px}
-  .gallery{padding:28px 24px}
-  .gallery h2{font-size:38px}
+
+[hidden] { display: none !important; }
+
+/* Full-screen experiment */
+#experiment {
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(0,1.65fr) minmax(320px,.85fr);
+  overflow: hidden;
 }
-@media(max-width:380px){
-  .color-pickers{grid-template-columns:1fr}
-  .color-ring{width:148px}
+
+/* Left panel stays in place */
+.room-section {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: #ddd;
+}
+
+.room {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  transition: filter .2s;
+}
+
+.wall {
+  position: absolute;
+  inset: 0 0 28%;
+  background: #e8e4dc;
+}
+
+.floor {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -15%;
+  height: 50%;
+  background: #bda98d;
+  transform: perspective(800px) rotateX(58deg);
+  transform-origin: center top;
+}
+
+.corner-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 72%;
+  height: 1px;
+  background: #0001;
+}
+
+.window {
+  position: absolute;
+  width: 35%;
+  height: 57%;
+  left: 12%;
+  top: 13%;
+  border: 10px solid #f8f8f2;
+  overflow: hidden;
+  box-shadow: 0 8px 35px #0001;
+}
+
+.window::before, .window::after {
+  content: "";
+  position: absolute;
+  background: #f8f8f2;
+  z-index: 7;
+}
+
+.window::before {
+  left: 50%;
+  top: 0;
+  width: 7px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.window::after {
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 7px;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#bdd6e5, #e9ebdc 72%, #c7c6a8);
+}
+
+.diffusion {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,.78);
+  z-index: 4;
+}
+
+.curtain {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 5;
+  background: repeating-linear-gradient(
+    90deg, #f8f7eff0 0 12px, #e1e0d6b8 22px, #f8f7efe6 34px
+  );
+  box-shadow: 8px 0 20px #0001;
+}
+
+.light-beam {
+  position: absolute;
+  width: 77%;
+  height: 72%;
+  left: 26%;
+  top: 30%;
+  z-index: 2;
+  background: linear-gradient(
+    110deg, #fff2b7b8, #fff8da3b, transparent 68%
+  );
+  clip-path: polygon(0 0,44% 0,100% 100%,20% 100%);
+  transform-origin: top left;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.shadow {
+  position: absolute;
+  width: 56%;
+  height: 18%;
+  left: 22%;
+  bottom: 8%;
+  z-index: 3;
+  background: #36332c;
+  pointer-events: none;
+}
+
+.chair {
+  position: absolute;
+  right: 20%;
+  bottom: 20%;
+  width: 112px;
+  height: 150px;
+  z-index: 4;
+  filter: drop-shadow(12px 18px 10px #0002);
+}
+
+.chair-back {
+  position: absolute;
+  width: 100%;
+  height: 72px;
+  bottom: 75px;
+  background: #7f7a70;
+  border-radius: 2px;
+}
+
+.chair-seat {
+  position: absolute;
+  width: 100%;
+  height: 18px;
+  bottom: 58px;
+  background: #6f6b63;
+}
+
+.leg {
+  position: absolute;
+  width: 7px;
+  height: 62px;
+  bottom: 0;
+  background: #504d47;
+}
+
+.leg.left { left: 15px; }
+.leg.right { right: 15px; }
+
+.room-info {
+  position: absolute;
+  top: 30px;
+  left: 32px;
+  z-index: 20;
+}
+
+.project-name {
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.step { margin-top: 7px; font-size: 11px; opacity: .55; }
+
+/* Only this right panel scrolls during the experiment */
+.controls {
+  height: 100%;
+  min-height: 0;
+  padding: 28px 30px 36px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+  background: #faf9f5;
+  border-left: 1px solid var(--line);
+}
+
+.prompt-label, .section-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  opacity: .6;
+}
+
+h1 {
+  font-size: 46px;
+  font-weight: 400;
+  letter-spacing: -.045em;
+  margin: 7px 0 22px;
+}
+
+.section-label {
+  padding-top: 14px;
+  margin-bottom: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.control { margin-bottom: 20px; }
+
+.control-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+  margin-bottom: 10px;
+}
+
+.value { opacity: .55; }
+
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  opacity: .5;
+  margin-top: 7px;
+}
+
+input[type="range"] {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 2px;
+  margin: 8px 0;
+  background: #77766f;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ink);
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  cursor: pointer;
+}
+
+.color-pickers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.color-picker { min-width: 0; }
+
+.swatch-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .09em;
+}
+
+.color-ring {
+  position: relative;
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  margin: 10px auto 14px;
+  background: conic-gradient(
+    from 90deg, red, #ff0, #0f0, #0ff, #00f, #f0f, red
+  );
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.color-ring::before {
+  content: "";
+  position: absolute;
+  inset: 13px;
+  border-radius: 50%;
+  background: #faf9f5;
+}
+
+.color-ring-center {
+  position: absolute;
+  inset: 25px;
+  border-radius: 50%;
+  border: 1px solid #0002;
+  pointer-events: none;
+}
+
+.color-marker {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px #222;
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+
+.color-picker label {
+  display: block;
+  font-size: 10px;
+  margin: 15px 0 8px;
+}
+
+.color-entry { display: flex; gap: 8px; align-items: center; }
+
+.color-code {
+  width: 100%;
+  min-width: 0;
+  padding: 6px;
+  border: 1px solid var(--line);
+  background: transparent;
+  font-size: 11px;
+}
+
+input[type="color"] {
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.note {
+  font-size: 11px;
+  line-height: 1.5;
+  opacity: .6;
+}
+
+.controls .note { margin: 16px 0; }
+
+button {
+  border: 1px solid var(--ink);
+  background: transparent;
+  padding: 11px 16px;
+  font-size: 11px;
+  letter-spacing: .05em;
+}
+
+button:hover:not(:disabled) { background: var(--ink); color: white; }
+
+.record-button, .gallery-link {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Results and gallery have their own scrolling screens */
+.screen {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  padding: 30px 40px;
+  background: var(--paper);
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 42px;
+  letter-spacing: -.04em;
+  margin: 14px 0 10px;
+}
+
+.results-intro {
+  max-width: 620px;
+  font-size: 14px;
+  line-height: 1.5;
+  opacity: .7;
+}
+
+.result-grid, .gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.result-card { border-top: 1px solid var(--ink); padding-top: 12px; }
+
+.result-preview {
+  position: relative;
+  height: 160px;
+  overflow: hidden;
+  background: #ddd;
+  border: 1px solid #0001;
+}
+
+/* Scale furniture appropriately inside previews */
+.result-preview .chair {
+  width: 40px;
+  height: 54px;
+  filter: drop-shadow(4px 6px 3px #0002);
+}
+
+.result-preview .chair-back { height: 26px; bottom: 27px; }
+.result-preview .chair-seat { height: 6px; bottom: 21px; }
+.result-preview .leg { width: 3px; height: 22px; }
+.result-preview .leg.left { left: 5px; }
+.result-preview .leg.right { right: 5px; }
+.result-preview .window { border-width: 4px; }
+.result-preview .window::before { width: 3px; }
+.result-preview .window::after { height: 3px; }
+
+.result-emotion { font-size: 22px; margin: 12px 0 8px; }
+
+.result-data {
+  font-size: 10px;
+  line-height: 1.7;
+  text-transform: uppercase;
+}
+
+.save-panel {
+  max-width: 700px;
+  margin-top: 26px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+
+.save-panel label { display: block; font-size: 12px; margin: 12px 0 6px; }
+
+.save-panel input, .save-panel textarea {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid var(--line);
+}
+
+.save-panel textarea { height: 70px; resize: vertical; }
+
+.gallery-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+
+.status { font-size: 12px; min-height: 18px; }
+
+.saved-card { border: 1px solid var(--line); padding: 14px; }
+.saved-card h3 { font-size: 19px; font-weight: 400; overflow-wrap: anywhere; }
+.saved-card p { font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+.saved-card time { font-size: 10px; opacity: .6; }
+
+.saved-previews {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.saved-previews .result-preview { height: 100px; }
+
+.preview-label {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  font-size: 8px;
+  background: #ffffffe0;
+  padding: 3px;
+}
+
+.saved-card .gallery-actions { flex-direction: column; }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+  font-size: 12px;
+}
+
+@media (max-width: 800px) {
+  #experiment {
+    grid-template-columns: minmax(0,1fr) minmax(280px,1fr);
+  }
+
+  .controls { padding: 22px 18px 30px; }
+  .room-info { top: 20px; left: 18px; }
+  .project-name { font-size: 9px; }
+  .result-grid, .gallery-grid { grid-template-columns: repeat(2,1fr); }
+  .screen { padding: 24px 20px; }
+}
+
+@media (max-width: 520px) {
+  #experiment { grid-template-columns: minmax(0,1fr) minmax(220px,1.4fr); }
+  .controls { padding: 18px 12px 28px; }
+  h1 { font-size: 32px; }
+  .color-pickers { gap: 10px; }
+  .room-section > .room .chair { right: 8%; transform: scale(.65); }
+  .room-info { left: 10px; right: 8px; }
+  .result-grid, .gallery-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
-<body>
 
-<div class="app" id="experiment">
-  <section class="room-section">
+<body>
+<main id="experiment">
+  <section class="room-section" aria-label="Live room preview">
     <div class="room-info">
       <div class="project-name">A Measure of Daylight</div>
       <div class="step" id="step">01 / 04</div>
     </div>
 
     <div class="room" id="room">
-      <div class="wall" id="wall"></div>
-      <div class="floor" id="floor"></div>
+      <div class="wall"></div>
+      <div class="floor"></div>
       <div class="corner-line"></div>
       <div class="window">
         <div class="sky"></div>
-        <div class="diffusion" id="diffusionLayer"></div>
-        <div class="curtain" id="curtain"></div>
+        <div class="diffusion"></div>
+        <div class="curtain"></div>
       </div>
-      <div class="light-beam" id="beam"></div>
-      <div class="shadow" id="shadow"></div>
+      <div class="light-beam"></div>
+      <div class="shadow"></div>
       <div class="chair">
         <div class="chair-back"></div>
         <div class="chair-seat"></div>
@@ -189,16 +589,15 @@ button:focus-visible,input:focus-visible{outline:2px solid #171715;outline-offse
     </div>
   </section>
 
-  <section class="controls">
+  <section class="controls" aria-label="Room controls" tabindex="0">
     <div class="prompt-label">Make this space feel</div>
     <h1 id="emotion">CALM</h1>
-
     <div class="section-label">01 — Daylight</div>
 
     <div class="control">
       <div class="control-header">
-        <span>Intensity</span>
-        <span class="value" id="intensityValue">50</span>
+        <label for="intensity">Intensity</label>
+        <output class="value" id="intensityValue">50</output>
       </div>
       <input id="intensity" type="range" min="0" max="100" value="50">
       <div class="range-labels"><span>DIM</span><span>BRIGHT</span></div>
@@ -206,8 +605,8 @@ button:focus-visible,input:focus-visible{outline:2px solid #171715;outline-offse
 
     <div class="control">
       <div class="control-header">
-        <span>Diffusion</span>
-        <span class="value" id="diffusionValue">50</span>
+        <label for="diffusion">Diffusion</label>
+        <output class="value" id="diffusionValue">50</output>
       </div>
       <input id="diffusion" type="range" min="0" max="100" value="50">
       <div class="range-labels"><span>DIRECT</span><span>SOFT</span></div>
@@ -215,8 +614,8 @@ button:focus-visible,input:focus-visible{outline:2px solid #171715;outline-offse
 
     <div class="control">
       <div class="control-header">
-        <span>Openness</span>
-        <span class="value" id="opennessValue">50</span>
+        <label for="openness">Openness</label>
+        <output class="value" id="opennessValue">50</output>
       </div>
       <input id="openness" type="range" min="0" max="100" value="50">
       <div class="range-labels"><span>FILTERED</span><span>OPEN</span></div>
@@ -224,97 +623,40 @@ button:focus-visible,input:focus-visible{outline:2px solid #171715;outline-offse
 
     <div class="control">
       <div class="control-header">
-        <span>Direction</span>
-        <span class="value" id="directionValue">50</span>
+        <label for="direction">Direction</label>
+        <output class="value" id="directionValue">50</output>
       </div>
       <input id="direction" type="range" min="0" max="100" value="50">
       <div class="range-labels"><span>INDIRECT</span><span>DIRECT</span></div>
     </div>
 
     <div class="section-label">02 — Surface</div>
+    <div class="color-pickers" id="colorPickers"></div>
 
-    <div class="color-pickers">
-      <div class="color-picker" id="wallPicker">
-        <div class="swatch-title">Wall</div>
-
-        <div class="color-ring" role="slider" tabindex="0"
-             aria-label="Wall hue" aria-valuemin="0"
-             aria-valuemax="359" aria-valuenow="0">
-          <div class="color-ring-center"></div>
-          <div class="color-marker"></div>
-        </div>
-
-        <label for="wallSaturation">Saturation <output></output></label>
-        <input id="wallSaturation" class="saturation"
-               type="range" min="0" max="100" value="0">
-
-        <label for="wallBrightness">Brightness <output></output></label>
-        <input id="wallBrightness" class="color-brightness"
-               type="range" min="0" max="100" value="100">
-
-        <label for="wallHex">Exact color</label>
-        <div class="color-entry">
-          <input type="color" value="#e8e4dc" aria-label="Wall color picker">
-          <input id="wallHex" class="color-code" value="#e8e4dc"
-                 maxlength="7" aria-label="Wall hexadecimal color"
-                 spellcheck="false">
-        </div>
-      </div>
-
-      <div class="color-picker" id="floorPicker">
-        <div class="swatch-title">Floor</div>
-
-        <div class="color-ring" role="slider" tabindex="0"
-             aria-label="Floor hue" aria-valuemin="0"
-             aria-valuemax="359" aria-valuenow="0">
-          <div class="color-ring-center"></div>
-          <div class="color-marker"></div>
-        </div>
-
-        <label for="floorSaturation">Saturation <output></output></label>
-        <input id="floorSaturation" class="saturation"
-               type="range" min="0" max="100" value="0">
-
-        <label for="floorBrightness">Brightness <output></output></label>
-        <input id="floorBrightness" class="color-brightness"
-               type="range" min="0" max="100" value="100">
-
-        <label for="floorHex">Exact color</label>
-        <div class="color-entry">
-          <input type="color" value="#bda98d" aria-label="Floor color picker">
-          <input id="floorHex" class="color-code" value="#bda98d"
-                 maxlength="7" aria-label="Floor hexadecimal color"
-                 spellcheck="false">
-        </div>
-      </div>
-    </div>
-
-    <div class="note">
-      Drag the ring to choose a hue. Adjust saturation and brightness for any
-      shade. Arrow keys also adjust the ring.
-    </div>
+    <p class="note">
+      Drag a ring to choose a hue. Adjust saturation and brightness
+      for any shade. Arrow keys also adjust the ring.
+    </p>
 
     <button class="record-button" id="recordButton">
       THIS IS THE SPACE I NEED
     </button>
-
     <button class="gallery-link" id="openGallery">VIEW SAVED GALLERY</button>
 
-    <div class="note">
-      There is no correct setting. Adjust the room until it matches your own
-      interpretation of the word.
-    </div>
+    <p class="note">
+      There is no correct setting. Adjust the room until it matches
+      your own interpretation of the word.
+    </p>
   </section>
-</div>
+</main>
 
-<section class="results" id="results">
+<section class="screen" id="results" hidden>
   <div class="project-name">A Measure of Daylight</div>
   <h2>Your Light Portrait</h2>
-
-  <div class="results-intro">
-    Four emotional prompts, four different relationships between daylight
-    and the surfaces around it.
-  </div>
+  <p class="results-intro">
+    Four emotional prompts, four different relationships between
+    daylight and the surfaces around it.
+  </p>
 
   <div class="result-grid" id="resultGrid"></div>
 
@@ -325,227 +667,230 @@ button:focus-visible,input:focus-visible{outline:2px solid #171715;outline-offse
     <label for="portraitNote">
       What do these spaces remind you of? (optional)
     </label>
-    <textarea id="portraitNote" maxlength="500" rows="3"
-              placeholder="A place, a feeling, or a memory…"></textarea>
+    <textarea id="portraitNote" maxlength="500"
+      placeholder="A place, a feeling, or a memory…"></textarea>
 
-    <button id="savePortrait">SAVE TO GALLERY</button>
-    <p class="gallery-status" id="saveStatus" role="status"></p>
-
+    <div class="gallery-actions">
+      <button id="savePortrait">SAVE TO GALLERY</button>
+    </div>
+    <p class="status" id="saveStatus" role="status"></p>
     <p class="note">
-      Saved on this browser and device. Download a copy to keep or share
-      your results.
+      Saved on this browser and device. Download a copy to keep or share.
     </p>
   </div>
 
   <div class="gallery-actions">
     <button id="resultsGallery">VIEW GALLERY</button>
     <button id="downloadCurrent">DOWNLOAD RESULTS</button>
-    <button class="restart" onclick="location.reload()">START AGAIN</button>
+    <button id="startAgain">START AGAIN</button>
   </div>
 </section>
 
-<section class="gallery" id="gallery">
+<section class="screen" id="gallery" hidden>
   <div class="project-name">A Measure of Daylight</div>
   <h2>The Light Library</h2>
-
   <p class="results-intro">
-    Different people, different needs. A collection of light, color,
-    and emotional comfort.
+    Different people, different needs. A collection of light,
+    color, and emotional comfort.
   </p>
-
   <p class="note">
-    This gallery belongs to this browser. It is not shared across devices.
+    This gallery is saved in this browser. It is not shared across devices.
     Clearing browser data removes saved portraits.
   </p>
 
   <div class="gallery-actions">
-    <button id="closeGallery">BACK TO EXPERIMENT</button>
+    <button id="closeGallery">BACK</button>
     <button id="exportGallery">DOWNLOAD GALLERY</button>
   </div>
 
-  <p class="gallery-status" id="galleryStatus" role="status"></p>
+  <p class="status" id="galleryStatus" role="status"></p>
   <div class="gallery-grid" id="galleryGrid"></div>
+
+  <div class="pagination">
+    <button id="galleryPrev">PREVIOUS</button>
+    <span id="galleryPage" aria-live="polite"></span>
+    <button id="galleryNext">NEXT</button>
+  </div>
 </section>
 
 <script>
+const $ = id => document.getElementById(id);
 const emotions = ["CALM", "SAFE", "FOCUSED", "ENERGIZED"];
+const lightKeys = ["intensity", "diffusion", "openness", "direction"];
+const galleryKey = "daylight-light-library-v1";
+const colorPickers = {};
 let currentEmotion = 0;
-const results = [];
-
-const intensity = document.getElementById("intensity");
-const diffusion = document.getElementById("diffusion");
-const openness = document.getElementById("openness");
-const direction = document.getElementById("direction");
-const room = document.getElementById("room");
-const wall = document.getElementById("wall");
-const floor = document.getElementById("floor");
-const diffusionLayer = document.getElementById("diffusionLayer");
-const curtain = document.getElementById("curtain");
-const beam = document.getElementById("beam");
-const shadow = document.getElementById("shadow");
-
+let results = [];
 let wallColor = "#e8e4dc";
 let floorColor = "#bda98d";
+let savedPortraitId = null;
+let portraitCreatedAt = null;
+let galleryReturn = "experiment";
+let galleryPageIndex = 0;
+const pageSize = 4;
 
-function updateLight() {
-  const i = Number(intensity.value);
-  const d = Number(diffusion.value);
-  const o = Number(openness.value);
-  const dir = Number(direction.value);
+function showScreen(id) {
+  ["experiment", "results", "gallery"].forEach(name => {
+    $(name).hidden = name !== id;
+  });
+}
 
-  const brightness = .48 + (i / 100) * 1.12;
-  room.style.filter = `brightness(${brightness})`;
+function currentSettings() {
+  return {
+    emotion: emotions[currentEmotion],
+    ...Object.fromEntries(lightKeys.map(key => [key, Number($(key).value)])),
+    wallColor,
+    floorColor
+  };
+}
 
+function paintRoom(element, settings) {
+  const { intensity: i, diffusion: d, openness: o, direction: dir } = settings;
+  element.style.filter = `brightness(${.48 + i / 100 * 1.12})`;
+  element.querySelector(".wall").style.backgroundColor = settings.wallColor;
+  element.querySelector(".floor").style.backgroundColor = settings.floorColor;
+
+  const diffusionLayer = element.querySelector(".diffusion");
   diffusionLayer.style.opacity = d / 120;
   diffusionLayer.style.backdropFilter = `blur(${d / 7}px)`;
+  element.querySelector(".curtain").style.width = `${100 - o}%`;
 
+  const beam = element.querySelector(".light-beam");
   beam.style.filter = `blur(${3 + d / 4}px)`;
+  beam.style.transform = `rotate(${-18 + dir / 100 * 38}deg)`;
+  beam.style.opacity = .18 + dir / 100 * .72;
+
+  const shadow = element.querySelector(".shadow");
   shadow.style.filter = `blur(${3 + d / 3}px)`;
-  curtain.style.width = `${100 - o}%`;
-
-  const rotation = -18 + (dir / 100) * 38;
-  beam.style.transform = `rotate(${rotation}deg)`;
-  beam.style.opacity = .18 + (dir / 100) * .72;
-
   shadow.style.transform = `skewX(${-40 + dir / 2}deg)`;
-  shadow.style.opacity = .10 + (dir / 100) * .24;
+  shadow.style.opacity = .1 + dir / 100 * .24;
+}
 
-  document.getElementById("intensityValue").textContent = i;
-  document.getElementById("diffusionValue").textContent = d;
-  document.getElementById("opennessValue").textContent = o;
-  document.getElementById("directionValue").textContent = dir;
+function updateLight() {
+  paintRoom($("room"), currentSettings());
+  lightKeys.forEach(key => $(key + "Value").textContent = $(key).value);
 }
 
 function hexToHSV(hex) {
-  const rgb = hex.match(/\w\w/g).map(x => parseInt(x, 16) / 255);
-  const [r, g, b] = rgb;
+  const rgb = hex.slice(1).match(/../g).map(x => parseInt(x,16) / 255);
+  const [r,g,b] = rgb;
   const max = Math.max(...rgb);
-  const min = Math.min(...rgb);
-  const delta = max - min;
-
+  const delta = max - Math.min(...rgb);
   let h = 0;
 
   if (delta) {
     if (max === r) h = ((g - b) / delta) % 6;
     else if (max === g) h = (b - r) / delta + 2;
     else h = (r - g) / delta + 4;
-
     h = (h * 60 + 360) % 360;
   }
 
-  return {
-    h,
-    s: max ? delta / max * 100 : 0,
-    v: max * 100
-  };
+  return { h, s: max ? delta / max * 100 : 0, v: max * 100 };
 }
 
-function hsvToHex({ h, s, v }) {
+function hsvToHex({h,s,v}) {
   s /= 100;
   v /= 100;
-
   const c = v * s;
   const x = c * (1 - Math.abs((h / 60) % 2 - 1));
   const m = v - c;
-
-  const rgb =
-    h < 60 ? [c, x, 0] :
-    h < 120 ? [x, c, 0] :
-    h < 180 ? [0, c, x] :
-    h < 240 ? [0, x, c] :
-    h < 300 ? [x, 0, c] :
-    [c, 0, x];
+  const rgb = h < 60 ? [c,x,0] :
+    h < 120 ? [x,c,0] :
+    h < 180 ? [0,c,x] :
+    h < 240 ? [0,x,c] :
+    h < 300 ? [x,0,c] : [c,0,x];
 
   return "#" + rgb.map(n =>
-    Math.round((n + m) * 255).toString(16).padStart(2, "0")
+    Math.round((n + m) * 255).toString(16).padStart(2,"0")
   ).join("");
 }
 
-const colorPickers = {};
-
 function setupColorPicker(target, initial) {
-  const root = document.getElementById(target + "Picker");
+  const root = document.createElement("div");
+  root.className = "color-picker";
+  root.innerHTML = `
+    <div class="swatch-title">${target}</div>
+    <div class="color-ring" role="slider" tabindex="0"
+      aria-label="${target} hue" aria-valuemin="0" aria-valuemax="359">
+      <div class="color-ring-center"></div>
+      <div class="color-marker"></div>
+    </div>
+    <label for="${target}Saturation">Saturation <output></output></label>
+    <input id="${target}Saturation" class="saturation"
+      type="range" min="0" max="100">
+    <label for="${target}Brightness">Brightness <output></output></label>
+    <input id="${target}Brightness" class="brightness"
+      type="range" min="0" max="100">
+    <label for="${target}Hex">Exact color</label>
+    <div class="color-entry">
+      <input type="color" aria-label="${target} color picker">
+      <input id="${target}Hex" class="color-code" maxlength="7"
+        aria-label="${target} hexadecimal color" spellcheck="false">
+    </div>
+  `;
+  $("colorPickers").append(root);
+
   const ring = root.querySelector(".color-ring");
   const marker = root.querySelector(".color-marker");
   const saturation = root.querySelector(".saturation");
-  const brightness = root.querySelector(".color-brightness");
+  const brightness = root.querySelector(".brightness");
   const hex = root.querySelector(".color-code");
-  const native = root.querySelector("[type=color]");
-
+  const native = root.querySelector('[type="color"]');
+  const outputs = root.querySelectorAll("output");
   let state = hexToHSV(initial);
 
   function render(exact) {
     const color = exact || hsvToHex(state);
     const rad = state.h * Math.PI / 180;
-
-    marker.style.left = (50 + 42.5 * Math.cos(rad)) + "%";
-    marker.style.top = (50 + 42.5 * Math.sin(rad)) + "%";
-
+    marker.style.left = `${50 + 42.5 * Math.cos(rad)}%`;
+    marker.style.top = `${50 + 42.5 * Math.sin(rad)}%`;
     root.querySelector(".color-ring-center").style.background = color;
-
-    ring.setAttribute("aria-valuenow", Math.round(state.h));
-    ring.setAttribute("aria-valuetext", Math.round(state.h) + " degrees");
-
+    ring.setAttribute("aria-valuenow", Math.min(359, Math.round(state.h)));
+    ring.setAttribute("aria-valuetext", `${Math.round(state.h)} degrees`);
     saturation.value = Math.round(state.s);
     brightness.value = Math.round(state.v);
-
-    root.querySelectorAll("output")[0].textContent =
-      Math.round(state.s) + "%";
-    root.querySelectorAll("output")[1].textContent =
-      Math.round(state.v) + "%";
-
+    outputs[0].textContent = `${Math.round(state.s)}%`;
+    outputs[1].textContent = `${Math.round(state.v)}%`;
     hex.value = color;
     hex.setCustomValidity("");
     native.value = color;
-
-    if (target === "wall") {
-      wallColor = color;
-      wall.style.backgroundColor = color;
-    } else {
-      floorColor = color;
-      floor.style.backgroundColor = color;
-    }
+    if (target === "wall") wallColor = color;
+    else floorColor = color;
+    updateLight();
   }
 
-  function point(e) {
-    const r = ring.getBoundingClientRect();
-
+  function point(event) {
+    const rect = ring.getBoundingClientRect();
     state.h = (
       Math.atan2(
-        e.clientY - r.top - r.height / 2,
-        e.clientX - r.left - r.width / 2
+        event.clientY - rect.top - rect.height / 2,
+        event.clientX - rect.left - rect.width / 2
       ) * 180 / Math.PI + 360
     ) % 360;
-
     render();
   }
 
-  ring.addEventListener("pointerdown", e => {
-    ring.setPointerCapture(e.pointerId);
-    point(e);
+  ring.addEventListener("pointerdown", event => {
+    ring.focus();
+    ring.setPointerCapture(event.pointerId);
+    point(event);
   });
 
-  ring.addEventListener("pointermove", e => {
-    if (ring.hasPointerCapture(e.pointerId)) point(e);
+  ring.addEventListener("pointermove", event => {
+    if (ring.hasPointerCapture(event.pointerId)) point(event);
   });
 
-  ring.addEventListener("keydown", e => {
-    const keys = [
-      "ArrowLeft", "ArrowDown", "ArrowRight", "ArrowUp", "Home", "End"
-    ];
+  ring.addEventListener("keydown", event => {
+    if (!["ArrowLeft","ArrowDown","ArrowRight","ArrowUp","Home","End"]
+      .includes(event.key)) return;
+    event.preventDefault();
 
-    if (!keys.includes(e.key)) return;
-
-    e.preventDefault();
-
-    if (e.key === "Home") state.h = 0;
-    else if (e.key === "End") state.h = 359;
+    if (event.key === "Home") state.h = 0;
+    else if (event.key === "End") state.h = 359;
     else {
-      const step = e.shiftKey ? 10 : 1;
-      const sign = ["ArrowLeft", "ArrowDown"].includes(e.key) ? -1 : 1;
-      state.h = (state.h + sign * step + 360) % 360;
+      const sign = ["ArrowLeft","ArrowDown"].includes(event.key) ? -1 : 1;
+      state.h = (state.h + sign * (event.shiftKey ? 10 : 1) + 360) % 360;
     }
-
     render();
   });
 
@@ -567,17 +912,9 @@ function setupColorPicker(target, initial) {
   native.addEventListener("input", () => setColor(native.value));
 
   hex.addEventListener("input", () => {
-    let color = hex.value;
-
-    if (!color.startsWith("#")) color = "#" + color;
-
-    if (/^#[0-9a-f]{6}$/i.test(color)) {
-      setColor(color);
-    } else {
-      hex.setCustomValidity(
-        "Enter a six-digit color, such as #aabbcc."
-      );
-    }
+    const color = hex.value.startsWith("#") ? hex.value : "#" + hex.value;
+    if (/^#[0-9a-f]{6}$/i.test(color)) setColor(color);
+    else hex.setCustomValidity("Enter a six-digit color, such as #aabbcc.");
   });
 
   hex.addEventListener("change", () => {
@@ -589,339 +926,279 @@ function setupColorPicker(target, initial) {
 }
 
 function resetControls() {
-  intensity.value = 50;
-  diffusion.value = 50;
-  openness.value = 50;
-  direction.value = 50;
-
-  wallColor = "#e8e4dc";
-  floorColor = "#bda98d";
-
-  wall.style.backgroundColor = wallColor;
-  floor.style.backgroundColor = floorColor;
-
-  colorPickers.wall(wallColor);
-  colorPickers.floor(floorColor);
-
+  lightKeys.forEach(key => $(key).value = 50);
+  colorPickers.wall("#e8e4dc");
+  colorPickers.floor("#bda98d");
   updateLight();
 }
 
-document.getElementById("recordButton").addEventListener("click", () => {
-  results.push({
-    emotion: emotions[currentEmotion],
-    intensity: Number(intensity.value),
-    diffusion: Number(diffusion.value),
-    openness: Number(openness.value),
-    direction: Number(direction.value),
-    wallColor,
-    floorColor,
-    preview: captureRoom()
-  });
-
-  currentEmotion++;
-
-  if (currentEmotion < emotions.length) {
-    document.getElementById("emotion").textContent =
-      emotions[currentEmotion];
-
-    document.getElementById("step").textContent =
-      `0${currentEmotion + 1} / 04`;
-
-    resetControls();
-  } else {
-    showResults();
-  }
-});
-
-function captureRoom() {
-  const clone = room.cloneNode(true);
-
-  clone.querySelectorAll("[id]").forEach(el =>
-    el.removeAttribute("id")
-  );
-
+function makePreview(settings) {
+  const box = document.createElement("div");
+  box.className = "result-preview";
+  const clone = $("room").cloneNode(true);
   clone.removeAttribute("id");
-  clone.style.width = "100%";
-  clone.style.height = "100%";
-
-  return clone.outerHTML;
+  paintRoom(clone, settings);
+  box.append(clone);
+  return box;
 }
 
 function showResults() {
-  document.getElementById("experiment").style.display = "none";
-  document.getElementById("results").style.display = "block";
+  showScreen("results");
+  $("results").scrollTop = 0;
+  $("resultGrid").replaceChildren();
 
-  const grid = document.getElementById("resultGrid");
-  grid.innerHTML = "";
-
-  results.forEach(r => {
-    const card = document.createElement("div");
+  results.forEach(settings => {
+    const card = document.createElement("article");
     card.className = "result-card";
+    const emotion = document.createElement("div");
+    emotion.className = "result-emotion";
+    emotion.textContent = settings.emotion;
 
-    const lightStrength = .18 + (r.intensity / 100) * .72;
+    const data = document.createElement("div");
+    data.className = "result-data";
 
-    card.innerHTML = `
-      <div class="result-preview">
-        <div class="mini-wall" style="background:${r.wallColor}"></div>
-        <div class="mini-floor" style="background:${r.floorColor}"></div>
-        <div class="mini-light" style="opacity:${lightStrength}"></div>
-      </div>
-      <div class="result-emotion">${r.emotion}</div>
-      <div class="result-data">
-        Intensity ${r.intensity}%<br>
-        Diffusion ${r.diffusion}%<br>
-        Openness ${r.openness}%<br>
-        Direction ${r.direction}%<br>
-        Wall ${r.wallColor}<br>
-        Floor ${r.floorColor}
-      </div>
-    `;
+    [
+      ...lightKeys.map(key => `${key} ${settings[key]}%`),
+      `Wall ${settings.wallColor}`,
+      `Floor ${settings.floorColor}`
+    ].forEach(line => {
+      const row = document.createElement("div");
+      row.textContent = line;
+      data.append(row);
+    });
 
-    if (r.preview) {
-      card.querySelector(".result-preview").innerHTML = r.preview;
-    }
-
-    grid.appendChild(card);
+    card.append(makePreview(settings), emotion, data);
+    $("resultGrid").append(card);
   });
 }
 
-const galleryKey = "daylight-light-library-v1";
-let galleryReturn = "experiment";
-let savedPortraitId = null;
+$("recordButton").onclick = () => {
+  const invalid = [...document.querySelectorAll(".color-code")]
+    .find(input => !input.checkValidity());
+  if (invalid) {
+    invalid.reportValidity();
+    return;
+  }
+
+  results.push(currentSettings());
+  currentEmotion++;
+
+  if (currentEmotion < emotions.length) {
+    $("emotion").textContent = emotions[currentEmotion];
+    $("step").textContent = `0${currentEmotion + 1} / 04`;
+    resetControls();
+    document.querySelector(".controls").scrollTop = 0;
+  } else {
+    portraitCreatedAt = new Date().toISOString();
+    $("savePanel").hidden = false;
+    showResults();
+  }
+};
 
 function readGallery() {
   try {
-    const value = JSON.parse(
-      localStorage.getItem(galleryKey) || "[]"
-    );
-
-    if (!Array.isArray(value)) throw Error();
-
-    return value;
-  } catch (e) {
-    document.getElementById("galleryStatus").textContent =
-      "Saved portraits could not be read. Your current results can still be downloaded.";
-
+    const portraits = JSON.parse(localStorage.getItem(galleryKey) || "[]");
+    if (!Array.isArray(portraits)) throw new Error();
+    return portraits;
+  } catch {
+    $("galleryStatus").textContent =
+      "Saved portraits could not be read. Download your current results to keep them.";
     return null;
   }
 }
 
-function downloadJSON(data, name) {
-  const blob = new Blob(
-    [JSON.stringify(data, null, 2)],
-    { type: "application/json" }
-  );
-
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-
-  a.href = url;
-  a.download = name;
-  a.click();
-
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+function downloadJSON(data, filename) {
+  const url = URL.createObjectURL(new Blob(
+    [JSON.stringify(data,null,2)],
+    {type:"application/json"}
+  ));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url),1000);
 }
 
 function currentPortrait() {
   return {
     id: savedPortraitId || (
-      globalThis.crypto && crypto.randomUUID
+      globalThis.crypto?.randomUUID
         ? crypto.randomUUID()
-        : Date.now().toString(36)
+        : Date.now().toString(36) + Math.random().toString(36).slice(2)
     ),
-    title: document.getElementById("portraitTitle").value.trim()
-      || "Untitled light portrait",
-    note: document.getElementById("portraitNote").value.trim(),
-    createdAt: new Date().toISOString(),
-    results: results.map(r => ({ ...r }))
+    title: $("portraitTitle").value.trim() || "Untitled light portrait",
+    note: $("portraitNote").value.trim(),
+    createdAt: portraitCreatedAt || new Date().toISOString(),
+    results: results.map(settings => ({...settings}))
   };
 }
 
 function openGallery() {
-  galleryReturn =
-    document.getElementById("results").style.display === "block"
-      ? "results"
-      : "experiment";
-
-  document.getElementById(galleryReturn).style.display = "none";
-  document.getElementById("gallery").style.display = "block";
-
+  galleryReturn = $("results").hidden ? "experiment" : "results";
+  galleryPageIndex = 0;
+  showScreen("gallery");
+  $("gallery").scrollTop = 0;
   renderGallery();
-  window.scrollTo(0, 0);
 }
 
 function renderGallery() {
-  const grid = document.getElementById("galleryGrid");
-  grid.replaceChildren();
-
+  $("galleryGrid").replaceChildren();
+  $("galleryStatus").textContent = "";
   const portraits = readGallery();
-
   if (!portraits) return;
 
-  if (!portraits.length) {
-    const p = document.createElement("p");
-    p.className = "empty-gallery";
-    p.textContent =
-      "Your gallery is empty. Finish the four prompts, then save your light portrait.";
+  const pageCount = Math.max(1,Math.ceil(portraits.length / pageSize));
+  galleryPageIndex = Math.max(0,Math.min(galleryPageIndex,pageCount - 1));
+  $("galleryPage").textContent = `${galleryPageIndex + 1} / ${pageCount}`;
+  $("galleryPrev").disabled = galleryPageIndex === 0;
+  $("galleryNext").disabled = galleryPageIndex === pageCount - 1;
 
-    grid.append(p);
+  if (!portraits.length) {
+    const empty = document.createElement("p");
+    empty.className = "note";
+    empty.textContent =
+      "Your gallery is empty. Finish the four prompts, then save your portrait.";
+    $("galleryGrid").append(empty);
     return;
   }
 
-  portraits.slice().reverse().forEach(p => {
+  portraits.slice().reverse().slice(
+    galleryPageIndex * pageSize,
+    (galleryPageIndex + 1) * pageSize
+  ).forEach(portrait => {
     const card = document.createElement("article");
     card.className = "saved-card";
-
     const previews = document.createElement("div");
     previews.className = "saved-previews";
 
-    (p.results || []).forEach(r => {
-      const box = document.createElement("div");
-      box.className = "result-preview";
-
-      const w = document.createElement("div");
-      w.className = "mini-wall";
-      w.style.backgroundColor = r.wallColor;
-
-      const f = document.createElement("div");
-      f.className = "mini-floor";
-      f.style.backgroundColor = r.floorColor;
-
-      const l = document.createElement("div");
-      l.className = "mini-light";
-      l.style.opacity = .18 + r.intensity / 100 * .72;
-
+    (portrait.results || []).forEach(settings => {
+      const box = makePreview(settings);
       const label = document.createElement("span");
-      label.className = "saved-preview-label";
-      label.textContent = r.emotion;
-
-      box.append(w, f, l, label);
+      label.className = "preview-label";
+      label.textContent = settings.emotion;
+      box.append(label);
       previews.append(box);
     });
 
     const title = document.createElement("h3");
-    title.textContent = p.title;
-
+    title.textContent = portrait.title;
     const date = document.createElement("time");
-    date.textContent = new Date(p.createdAt).toLocaleString();
-
+    date.textContent = new Date(portrait.createdAt).toLocaleString();
     const note = document.createElement("p");
-    note.textContent = p.note;
+    note.textContent = portrait.note || "";
 
     const actions = document.createElement("div");
     actions.className = "gallery-actions";
 
     const view = document.createElement("button");
     view.textContent = "VIEW PORTRAIT";
-
     view.onclick = () => {
-      results.splice(0, results.length, ...p.results);
-      savedPortraitId = p.id;
-
-      document.getElementById("portraitTitle").value = p.title;
-      document.getElementById("portraitNote").value = p.note || "";
-      document.getElementById("gallery").style.display = "none";
-
+      results = portrait.results.map(settings => ({...settings}));
+      savedPortraitId = portrait.id;
+      portraitCreatedAt = portrait.createdAt;
+      $("portraitTitle").value = portrait.title;
+      $("portraitNote").value = portrait.note || "";
+      $("savePanel").hidden = true;
       showResults();
-
-      document.getElementById("savePanel").style.display = "none";
-      window.scrollTo(0, 0);
     };
 
-    const dl = document.createElement("button");
-    dl.textContent = "DOWNLOAD";
-    dl.onclick = () => downloadJSON(p, "light-portrait.json");
+    const download = document.createElement("button");
+    download.textContent = "DOWNLOAD";
+    download.onclick = () => downloadJSON(portrait,"light-portrait.json");
 
-    const del = document.createElement("button");
-    del.textContent = "DELETE";
-
-    del.onclick = () => {
+    const remove = document.createElement("button");
+    remove.textContent = "DELETE";
+    remove.onclick = () => {
       if (!confirm("Delete this portrait from this browser?")) return;
-
       const all = readGallery();
       if (!all) return;
-
       try {
         localStorage.setItem(
           galleryKey,
-          JSON.stringify(all.filter(x => x.id !== p.id))
+          JSON.stringify(all.filter(item => item.id !== portrait.id))
         );
-
         renderGallery();
       } catch {
-        document.getElementById("galleryStatus").textContent =
-          "Could not delete the portrait.";
+        $("galleryStatus").textContent = "Could not delete this portrait.";
       }
     };
 
-    actions.append(view, dl, del);
-    card.append(previews, title, date, note, actions);
-    grid.append(card);
+    actions.append(view,download,remove);
+    card.append(previews,title,date,note,actions);
+    $("galleryGrid").append(card);
   });
 }
 
-document.getElementById("savePortrait").onclick = () => {
-  const status = document.getElementById("saveStatus");
-
+$("savePortrait").onclick = () => {
   if (savedPortraitId) {
-    status.textContent = "This portrait is already saved.";
+    $("saveStatus").textContent = "This portrait is already saved.";
     return;
   }
 
   const all = readGallery();
-
   if (!all) {
-    status.textContent =
-      "Cannot access saved portraits. Download your results instead.";
+    $("saveStatus").textContent =
+      "Cannot access the gallery. Download your results instead.";
     return;
   }
 
-  const p = currentPortrait();
-
+  const portrait = currentPortrait();
   try {
-    localStorage.setItem(
-      galleryKey,
-      JSON.stringify([...all, p])
-    );
-
-    savedPortraitId = p.id;
-    status.textContent =
-      "Your four room designs are saved. Open the gallery to see them.";
-
-    document.getElementById("savePortrait").disabled = true;
+    localStorage.setItem(galleryKey,JSON.stringify([...all,portrait]));
+    savedPortraitId = portrait.id;
+    $("savePortrait").disabled = true;
+    $("saveStatus").textContent = "Your four room designs are saved.";
   } catch {
-    status.textContent =
-      "This browser could not save the portrait. Download your results to keep a copy.";
+    $("saveStatus").textContent =
+      "This browser could not save the portrait. Download your results instead.";
   }
 };
 
-document.getElementById("openGallery").onclick = openGallery;
-document.getElementById("resultsGallery").onclick = openGallery;
+$("openGallery").onclick = openGallery;
+$("resultsGallery").onclick = openGallery;
+$("closeGallery").onclick = () => showScreen(galleryReturn);
+$("downloadCurrent").onclick = () =>
+  downloadJSON(currentPortrait(),"light-portrait.json");
 
-document.getElementById("closeGallery").onclick = () => {
-  document.getElementById("gallery").style.display = "none";
-
-  document.getElementById(galleryReturn).style.display =
-    galleryReturn === "experiment" ? "grid" : "block";
-
-  window.scrollTo(0, 0);
-};
-
-document.getElementById("downloadCurrent").onclick = () =>
-  downloadJSON(currentPortrait(), "light-portrait.json");
-
-document.getElementById("exportGallery").onclick = () => {
+$("exportGallery").onclick = () => {
   const all = readGallery();
-
-  if (all) downloadJSON(all, "daylight-gallery.json");
+  if (all) downloadJSON(all,"daylight-gallery.json");
 };
 
-[intensity, diffusion, openness, direction].forEach(slider =>
-  slider.addEventListener("input", updateLight)
-);
+$("galleryPrev").onclick = () => {
+  galleryPageIndex--;
+  renderGallery();
+  $("gallery").scrollTop = 0;
+};
 
-setupColorPicker("wall", wallColor);
-setupColorPicker("floor", floorColor);
+$("galleryNext").onclick = () => {
+  galleryPageIndex++;
+  renderGallery();
+  $("gallery").scrollTop = 0;
+};
+
+$("startAgain").onclick = () => {
+  results = [];
+  currentEmotion = 0;
+  savedPortraitId = null;
+  portraitCreatedAt = null;
+  $("emotion").textContent = emotions[0];
+  $("step").textContent = "01 / 04";
+  $("portraitTitle").value = "";
+  $("portraitNote").value = "";
+  $("saveStatus").textContent = "";
+  $("savePortrait").disabled = false;
+  $("savePanel").hidden = false;
+  resetControls();
+  showScreen("experiment");
+  document.querySelector(".controls").scrollTop = 0;
+};
+
+lightKeys.forEach(key => $(key).addEventListener("input",updateLight));
+setupColorPicker("wall",wallColor);
+setupColorPicker("floor",floorColor);
 updateLight();
 </script>
 </body>
