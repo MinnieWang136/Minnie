@@ -675,7 +675,7 @@ h2 {
     </div>
     <p class="status" id="saveStatus" role="status"></p>
     <p class="note">
-      Saved on this browser and device. Download a copy to keep or share.
+      Submitted portraits are stored in the shared Light Library. Do not include personal or sensitive information. Download a copy if you wish.
     </p>
   </div>
 
@@ -694,8 +694,7 @@ h2 {
     color, and emotional comfort.
   </p>
   <p class="note">
-    This gallery is saved in this browser. It is not shared across devices.
-    Clearing browser data removes saved portraits.
+    This is a shared public library. Submitted portraits can be viewed by anyone with the website link. Do not include personal information.
   </p>
 
   <div class="gallery-actions">
@@ -717,7 +716,9 @@ h2 {
 const $ = id => document.getElementById(id);
 const emotions = ["CALM", "SAFE", "FOCUSED", "ENERGIZED"];
 const lightKeys = ["intensity", "diffusion", "openness", "direction"];
-const galleryKey = "daylight-light-library-v1";
+const SUPABASE_URL = "https://twnlwkptasbjllmakazt.supabase.co";
+const SUPABASE_KEY = "sb_publishable_-ApwE4jnADQ4yT9lIxdQjQ_Y17THrUL";
+const API_URL = `${SUPABASE_URL}/rest/v1/light_portraits`;
 const colorPickers = {};
 let currentEmotion = 0;
 let results = [];
@@ -995,16 +996,44 @@ $("recordButton").onclick = () => {
   }
 };
 
-function readGallery() {
-  try {
-    const portraits = JSON.parse(localStorage.getItem(galleryKey) || "[]");
-    if (!Array.isArray(portraits)) throw new Error();
-    return portraits;
-  } catch {
-    $("galleryStatus").textContent =
-      "Saved portraits could not be read. Download your current results to keep them.";
-    return null;
+async function apiRequest(query = "", options = {}) {
+  const response = await fetch(API_URL + query, {
+    ...options,
+    headers: {
+      apikey: SUPABASE_KEY,
+      "Content-Type": "application/json",
+      ...options.headers
+    }
+  });
+  if (!response.ok) {
+    let message = `HTTP ${response.status}`;
+    try {
+      const body = await response.json();
+      message = body.message || body.error || message;
+    } catch {}
+    throw new Error(message);
   }
+  return response;
+}
+
+function fromDatabase(row) {
+  return {
+    id: row.id,
+    title: row.title,
+    note: row.note || "",
+    createdAt: row.created_at,
+    results: row.results
+  };
+}
+
+async function fetchPortraits(limit, offset = 0, count = false) {
+  const query = `?select=id,title,note,created_at,results&order=created_at.desc&limit=${limit}&offset=${offset}`;
+  const response = await apiRequest(query, {
+    headers: count ? { Prefer: "count=exact" } : {}
+  });
+  const rows = (await response.json()).map(fromDatabase);
+  const total = count ? Number((response.headers.get("content-range") || "").split("/")[1]) : null;
+  return { rows, total: Number.isFinite(total) ? total : null };
 }
 
 function downloadJSON(data, filename) {
@@ -1043,31 +1072,40 @@ function openGallery() {
   renderGallery();
 }
 
-function renderGallery() {
+async function renderGallery() {
   $("galleryGrid").replaceChildren();
   $("galleryStatus").textContent = "";
-  const portraits = readGallery();
-  if (!portraits) return;
-
-  const pageCount = Math.max(1,Math.ceil(portraits.length / pageSize));
-  galleryPageIndex = Math.max(0,Math.min(galleryPageIndex,pageCount - 1));
+  $("galleryStatus").textContent = "Loading shared portraits…";
+  let portraits, total;
+  try {
+    ({ rows: portraits, total } = await fetchPortraits(pageSize, galleryPageIndex * pageSize, true));
+    if (total !== null && galleryPageIndex > 0 && galleryPageIndex * pageSize >= total) {
+      galleryPageIndex = Math.max(0, Math.ceil(total / pageSize) - 1);
+      ({ rows: portraits, total } = await fetchPortraits(pageSize, galleryPageIndex * pageSize, true));
+    }
+    $("galleryStatus").textContent = "";
+  } catch (error) {
+    $("galleryStatus").textContent = "Could not load shared gallery: " + error.message;
+    $("galleryPage").textContent = "";
+    $("galleryPrev").disabled = true;
+    $("galleryNext").disabled = true;
+    return;
+  }
+  const pageCount = Math.max(1, Math.ceil((total ?? portraits.length) / pageSize));
   $("galleryPage").textContent = `${galleryPageIndex + 1} / ${pageCount}`;
   $("galleryPrev").disabled = galleryPageIndex === 0;
-  $("galleryNext").disabled = galleryPageIndex === pageCount - 1;
+  $("galleryNext").disabled = galleryPageIndex >= pageCount - 1;
 
   if (!portraits.length) {
     const empty = document.createElement("p");
     empty.className = "note";
     empty.textContent =
-      "Your gallery is empty. Finish the four prompts, then save your portrait.";
+      "The shared library is empty. Finish the four prompts to add the first portrait.";
     $("galleryGrid").append(empty);
     return;
   }
 
-  portraits.slice().reverse().slice(
-    galleryPageIndex * pageSize,
-    (galleryPageIndex + 1) * pageSize
-  ).forEach(portrait => {
+  portraits.forEach(portrait => {
     const card = document.createElement("article");
     card.className = "saved-card";
     const previews = document.createElement("div");
@@ -1108,51 +1146,37 @@ function renderGallery() {
     download.textContent = "DOWNLOAD";
     download.onclick = () => downloadJSON(portrait,"light-portrait.json");
 
-    const remove = document.createElement("button");
-    remove.textContent = "DELETE";
-    remove.onclick = () => {
-      if (!confirm("Delete this portrait from this browser?")) return;
-      const all = readGallery();
-      if (!all) return;
-      try {
-        localStorage.setItem(
-          galleryKey,
-          JSON.stringify(all.filter(item => item.id !== portrait.id))
-        );
-        renderGallery();
-      } catch {
-        $("galleryStatus").textContent = "Could not delete this portrait.";
-      }
-    };
-
-    actions.append(view,download,remove);
+    actions.append(view, download);
     card.append(previews,title,date,note,actions);
     $("galleryGrid").append(card);
   });
 }
 
-$("savePortrait").onclick = () => {
+$("savePortrait").onclick = async () => {
   if (savedPortraitId) {
-    $("saveStatus").textContent = "This portrait is already saved.";
+    $("saveStatus").textContent = "This portrait is already submitted.";
     return;
   }
-
-  const all = readGallery();
-  if (!all) {
-    $("saveStatus").textContent =
-      "Cannot access the gallery. Download your results instead.";
-    return;
-  }
-
   const portrait = currentPortrait();
+  const button = $("savePortrait");
+  button.disabled = true;
+  $("saveStatus").textContent = "Saving to the shared Light Library…";
   try {
-    localStorage.setItem(galleryKey,JSON.stringify([...all,portrait]));
+    await apiRequest("", {
+      method: "POST",
+      headers: { Prefer: "return=minimal" },
+      body: JSON.stringify({
+        id: portrait.id,
+        title: portrait.title,
+        note: portrait.note,
+        results: portrait.results
+      })
+    });
     savedPortraitId = portrait.id;
-    $("savePortrait").disabled = true;
-    $("saveStatus").textContent = "Your four room designs are saved.";
-  } catch {
-    $("saveStatus").textContent =
-      "This browser could not save the portrait. Download your results instead.";
+    $("saveStatus").textContent = "Saved to the shared Light Library. You can now view it from another device.";
+  } catch (error) {
+    button.disabled = false;
+    $("saveStatus").textContent = "Could not save online: " + error.message + ". Please download your results and try again.";
   }
 };
 
@@ -1162,9 +1186,20 @@ $("closeGallery").onclick = () => showScreen(galleryReturn);
 $("downloadCurrent").onclick = () =>
   downloadJSON(currentPortrait(),"light-portrait.json");
 
-$("exportGallery").onclick = () => {
-  const all = readGallery();
-  if (all) downloadJSON(all,"daylight-gallery.json");
+$("exportGallery").onclick = async () => {
+  $("galleryStatus").textContent = "Preparing gallery download…";
+  try {
+    const all = [];
+    for (let offset = 0; ; offset += 500) {
+      const { rows } = await fetchPortraits(500, offset);
+      all.push(...rows);
+      if (rows.length < 500) break;
+    }
+    downloadJSON(all, "daylight-shared-gallery.json");
+    $("galleryStatus").textContent = `Downloaded ${all.length} portraits.`;
+  } catch (error) {
+    $("galleryStatus").textContent = "Gallery download failed: " + error.message;
+  }
 };
 
 $("galleryPrev").onclick = () => {
