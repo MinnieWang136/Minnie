@@ -6,8 +6,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#252924;--muted:#77786f;--paper:#f5f4ef;--line:#d9d9d1;--accent:#506653;--panel:#fcfbf8}
-*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--paper);font:14px/1.45 'DM Sans',sans-serif}button,input,textarea{font:inherit}button{cursor:pointer}header{height:76px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 3.2vw;background:var(--panel)}.brand{font-family:'Instrument Serif',serif;font-size:27px;letter-spacing:-.3px}.eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700}.header-right{display:flex;gap:22px;align-items:center}.outline{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:0;padding:10px 15px}.outline:hover{border-color:var(--ink)}main{display:grid;grid-template-columns:minmax(0,1fr) 390px;height:calc(100dvh - 76px);min-height:560px}.viewport{position:relative;overflow:hidden;background:#dddcd3}.viewport canvas{display:block;width:100%;height:100%;touch-action:none}.overlay-top{position:absolute;left:30px;top:25px;pointer-events:none;color:#2a302e}.overlay-top .eyebrow{color:#49544f}.overlay-top h2{font:italic 37px/1 'Instrument Serif',serif;margin:9px 0}.hint{position:absolute;left:27px;bottom:24px;background:#fcfbf8dc;backdrop-filter:blur(10px);padding:12px 15px;font-size:11px;max-width:370px}.panel{background:var(--panel);border-left:1px solid var(--line);display:flex;flex-direction:column;min-height:0}.panel-content{padding:30px 30px 18px;overflow-y:auto;flex:1}.progress{display:flex;gap:5px;margin:14px 0 30px}.progress i{display:block;height:3px;background:#e2e3dc;flex:1}.progress i.active{background:var(--accent)}.step-count{color:var(--muted);font-size:11px;letter-spacing:.14em}.panel h1{font:43px/1.03 'Instrument Serif',serif;font-weight:400;margin:17px 0}.desc{color:#74786f;margin:0 0 27px;line-height:1.65}.label{display:block;margin:20px 0 10px;font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:700}.choice{width:100%;padding:13px 15px;text-align:left;border:1px solid var(--line);margin:0 0 9px;background:transparent;display:flex;justify-content:space-between;align-items:center}.choice:hover,.choice.selected{background:#e6ebe3;border-color:#8d9d8d}.choice span:last-child{font-family:'Instrument Serif',serif;font-size:21px}.tool-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tool{border:1px solid var(--line);background:transparent;padding:12px 8px;text-align:center}.tool.selected{background:#e5eae3;border-color:#697f6c}.tool small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.range-head{display:flex;justify-content:space-between;margin:0 0 9px}.range-head b{font-weight:500}input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}input[type=color]{appearance:none;border:1px solid var(--line);background:transparent;width:58px;height:45px;padding:4px;cursor:pointer}.swatch-line{display:flex;gap:12px;align-items:center}.swatch-line span{flex:1}input[type=text],textarea{width:100%;padding:12px;border:1px solid var(--line);background:transparent;outline:none}textarea{resize:vertical;min-height:95px}.foot{border-top:1px solid var(--line);padding:19px 30px;display:flex;justify-content:space-between;gap:8px}.primary{background:var(--ink);color:white;border:1px solid var(--ink);padding:12px 21px;min-width:120px}.primary:hover{background:var(--accent)}button:disabled{opacity:.35;cursor:not-allowed}.minor{font-size:11px;color:var(--muted);margin-top:11px}.pills{display:flex;gap:6px;flex-wrap:wrap}.pill{border:1px solid var(--line);padding:7px 9px;background:transparent}.pill.selected{background:var(--ink);color:white}.toolbar{position:absolute;right:20px;bottom:20px;display:flex;gap:7px}.toolbar button{background:#fcfbf8ed;border:1px solid #dadbd6;padding:10px 12px}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);padding:13px 20px;color:white;background:#2e3831;z-index:20;display:none;max-width:85vw}.gallery{display:none;position:fixed;inset:0;z-index:12;background:#f5f4ef;padding:34px 5vw;overflow:auto}.gallery.visible{display:block}.gallery-header{display:flex;justify-content:space-between;align-items:center}.gallery h2{font:52px 'Instrument Serif',serif;font-weight:400}.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:17px}.gallery-card{background:white;padding:13px;border:1px solid var(--line)}.gallery-card img{width:100%;aspect-ratio:1.4;object-fit:cover;background:#ddd}.gallery-card h3{margin:9px 0 2px}.gallery-card p{font-size:12px;color:var(--muted)}.inline-actions{display:flex;gap:8px;margin-top:12px}.inline-actions button{padding:9px;font-size:11px;background:transparent;border:1px solid var(--line)}@media(max-width:900px){header{height:64px;padding:0 17px}.brand{font-size:22px}.header-right .eyebrow{display:none}main{display:flex;flex-direction:column;height:auto;min-height:calc(100dvh - 64px)}.viewport{height:48vh;min-height:300px}.panel{min-height:52vh;border-left:0}.panel-content{overflow:visible;padding:25px}.foot{padding:15px 25px}.overlay-top{top:15px;left:17px}.overlay-top h2{font-size:28px}.hint{bottom:14px;left:14px;font-size:10px}.toolbar{right:12px;bottom:12px}.panel h1{font-size:38px}}
+:root{--ink:#252924;--muted:#77786f;--paper:#f3e9db;--line:#decfbb;--accent:#98775a;--panel:#fcf6ec}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--paper);font:14px/1.45 'DM Sans',sans-serif}button,input,textarea{font:inherit}button{cursor:pointer}header{height:76px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 3.2vw;background:var(--panel)}.brand{font-family:'Instrument Serif',serif;font-size:27px;letter-spacing:-.3px}.eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700}.header-right{display:flex;gap:22px;align-items:center}.outline{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:0;padding:10px 15px}.outline:hover{border-color:var(--ink)}main{display:grid;grid-template-columns:minmax(0,1fr) 390px;height:calc(100dvh - 76px);min-height:560px}.viewport{position:relative;overflow:hidden;background:#e5d5c4}.viewport canvas{display:block;width:100%;height:100%;touch-action:none}.overlay-top{position:absolute;left:30px;top:25px;pointer-events:none;color:#2a302e}.overlay-top .eyebrow{color:#49544f}.overlay-top h2{font:italic 37px/1 'Instrument Serif',serif;margin:9px 0}.hint{position:absolute;left:27px;bottom:24px;background:#fcfbf8dc;backdrop-filter:blur(10px);padding:12px 15px;font-size:11px;max-width:370px}.panel{background:var(--panel);border-left:1px solid var(--line);display:flex;flex-direction:column;min-height:0}.panel-content{padding:30px 30px 18px;overflow-y:auto;flex:1}.progress{display:flex;gap:5px;margin:14px 0 30px}.progress i{display:block;height:3px;background:#e2e3dc;flex:1}.progress i.active{background:var(--accent)}.step-count{color:var(--muted);font-size:11px;letter-spacing:.14em}.panel h1{font:43px/1.03 'Instrument Serif',serif;font-weight:400;margin:17px 0}.desc{color:#74786f;margin:0 0 27px;line-height:1.65}.label{display:block;margin:20px 0 10px;font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:700}.choice{width:100%;padding:13px 15px;text-align:left;border:1px solid var(--line);margin:0 0 9px;background:transparent;display:flex;justify-content:space-between;align-items:center}.choice:hover,.choice.selected{background:#e6ebe3;border-color:#8d9d8d}.choice span:last-child{font-family:'Instrument Serif',serif;font-size:21px}.tool-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tool{border:1px solid var(--line);background:transparent;padding:12px 8px;text-align:center}.tool.selected{background:#e5eae3;border-color:#697f6c}.tool small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.range-head{display:flex;justify-content:space-between;margin:0 0 9px}.range-head b{font-weight:500}input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}input[type=color]{appearance:none;border:1px solid var(--line);background:transparent;width:58px;height:45px;padding:4px;cursor:pointer}.swatch-line{display:flex;gap:12px;align-items:center}.swatch-line span{flex:1}input[type=text],textarea{width:100%;padding:12px;border:1px solid var(--line);background:transparent;outline:none}textarea{resize:vertical;min-height:95px}.foot{border-top:1px solid var(--line);padding:19px 30px;display:flex;justify-content:space-between;gap:8px}.primary{background:var(--ink);color:white;border:1px solid var(--ink);padding:12px 21px;min-width:120px}.primary:hover{background:var(--accent)}button:disabled{opacity:.35;cursor:not-allowed}.minor{font-size:11px;color:var(--muted);margin-top:11px}.pills{display:flex;gap:6px;flex-wrap:wrap}.pill{border:1px solid var(--line);padding:7px 9px;background:transparent}.pill.selected{background:var(--ink);color:white}.toolbar{position:absolute;right:20px;bottom:20px;display:flex;gap:7px}.toolbar button{background:#fcfbf8ed;border:1px solid #dadbd6;padding:10px 12px}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);padding:13px 20px;color:white;background:#2e3831;z-index:20;display:none;max-width:85vw}.gallery{display:none;position:fixed;inset:0;z-index:12;background:#f5f4ef;padding:34px 5vw;overflow:auto}.gallery.visible{display:block}.gallery-header{display:flex;justify-content:space-between;align-items:center}.gallery h2{font:52px 'Instrument Serif',serif;font-weight:400}.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:17px}.gallery-card{background:white;padding:13px;border:1px solid var(--line)}.gallery-card img{width:100%;aspect-ratio:1.4;object-fit:cover;background:#ddd}.gallery-card h3{margin:9px 0 2px}.gallery-card p{font-size:12px;color:var(--muted)}.inline-actions{display:flex;gap:8px;margin-top:12px}.inline-actions button{padding:9px;font-size:11px;background:transparent;border:1px solid var(--line)}@media(max-width:900px){header{height:64px;padding:0 17px}.brand{font-size:22px}.header-right .eyebrow{display:none}main{display:flex;flex-direction:column;height:auto;min-height:calc(100dvh - 64px)}.viewport{height:48vh;min-height:300px}.panel{min-height:52vh;border-left:0}.panel-content{overflow:visible;padding:25px}.foot{padding:15px 25px}.overlay-top{top:15px;left:17px}.overlay-top h2{font-size:28px}.hint{bottom:14px;left:14px;font-size:10px}.toolbar{right:12px;bottom:12px}.panel h1{font-size:38px}}
 
 /* Softer editorial controls — rounded, accessible, still minimal. */
 :root { --ui-radius: 15px; }
@@ -24,12 +24,73 @@ button:not(:disabled):active { transform: translateY(1px); }
 .gallery-card { border-radius:18px; overflow:hidden; }
 .toast { border-radius:14px; }
 input[type=range] { accent-color:#607966; }
+
+.viewport::after{content:"";pointer-events:none;position:absolute;inset:0;box-shadow:inset 0 0 110px 35px rgba(81,54,35,.17);z-index:1}.overlay-top,.hint,.toolbar{z-index:2}.panel-content{padding-top:23px}.panel h1{font-size:37px}.desc{margin-bottom:12px}.label{margin:14px 0 7px}.control-group{border:1px solid var(--line);border-radius:18px;padding:12px 15px;margin:12px 0;background:#fffaf3}.control-group summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center}.control-group summary::after{content:'⌄';font-size:20px;color:var(--accent)}.control-group[open] summary::after{content:'⌃'}.control-group .minor{line-height:1.5}.mood-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:12px 0}.mood-tabs button{border:1px solid var(--line);background:transparent;padding:9px 3px;font-size:11px;border-radius:14px}.mood-tabs button.selected{background:#80664f;color:white}.small-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.small-actions button{border:1px solid var(--line);border-radius:14px;background:#fffaf4;padding:8px 12px}.object-menu{position:absolute;z-index:5;display:none;background:#fff9efef;backdrop-filter:blur(8px);padding:10px;border:1px solid #d6c2aa;border-radius:15px;box-shadow:0 12px 35px #48341c33;max-width:210px}.object-menu button{border:1px solid #decfbb;background:white;border-radius:10px;padding:7px 10px;margin:2px}.object-menu label{display:block;font-size:11px;margin:5px 0}.object-menu input[type=color]{width:43px;height:33px}.foot{padding:13px 24px}.progress{display:none}.step-count{font-size:10px}.toolbar button{background:#fff9efea}.gallery{background:#f3e9db}.control-group .control-group{margin:9px 0;background:#f6eee3;padding:9px 12px}.object-menu{min-width:190px}.object-menu .minor{margin-top:7px;font-size:10px}.control-group[open]>summary{margin-bottom:7px}
+
+/* Mobile layout: the live 3D room stays ABOVE its controls. */
+@media (max-width: 900px) {
+  html { scroll-padding-top: 12px; }
+  body { overflow-x: hidden; }
+  header { height: 66px; min-height: 66px; gap: 8px; padding: 0 14px; }
+  .brand { min-width: 0; font-size: clamp(19px, 4vw, 24px); line-height: 1.05; }
+  .brand span { display: block; font-size: 10px !important; margin-top: 3px; }
+  .header-right { flex-shrink: 0; gap: 8px; }
+  #galleryOpen { min-height: 42px; padding: 9px 12px; font-size: 11px; white-space: nowrap; }
+  main { display: flex; flex-direction: column; height: auto; min-height: calc(100dvh - 66px); }
+  .viewport { order: 0; flex: none; width: 100%; height: clamp(290px, 43dvh, 460px); min-height: 290px; }
+  .panel { order: 1; width: 100%; min-height: 0; flex: 1 0 auto; border-left: 0; border-top: 1px solid var(--line); }
+  .panel-content { overflow: visible; padding: 19px clamp(16px, 5vw, 28px) 26px; }
+  .panel h1 { margin-top: 12px; font-size: clamp(31px, 7vw, 40px); }
+  .desc { font-size: 13px; line-height: 1.55; }
+  .foot { position: sticky; bottom: 0; z-index: 8; padding: 12px clamp(16px, 5vw, 28px) calc(12px + env(safe-area-inset-bottom)); background: rgba(252,246,236,.97); backdrop-filter: blur(14px); box-shadow: 0 -8px 25px rgba(60,43,25,.06); }
+  .foot button { min-height: 46px; }
+  .foot .primary { flex: 1; }
+  .foot .outline { flex: 0 1 auto; }
+  .overlay-top { top: 14px; left: 16px; right: 12px; }
+  .overlay-top h2 { font-size: clamp(24px, 6vw, 32px); }
+  .hint { left: 12px; bottom: 12px; max-width: min(54%, 250px); font-size: 10px; padding: 8px 10px; line-height: 1.35; }
+  .toolbar { right: 12px; bottom: 12px; }
+  .toolbar button { min-height: 42px; padding: 9px 12px; font-size: 11px; }
+  .tool-row { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .tool,.pill,.mood-tabs button,.small-actions button { min-height: 42px; }
+  input[type=range] { min-height: 32px; }
+  input[type=text], textarea { font-size: 16px; }
+  .gallery { padding: 18px 16px calc(28px + env(safe-area-inset-bottom)); }
+  .gallery-header { gap: 10px; align-items: flex-start; }
+  .gallery h2 { font-size: clamp(32px, 8vw, 44px); line-height: 1.1; margin: 10px 0; }
+  #galleryClose { flex-shrink: 0; }
+  .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%,240px),1fr)); }
+  .object-menu { max-width: min(220px, calc(100% - 20px)); z-index: 10; }
+}
+@media (max-width: 480px) {
+  .viewport { height: clamp(280px, 40dvh, 365px); min-height: 280px; }
+  .brand { font-size: 20px; }
+  #galleryOpen { font-size: 10px; padding: 8px 10px; }
+  .overlay-top h2 { font-size: 27px; }
+  .hint { max-width: 58%; }
+  .control-group { padding: 12px; }
+  .mood-tabs { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 7px; }
+  .mood-tabs button { font-size: 12px; }
+  .foot { gap: 7px; }
+  .foot .outline { padding: 10px 12px; font-size: 12px; }
+  .foot .primary { min-width: 0; padding: 11px 12px; font-size: 12px; }
+}
+@media (max-width: 360px) {
+  .brand { font-size: 17px; }
+  .hint { display: none; }
+  .foot .outline { max-width: 42%; }
+}
+@media (hover: none) and (pointer: coarse) {
+  button, summary { -webkit-tap-highlight-color: transparent; }
+  .viewport canvas { touch-action: none; }
+  .object-menu button { min-height: 40px; }
+}
 </style>
 </head>
 <body>
 <header><div class="brand">A Measure of Daylight <span style="font-size:13px;font-family:'DM Sans';color:var(--muted)">/ Light Study</span></div><div class="header-right"><span class="eyebrow">Prototype 01 · Refined</span><button class="outline" id="galleryOpen" type="button">Shared Gallery ↗</button></div></header>
 <main>
-<section class="viewport" id="viewport"><div class="overlay-top"><div class="eyebrow" id="moodLabel">01 / CALM</div><h2 id="roomHeadline">A room for calm.</h2></div><div class="hint" id="hint">Drag furniture or windows in the active step. Drag a window to the room corner to snap it onto the next wall.</div><div class="toolbar"><button id="resetView" title="Reset camera">Reset view ↺</button></div></section>
+<section class="viewport" id="viewport"><div class="overlay-top"><div class="eyebrow" id="moodLabel">01 / CALM</div><h2 id="roomHeadline">A room for calm.</h2></div><div class="hint" id="hint">Drag furniture or windows in the active step. Drag a window to the room corner to snap it onto the next wall.</div><div class="object-menu" id="objectMenu"></div><div class="toolbar"><button id="resetView" title="Reset camera">Reset view ↺</button></div></section>
 <aside class="panel"><div class="panel-content"><div class="step-count" id="stepCount">01 / 08</div><div class="progress" id="progress"></div><div id="controls"></div></div><div class="foot"><button class="outline" id="back">← Back</button><button class="primary" id="next">Next step →</button></div></aside>
 </main>
 <div class="toast" id="toast" role="status"></div>
@@ -43,6 +104,7 @@ window.addEventListener('unhandledrejection', function(e) { const ctl=document.g
 <script type="module">
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 
 // OPTIONAL: enter the same public URL and anon/publishable key as your existing project.
 // Never put a service_role key in browser code. Existing public SELECT/INSERT policies apply.
@@ -50,13 +112,13 @@ const SUPABASE_URL = 'https://twnlwkptasbjllmakazt.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_-ApwE4jnADQ4yT9lIxdQjQ_Y17THrUL';
 
 const MOODS=['Calm','Safe','Focused','Energized'];
-const STEPS=['emotion','layout','window','brightness','softness','artificial','color','reflect'];
-const DEFAULT=()=>({brightness:72,softness:68,temperature:3900,artificial:58,wall:'#e8e5da',floor:'#ad987e',windowX:-1.35,windowY:2.45,windowWidth:1.7,curtain:100,windows:[{x:-1.65,y:2.45,width:1.35},{x:.65,y:2.45,width:1.1}],layout:'Bedroom',objects:[{type:'bed',x:-1.2,z:.9},{type:'desk',x:1.65,z:-.7},{type:'chair',x:1.65,z:.45},{type:'floorlamp',x:2.25,z:1.6},{type:'plant',x:-2.3,z:-1.25},{type:'desklamp',x:1.65,z:-.7}],note:''});
-const state={mood:0,step:0,results:MOODS.map(()=>DEFAULT()),selected:'sofa',title:'',note:''};
+const STEPS=['setup','study'];
+const DEFAULT=()=>({brightness:72,softness:68,temperature:3900,artificial:58,time:15,sunAzimuth:35,wall:'#e8e5da',floor:'#ad987e',windowX:-1.35,windowY:2.45,windowWidth:1.7,curtain:100,windows:[{x:-1.65,y:2.45,width:1.35},{x:.65,y:2.45,width:1.1}],layout:'Bedroom',objects:[{type:'bed',x:-1.2,z:.9},{type:'desk',x:1.65,z:-.7},{type:'chair',x:1.65,z:.45},{type:'floorlamp',x:2.25,z:1.6},{type:'plant',x:-2.3,z:-1.25},{type:'desklamp',x:1.65,z:-.7}],note:''});
+const state={mood:0,step:0,results:MOODS.map(()=>DEFAULT()),selected:null,title:'',note:''};
 const $=id=>document.getElementById(id);const current=()=>state.results[state.mood];
 const hex=n=>'#'+new THREE.Color(n).getHexString();
 function notify(t){const el=$('toast');el.textContent=t;el.style.display='block';clearTimeout(notify.timer);notify.timer=setTimeout(()=>el.style.display='none',3100)}
-const scene=new THREE.Scene();scene.background=new THREE.Color('#d7d8d1');
+const scene=new THREE.Scene();scene.background=new THREE.Color('#e2d4c3');
 const camera=new THREE.PerspectiveCamera(38,1,.1,100);camera.position.set(7,5.8,8.8);
 const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio,1.5));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.35;$('viewport').prepend(renderer.domElement);
 const orbit=new OrbitControls(camera,renderer.domElement);orbit.target.set(0,1.6,0);orbit.enablePan=false;orbit.minDistance=6;orbit.maxDistance=16;orbit.maxPolarAngle=Math.PI/2-.08;orbit.update();
@@ -66,7 +128,31 @@ const lamps=[];let lightPatches=[];let lastLampTint=null;const sunBeam=new THREE
 const MAT=(color,roughness=.88)=>new THREE.MeshStandardMaterial({color,roughness,metalness:0,side:THREE.DoubleSide});
 let floor,back,left,windowGroups=[],objectGroups=[];const highlight=new THREE.BoxHelper(new THREE.Object3D(),0x678675);scene.add(highlight);highlight.visible=false;
 function mesh(geo,mat,x=0,y=0,z=0,parent=scene){let o=new THREE.Mesh(geo,mat);o.position.set(x,y,z);o.receiveShadow=true;o.castShadow=true;parent.add(o);return o}
-function cube(parent,w,h,d,color,x,y,z){return mesh(new THREE.BoxGeometry(w,h,d),MAT(color),x,y,z,parent)}
+// Round only furniture pieces; room walls and windows stay geometrically accurate.
+const furnitureShapes=new Map();
+function cube(parent,w,h,d,color,x,y,z){
+ const isFurniture=!!parent.userData.object;
+ const radius=isFurniture?Math.min(.075,w*.20,h*.28,d*.20):0;
+ let geometry;
+ if(radius>.007){
+  const key=[w,h,d,radius].join('/');
+  geometry=furnitureShapes.get(key);
+  if(!geometry){geometry=new RoundedBoxGeometry(w,h,d,3,radius);furnitureShapes.set(key,geometry)}
+ }else geometry=new THREE.BoxGeometry(w,h,d);
+ return mesh(geometry,MAT(color),x,y,z,parent);
+}
+// Procedural woven textile, intentionally subtle rather than a distracting pattern.
+function makeRugTexture(){
+ const c=document.createElement('canvas');c.width=c.height=256;
+ const ctx=c.getContext('2d');ctx.fillStyle='#d8c4a9';ctx.fillRect(0,0,256,256);
+ for(let y=0;y<256;y+=4){
+  ctx.fillStyle=y%8===0?'rgba(255,249,230,.23)':'rgba(111,83,59,.13)';ctx.fillRect(0,y,256,1);
+ }
+ for(let x=0;x<256;x+=4){ctx.fillStyle=x%8===0?'rgba(250,238,218,.23)':'rgba(105,75,55,.12)';ctx.fillRect(x,0,1,256)}
+ for(let y=2;y<256;y+=8)for(let x=2;x<256;x+=8){ctx.fillStyle='rgba(249,239,216,.27)';ctx.fillRect(x+(y%16?1:0),y,2,2)}
+ const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(2.2,1.7);t.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());return t;
+}
+const rugTexture=makeRugTexture();
 function cylinder(parent,r1,r2,h,color,x,y,z){return mesh(new THREE.CylinderGeometry(r1,r2,h,18),MAT(color),x,y,z,parent)}
 function buildRoom(){floor=cube(scene,6.2,.16,5.8,'#ad987e',0,-.08,0);back=cube(scene,6.2,4.1,.13,'#e8e5da',0,2.05,-2.9);left=cube(scene,.13,4.1,5.8,'#dad6c9',-3.1,2.05,0);cube(scene,6.25,.11,.08,'#d1c6b5',0,.07,-2.8); }
 function createWindow(w,index){
@@ -103,9 +189,21 @@ function addObject(data){const group=new THREE.Group();group.userData.object=dat
  if(data.type==='floorlamp'){cylinder(group,.26,.26,.07,'#68625a',0,.04,0);cylinder(group,.04,.05,1.75,'#68625a',0,.91,0);let shade=mesh(new THREE.CylinderGeometry(.23,.4,.46,24,1,true),MAT('#f0e4c7'),0,1.82,0,group);shade.castShadow=false;cube(group,.06,.06,.06,'#fff0bf',0,1.63,0)}
  if(data.type==='desklamp'){cube(group,.75,.58,.7,'#a18b73',0,.3,0);cylinder(group,.19,.19,.04,'#4c514d',0,.62,0);cylinder(group,.035,.035,.56,'#4c514d',0,.9,0);mesh(new THREE.CylinderGeometry(.12,.33,.37,24,1,true),MAT('#f0e5d6'),0,1.29,0,group)}
  if(data.type==='plant'){cylinder(group,.32,.25,.45,'#b58a75',0,.22,0);cylinder(group,.06,.06,.9,'#4e6945',0,.85,0);for(let i=0;i<7;i++){let a=i*Math.PI*2/7;let leaf=mesh(new THREE.SphereGeometry(.17,8,8),MAT('#638163'),Math.cos(a)*.26,1.18+Math.sin(i*1.9)*.18,Math.sin(a)*.26,group);leaf.scale.set(1.3,2,.6)}}
- if(data.type==='rug'){let rug=cube(group,1.7,.025,1.35,'#d4cabc',0,.025,0);rug.castShadow=false}
- if(data.type==='floorlamp'||data.type==='desklamp'){
-   const isDesk=data.type==='desklamp';const height=isDesk?1.18:1.64;
+ if(data.type==='rug'){
+  const rug=cube(group,1.85,.035,1.45,'#f1e7d7',0,.025,0);rug.castShadow=false;
+  rug.material=new THREE.MeshStandardMaterial({map:rugTexture,color:'#fff8ef',roughness:1});
+  // Small tassels along two edges suggest soft fabric without heavy geometry.
+  for(let i=0;i<13;i++)for(const side of [-1,1]){
+   const tassel=cube(group,.018,.012,.12,'#c7ad90',-.84+i*.14,.023,side*.775);
+   tassel.castShadow=false;
+  }
+ }
+  if(data.type==='walllamp'){cube(group,.14,.4,.3,'#a9927b',0,2.14,-.02);const shade=mesh(new THREE.SphereGeometry(.23,16,10),MAT('#f3dbb1'),0,2.18,.13,group);shade.scale.set(.7,1.1,.7)}
+  if(data.type==='ceilinglamp'){cylinder(group,.035,.035,.53,'#7c6b5b',0,3.75,0);mesh(new THREE.SphereGeometry(.38,20,12),MAT('#f4e0c1'),0,3.40,0,group)}
+  if(data.color){group.traverse(m=>{if(m.isMesh&&m.material?.isMeshStandardMaterial)m.material.color.set(data.color)})}
+
+ if(['floorlamp','desklamp','walllamp','ceilinglamp'].includes(data.type)){
+   const isDesk=data.type==='desklamp';const height=data.type==='ceilinglamp'?3.38:data.type==='walllamp'?2.18:isDesk?1.18:1.64;
    const bulb=mesh(new THREE.SphereGeometry(.095,12,8),new THREE.MeshBasicMaterial({color:'#fff1cb'}),0,height,0,group);
    const light=new THREE.PointLight('#ffd4a1',0,7,1.6);light.position.set(0,height-.08,.03);group.add(light);lamps.push({light,bulb,data});
    const glow=mesh(new THREE.SphereGeometry(isDesk?.38:.52,14,10),new THREE.MeshBasicMaterial({color:'#ffe5a9',transparent:true,opacity:.14,depthWrite:false}),0,height-.06,0,group);glow.castShadow=false;lamps[lamps.length-1].glow=glow;
@@ -140,7 +238,7 @@ function createSunPatches(s){
   // Visible moving pools of daylight, with spread controlled by the softness slider.
   const wide=w.width*(.78+s.softness/68);
   const patch=new THREE.Mesh(new THREE.PlaneGeometry(wide,1.4+s.softness/38),new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:(s.brightness/100)*open*(1.15-s.softness*.004),depthWrite:false,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2}));
-  patch.rotation.x=-Math.PI/2;patch.rotation.z=-.24;patch.position.set(w.wall==='left'?-1.25+i*.15:Math.max(-2.4,Math.min(2.4,w.x+.50)),.011,w.wall==='left'?Math.max(-2,Math.min(2,w.x+.35)):-.78+i*.22);
+  patch.rotation.x=-Math.PI/2;patch.rotation.z=-(s.sunAzimuth||0)*Math.PI/900;patch.position.set(w.wall==='left'?-1.25+i*.15:Math.max(-2.4,Math.min(2.4,w.x+Math.cos((s.sunAzimuth||0)*Math.PI/180)*.8)),.011,w.wall==='left'?Math.max(-2,Math.min(2,w.x+.35)):-.78+i*.22+Math.cos((s.time-12)*Math.PI/14)*.45);
   scene.add(patch);lightPatches.push(patch);
   const wallPatch=new THREE.Mesh(new THREE.PlaneGeometry(wide*.9,.9+s.softness/125),new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:open*s.brightness/140,depthWrite:false,side:THREE.DoubleSide}));
   if(w.wall==='left'){wallPatch.rotation.y=Math.PI/2;wallPatch.position.set(-2.856,1.24,w.x+.17)}else{wallPatch.position.set(Math.max(-2.5,Math.min(2.5,w.x+.17)),1.24,-2.666)}scene.add(wallPatch);lightPatches.push(wallPatch);
@@ -149,19 +247,18 @@ function createSunPatches(s){
 function updateWindowPatchPositions(){
  const s=current();s.windows.forEach((w,i)=>{
   const ground=lightPatches[i*2],wall=lightPatches[i*2+1];if(!ground||!wall)return;
-  ground.position.x=w.wall==='left'?-1.25+i*.15:Math.max(-2.4,Math.min(2.4,w.x+.50));
-  ground.position.z=w.wall==='left'?Math.max(-2,Math.min(2,w.x+.35)):-.78+i*.22;
+  ground.position.x=w.wall==='left'?-1.25+i*.15:Math.max(-2.4,Math.min(2.4,w.x+Math.cos((s.sunAzimuth||0)*Math.PI/180)*.8));
+  ground.position.z=w.wall==='left'?Math.max(-2,Math.min(2,w.x+.35)):-.78+i*.22+Math.cos((s.time-12)*Math.PI/14)*.45;
   if(w.wall==='left')wall.position.z=w.x+.17;else wall.position.x=Math.max(-2.5,Math.min(2.5,w.x+.17));
  });
 }
+function updateSun(s){const elev=Math.max(.04,Math.sin(Math.PI*(s.time-6)/12));const az=(s.sunAzimuth||0)*Math.PI/180;const d=7;sunlight.position.set(Math.cos(az)*d,Math.max(.15,elev*9),Math.sin(az)*d);sunlight.intensity=(.25+s.brightness/42)*(.25+.75*s.curtain/100)*(s.time<6||s.time>19?.08:Math.max(.2,elev));sunlight.color.set(s.time<9||s.time>17?'#ffd5a2':'#fff3dc');ambient.intensity=(.25+s.brightness/250)*(s.time<6||s.time>19?.45:1)}
 function syncScene(){
  const s=current();if(!s.windows?.length)s.windows=[{x:-1.5,y:2.45,width:1.35}];
  if(s.curtain===undefined)s.curtain=100;
  floor.material.color.set(s.floor);back.material.color.set(s.wall);left.material.color.set(s.wall).multiplyScalar(.93);
- const opening=s.curtain/100;sunlight.intensity=(.25+s.brightness/42)*(.25+.75*opening);
- ambient.intensity=.38+s.brightness/230;sunlight.color.set('#fff0d5');
+ const opening=s.curtain/100;updateSun(s);
  sunlight.shadow.radius=1+s.softness/3;
- sunlight.position.set(-3.5+(s.windows[0]?.x??0)*.32,6,2.8);
  syncWindows(s);
  for(const g of objectGroups)scene.remove(g);objectGroups=[];lamps.length=0;
  s.objects.forEach(addObject);
@@ -178,9 +275,9 @@ function schedulePatches(){if(patchPending)return;patchPending=true;requestAnima
 function liveUpdate(id){
  const s=current();
  if(id==='wall'||id==='floor'){floor.material.color.set(s.floor);back.material.color.set(s.wall);left.material.color.set(s.wall).multiplyScalar(.93)}
- if(['brightness','curtain','softness'].includes(id)){
-  const opening=s.curtain/100;sunlight.intensity=(.25+s.brightness/42)*(.25+.75*opening);
-  ambient.intensity=.38+s.brightness/230;sunlight.shadow.radius=1+s.softness/3;
+ if(['brightness','curtain','softness','time','sunAzimuth'].includes(id)){
+  const opening=s.curtain/100;updateSun(s);
+  sunlight.shadow.radius=1+s.softness/3;
   if(id==='curtain')windowGroups.forEach(g=>{if(g.userData.curtainParts)g.userData.curtainParts.forEach(part=>{const width=g.userData.baseWidth;const cover=width*(1-opening)*.48;part.mesh.scale.x=Math.max(.035,cover)/part.baseWidth;part.mesh.position.x=part.side*(width/2-Math.max(.035,cover)/2)})});
   schedulePatches();
  }
@@ -189,12 +286,13 @@ function liveUpdate(id){
  }
  render();
 }
-function resize(){const r=$('viewport').getBoundingClientRect();renderer.setSize(r.width,r.height);camera.aspect=r.width/r.height;camera.updateProjectionMatrix();render()}window.addEventListener('resize',resize);orbit.addEventListener('change',render);
-const ray=new THREE.Raycaster(),pointer=new THREE.Vector2();let drag=null,windowDrag=null;const dragPlane=new THREE.Plane(new THREE.Vector3(0,1,0),0),wallPlane=new THREE.Plane(new THREE.Vector3(0,0,1),-2.76),leftWallPlane=new THREE.Plane(new THREE.Vector3(1,0,0),2.96);
+function resize(){const r=$('viewport').getBoundingClientRect();renderer.setSize(r.width,r.height);camera.aspect=r.width/r.height;camera.updateProjectionMatrix();render()}window.addEventListener('resize',resize);if(typeof ResizeObserver!=='undefined'){new ResizeObserver(()=>resize()).observe($('viewport'));}orbit.addEventListener('change',render);
+const ray=new THREE.Raycaster(),pointer=new THREE.Vector2();let drag=null,windowDrag=null,objectDrag=null;const dragPlane=new THREE.Plane(new THREE.Vector3(0,1,0),0),wallPlane=new THREE.Plane(new THREE.Vector3(0,0,1),-2.76),leftWallPlane=new THREE.Plane(new THREE.Vector3(1,0,0),2.96);
 function point(e){let r=renderer.domElement.getBoundingClientRect();pointer.x=(e.clientX-r.left)/r.width*2-1;pointer.y=-(e.clientY-r.top)/r.height*2+1;ray.setFromCamera(pointer,camera)}
 function findGroup(obj){while(obj&&obj.parent!==scene){if(obj.userData.windowIndex!==undefined||obj.userData.object)return obj;obj=obj.parent}return obj&&(obj.userData.windowIndex!==undefined||obj.userData.object)?obj:null}
-renderer.domElement.addEventListener('pointerdown',e=>{if(!['layout','window','artificial'].includes(STEPS[state.step]))return;point(e);let hits=ray.intersectObjects([...objectGroups,...windowGroups],true);if(!hits.length)return;let group=findGroup(hits[0].object);if(!group)return;const isWindow=group.userData.windowIndex!==undefined;if(isWindow&&STEPS[state.step]!=='window')return;if(!isWindow&&STEPS[state.step]==='window')return;drag=group;
-windowDrag=null;
+renderer.domElement.addEventListener('pointerdown',e=>{if(state.step!==0)return;point(e);let hits=ray.intersectObjects([...objectGroups,...windowGroups],true);if(!hits.length)return;let group=findGroup(hits[0].object);if(!group)return;const isWindow=group.userData.windowIndex!==undefined;drag=group;closeObjectMenu();
+windowDrag=null;objectDrag=null;
+if(!isWindow){const hit=new THREE.Vector3();if(ray.ray.intersectPlane(dragPlane,hit)){objectDrag={offsetX:hit.x-group.position.x,offsetZ:hit.z-group.position.z,startX:e.clientX,startY:e.clientY};}}
 if(isWindow){
  const w=current().windows[group.userData.windowIndex], side=w.wall||'back';
  const plane=side==='left'?leftWallPlane:wallPlane;
@@ -261,42 +359,69 @@ renderer.domElement.addEventListener('pointermove',e=>{
   updateDraggedWindow(w,drag,selected.side,selected.value);
  }else{
   let hit=new THREE.Vector3();if(ray.ray.intersectPlane(dragPlane,hit)){
-   drag.position.x=Math.max(-2.5,Math.min(2.5,hit.x));drag.position.z=Math.max(-2.35,Math.min(2.35,hit.z));
+   if(!objectDrag||Math.hypot(e.clientX-objectDrag.startX,e.clientY-objectDrag.startY)<5)return;
+   drag.position.x=Math.max(-2.5,Math.min(2.5,hit.x-objectDrag.offsetX));drag.position.z=Math.max(-2.35,Math.min(2.35,hit.z-objectDrag.offsetZ));
    drag.userData.object.x=drag.position.x;drag.userData.object.z=drag.position.z;
   }
  }
  render();
 });
-function endDrag(){drag=null;windowDrag=null;orbit.enabled=true;renderer.shadowMap.autoUpdate=true;renderer.shadowMap.needsUpdate=true;render()}renderer.domElement.addEventListener('pointerup',endDrag);renderer.domElement.addEventListener('pointercancel',endDrag);
+const objMenu=$('objectMenu');let hovered=null,menuPinned=false;
+function closeObjectMenu(){objMenu.style.display='none';hovered=null;menuPinned=false;}
+function showObjectMenu(g){
+ if(hovered===g && objMenu.style.display==='block')return;
+ hovered=g;objMenu.style.display='block';
+ const world=new THREE.Vector3();g.getWorldPosition(world);world.y+=1.2;world.project(camera);
+ const rect=$('viewport').getBoundingClientRect();
+ objMenu.style.left=Math.max(8,Math.min(rect.width-225,(world.x+1)*rect.width/2+15))+'px';
+ objMenu.style.top=Math.max(8,Math.min(rect.height-170,(-world.y+1)*rect.height/2-30))+'px';
+ objMenu.innerHTML=`<label>${escapeHTML(g.userData.object.type.replace(/lamp/g,' lamp'))} · Edit</label><input type="color" title="Change color" value="${g.userData.object.color||'#b7a58c'}" id="objectColor"/><button id="objectCopy">＋ Copy</button><button id="objectDelete">Delete</button><div class="minor">Drag the object itself to move it.</div>`;
+ $('objectColor').oninput=ev=>{g.userData.object.color=ev.target.value;propagateRoom();g.traverse(child=>{if(child.isMesh&&child.material?.color&&!child.material.isMeshBasicMaterial)child.material.color.set(ev.target.value)});render()};
+ $('objectDelete').onclick=()=>{current().objects=current().objects.filter(x=>x!==g.userData.object);propagateRoom();closeObjectMenu();syncScene()};
+ $('objectCopy').onclick=()=>{current().objects.push({...structuredClone(g.userData.object),x:Math.min(2.3,g.position.x+.45),z:Math.min(2.2,g.position.z+.45)});propagateRoom();closeObjectMenu();syncScene()};
+}
+renderer.domElement.addEventListener('pointermove',e=>{
+ if(drag||state.step!==0||$('gallery').classList.contains('visible'))return;
+ point(e);const hits=ray.intersectObjects(objectGroups,true),g=hits.length?findGroup(hits[0].object):null;
+ if(g?.userData.object)showObjectMenu(g);
+ // Keep the menu visible after leaving the object so the pointer can reach its buttons.
+});
+renderer.domElement.addEventListener('click',e=>{
+ if(state.step!==0||drag)return;
+ point(e);const hits=ray.intersectObjects(objectGroups,true),g=hits.length?findGroup(hits[0].object):null;
+ if(g?.userData.object){showObjectMenu(g);menuPinned=true;}else closeObjectMenu();
+});
+objMenu.addEventListener('pointerenter',()=>{menuPinned=true});
+objMenu.addEventListener('pointerleave',()=>{menuPinned=false});
+function endDrag(){if(state.step===0)propagateRoom();drag=null;windowDrag=null;objectDrag=null;orbit.enabled=true;renderer.shadowMap.autoUpdate=true;renderer.shadowMap.needsUpdate=true;render()}renderer.domElement.addEventListener('pointerup',endDrag);renderer.domElement.addEventListener('pointercancel',endDrag);
 const range=(id,label,min,max,step=1,suffix='')=>{let v=current()[id];return `<div class="label">${label}</div><div class="range-head"><span>Adjust the room</span><b id="val-${id}">${v}${suffix}</b></div><input type="range" id="field-${id}" min="${min}" max="${max}" step="${step}" value="${v}"/>`};
-function setControls(){const s=current(),step=STEPS[state.step];$('moodLabel').textContent=`0${state.mood+1} / ${MOODS[state.mood].toUpperCase()}`;$('roomHeadline').textContent=`A room for ${MOODS[state.mood].toLowerCase()}.`;$('stepCount').textContent=String(state.step+1).padStart(2,'0')+' / 08';$('progress').innerHTML=STEPS.map((_,i)=>`<i class="${i<=state.step?'active':''}"></i>`).join('');$('back').disabled=state.step===0&&state.mood===0;$('next').textContent=state.step===7?(state.mood===3?'Download my JPEG ↓':'Next emotion →'):'Next step →';
-let content='';if(step==='emotion'){content=`<h1>Begin with a feeling.</h1><p class="desc">Create four spaces, each expressing a different emotional state. The order is fixed so the studies can be compared.</p><div class="label">Current emotion · ${state.mood+1} of 4</div><button class="choice selected">${MOODS[state.mood]} <span>↗</span></button><div class="minor">Take your time. There is no correct arrangement of light.</div>`}
-if(step==='layout'){content=`<h1>Shape your space.</h1><p class="desc">Drag furniture and light fixtures inside the room. Rotate the camera to look around.</p><div class="label">Room setting</div><div class="pills">${['Living room','Bedroom','Studio'].map(x=>`<button class="pill ${s.layout===x?'selected':''}" data-layout="${x}">${x}</button>`).join('')}</div><div class="label">In this room</div><p class="minor">${s.objects.map(o=>({bed:'Bed',desk:'Desk',chair:'Chair',floorlamp:'Floor lamp',desklamp:'Table lamp',plant:'Plant',sofa:'Sofa',table:'Coffee table',rug:'Rug'}[o.type]||o.type)).join(' · ')}</p><div class="label">Add furniture</div><div class="tool-row">${[['bed','Bed'],['desk','Desk'],['chair','Chair'],['sofa','Sofa'],['table','Coffee table'],['rug','Rug'],['plant','Plant'],['floorlamp','Floor lamp'],['desklamp','Table lamp']].map(([type,name])=>`<button class="tool" data-add="${type}">＋ ${name}<small>Add to room</small></button>`).join('')}</div><button class="outline" style="margin-top:13px" id="removeLast">Remove last object −</button>`}
-if(step==='window'){content=`<h1>Place your windows.</h1><p class="desc">Drag a window toward the shared room corner to snap it automatically onto the adjacent wall. You can still use wall buttons for precise placement.</p><div class="label">Windows · ${s.windows.length}</div><div class="tool-row"><button class="tool" id="addWindow">＋ Add window<small>Up to 5 windows</small></button><button class="tool" id="removeWindow">− Remove last<small>Keep at least one</small></button></div>${range('curtain','Curtains open',0,100,1,'%')}${s.windows.map((w,i)=>`<div class="label">Window ${i+1}</div><div class="pills"><button class="pill ${(w.wall||'back')==='back'?'selected':''}" data-window-wall="${i}" data-wall="back">Back wall</button><button class="pill ${w.wall==='left'?'selected':''}" data-window-wall="${i}" data-wall="left">Left wall</button></div><div class="range-head"><span>Width</span><b id="win-value-${i}">${w.width.toFixed(2)} m</b></div><input type="range" data-win-width="${i}" min="0.6" max="2.4" step="0.05" value="${w.width}"/><div class="range-head"><span>Height</span><b>${w.y.toFixed(2)} m</b></div><input type="range" data-win-y="${i}" min="1.4" max="3.1" step="0.05" value="${w.y}"/>`).join('')}<div class="minor">Open or close the curtains, then move windows to change where sunlight lands.</div>`}
-if(step==='brightness'){content=`<h1>How much light?</h1><p class="desc">Set the intensity of natural daylight reaching your space.</p>${range('brightness','Daylight intensity',0,100,1,'%')}`}
-if(step==='softness'){content=`<h1>Soft or direct?</h1><p class="desc">At 0% sunlight has sharper edges; at 100% it spreads into a broad, gentle pool. Adjust while looking at the floor.</p>${range('softness','Light softness',0,100,1,'%')}`}
-if(step==='artificial'){content=`<h1>Bring in a second sun.</h1><p class="desc">Each table lamp and floor lamp emits light. Adjust brightness and select warm or cool white.</p><div class="tool-row"><button class="tool" data-add="floorlamp">＋ Floor lamp</button><button class="tool" data-add="desklamp">＋ Table lamp</button></div>${range('artificial','Lamp brightness',0,100,1,'%')}<div class="label">Light appearance</div><div class="tool-row"><button class="tool" data-kelvin="2700">Warm white ☀<small>2700 K</small></button><button class="tool" data-kelvin="6000">Cool white ❄<small>6000 K</small></button></div>${range('temperature','Lamp color temperature',2200,6500,100,' K')}`}
-if(step==='color'){content=`<h1>What colors hold the light?</h1><p class="desc">Choose colors for the surfaces. Use any color you like rather than predefined palettes.</p><div class="label">Wall color</div><div class="swatch-line"><input type="color" id="color-wall" value="${s.wall}"/><span id="val-wall">${s.wall.toUpperCase()}</span></div><div class="label">Floor color</div><div class="swatch-line"><input type="color" id="color-floor" value="${s.floor}"/><span id="val-floor">${s.floor.toUpperCase()}</span></div>`}
-if(step==='reflect'){content=`<h1>What does this room remind you of?</h1><p class="desc">Briefly describe the memory, situation, or feeling associated with this space.</p><div class="label">Your association · optional</div><textarea id="mood-note" maxlength="500" placeholder="This reminds me of…">${s.note||''}</textarea><div class="minor">${state.mood+1} of 4 environments created</div>${state.mood===3?'<div class="label">Collection title</div><input type="text" id="study-title" maxlength="80" placeholder="Name your light study" value="'+escapeAttr(state.title)+'"/><div class="label">Additional note · optional</div><textarea id="study-note" maxlength="500" placeholder="What did you notice across the four rooms?">'+escapeHTML(state.note)+'</textarea><button class="primary" style="width:100%;margin-top:18px" id="publishStudy" type="button">Publish to Shared Gallery ↗</button><p class="minor">Publishing shares this work publicly; anyone can download its JPEG.</p>':''}`}
-$('controls').innerHTML=content;$('hint').textContent=step==='layout'||step==='artificial'?'Drag furniture and lamps across the floor; orbit by dragging empty space.':step==='window'?'Drag windows toward the back-left corner to snap them onto the adjacent wall. Curtains control sunlight.':'Drag empty space to orbit and inspect the room.';
-$('controls').querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>{let type=b.dataset.add;current().objects.push({type,x:Math.random()*1.3-.5,z:Math.random()*1.5-.6});syncScene();notify(`${type} added — drag to reposition`)}));
-$('controls').querySelectorAll('[data-kelvin]').forEach(b=>b.addEventListener('click',()=>{s.temperature=+b.dataset.kelvin;setControls()}));
-$('controls').querySelectorAll('[data-layout]').forEach(b=>b.addEventListener('click',()=>{s.layout=b.dataset.layout;setControls()}));
-$('addWindow')?.addEventListener('click',()=>{if(s.windows.length>=5){notify('Maximum five windows');return;}s.windows.push({x:Math.max(-2.2,Math.min(2.2,-1.7+s.windows.length*.9)),y:2.45,width:1.1});setControls()});$('removeWindow')?.addEventListener('click',()=>{if(s.windows.length>1){s.windows.pop();setControls()}else notify('Keep at least one window')});$('controls').querySelectorAll('[data-window-wall]').forEach(b=>b.addEventListener('click',()=>{const w=s.windows[+b.dataset.windowWall];w.wall=b.dataset.wall;w.x=Math.max(-2.8+w.width/2+.14,Math.min(2.8-w.width/2-.14,w.x));setControls()}));$('controls').querySelectorAll('[data-win-width]').forEach(el=>{
- const i=+el.dataset.winWidth;
- el.addEventListener('input',()=>{const w=s.windows[i];w.width=+el.value;w.x=Math.max(-2.8+w.width/2+.14,Math.min(2.8-w.width/2-.14,w.x));$('win-value-'+i).textContent=w.width.toFixed(2)+' m';const g=windowGroups[i];if(g){g.scale.x=w.width/g.userData.baseWidth;if(w.wall==='left')g.position.z=w.x;else g.position.x=w.x;}updateWindowPatchPositions();render()});
- el.addEventListener('change',()=>syncScene());
- });
- $('controls').querySelectorAll('[data-win-y]').forEach(el=>{
- const i=+el.dataset.winY;const value=el.previousElementSibling?.querySelector('b');
- el.addEventListener('input',()=>{s.windows[i].y=+el.value;if(windowGroups[i])windowGroups[i].position.y=+el.value;if(value)value.textContent=(+el.value).toFixed(2)+' m';render()});
- });$('removeLast')?.addEventListener('click',()=>{if(s.objects.length){s.objects.pop();syncScene()}});
-for(let id of ['windowWidth','windowY','brightness','softness','artificial','temperature','curtain']){let el=$('field-'+id);if(el)el.addEventListener('input',()=>{s[id]=+el.value;$('val-'+id).textContent=el.value+(id==='temperature'?' K':id==='windowWidth'||id==='windowY'?' m':'%');liveUpdate(id)})}
-for(let id of ['wall','floor'])$('color-'+id)?.addEventListener('input',e=>{s[id]=e.target.value;$('val-'+id).textContent=e.target.value.toUpperCase();liveUpdate(id)});
+function propagateRoom(){const src=current();for(const r of state.results){if(r===src)continue;r.objects=structuredClone(src.objects);r.windows=structuredClone(src.windows);r.layout=src.layout;r.curtain=src.curtain;}}
+const inventory=[['bed','Bed'],['desk','Desk'],['chair','Chair'],['sofa','Sofa'],['table','Coffee table'],['rug','Rug'],['plant','Plant'],['floorlamp','Floor lamp'],['desklamp','Table lamp'],['walllamp','Wall sconce'],['ceilinglamp','Ceiling light']];
+function group(title,content,opened=false){return `<details class="control-group" ${opened?'open':''}><summary>${title}</summary>${content}</details>`}
+function setControls(){if(typeof closeObjectMenu==='function')closeObjectMenu();const s=current();$('moodLabel').textContent=state.step===0?'ROOM / SETUP':`0${state.mood+1} / ${MOODS[state.mood].toUpperCase()}`;$('roomHeadline').textContent=state.step===0?'Make this space yours.':`A room for ${MOODS[state.mood].toLowerCase()}.`;$('stepCount').textContent=state.step===0?'SET UP YOUR ROOM ONCE':'LIGHT STUDY · FOUR FEELINGS';$('progress').innerHTML='';$('back').textContent=state.step===0?'Reset room':'← Room setup';$('next').textContent=state.step===0?'Start with Calm →':state.mood===3?'Download four rooms ↓':'Save & next feeling →';$('hint').textContent=state.step===0?(matchMedia('(hover: none)').matches?'Tap an object to edit it. Drag to move; drag empty space to rotate.':'Drag furniture or windows to move them. Hover or click an object to edit.'):'Adjust the light below. Drag empty space to rotate the room.';
+let content='';
+if(state.step===0){content=`<h1>First, your room.</h1><p class="desc">① Use the room as it is, or add furniture. ② Drag an object to move it. ③ Click <b>Start with Calm</b>. You only set up the room once.</p>`+group('＋ Add or remove furniture',`<div class="tool-row">${inventory.map(([type,name])=>`<button class="tool" data-add="${type}">＋ ${name}</button>`).join('')}</div><div class="small-actions"><button id="removeLast">Remove last object</button></div>`,false)+group('Windows & curtains',`<div class="small-actions"><button id="addWindow">＋ Window</button><button id="removeWindow">− Window</button></div>${range('curtain','Open the curtains',0,100,1,'%')}${s.windows.map((w,i)=>`<div class="label">Window ${i+1}</div><div class="pills"><button class="pill ${(w.wall||'back')==='back'?'selected':''}" data-window-wall="${i}" data-wall="back">Back wall</button><button class="pill ${w.wall==='left'?'selected':''}" data-window-wall="${i}" data-wall="left">Left wall</button></div><div class="range-head"><span>Width</span><b id="win-value-${i}">${w.width.toFixed(2)} m</b></div><input type="range" data-win-width="${i}" min="0.6" max="2.4" step="0.05" value="${w.width}"/>`).join('')}`,false);}
+else{content=`<h1>${MOODS[state.mood]}</h1><p class="desc">Adjust the light until this room feels <b>${MOODS[state.mood].toLowerCase()}</b> to you. Then choose <b>Next feeling</b>. No right or wrong answers.</p><div class="mood-tabs">${MOODS.map((m,i)=>`<button data-mood="${i}" class="${i===state.mood?'selected':''}">${m}</button>`).join('')}</div>`+
+group('☀ Sun & time',range('time','Time of day',6,20,.25,' h')+group('More sun settings',range('sunAzimuth','Sun direction',-180,180,1,'°')),true)+
+group('◐ Daylight',range('brightness','Brightness',0,100,1,'%')+range('softness','Softness',0,100,1,'%')+group('Curtains',range('curtain','Curtains open',0,100,1,'%')),true)+
+group('✦ Indoor lights',range('artificial','Lamp brightness',0,100,1,'%')+'<div class="small-actions"><button data-kelvin="2700">Warm glow</button><button data-kelvin="6000">Cool glow</button></div>'+group('Fine-tune warmth',range('temperature','Color temperature',2200,6500,100,' K')),false)+
+group('◉ Room colors',`<div class="label">Wall color</div><div class="swatch-line"><input type="color" id="color-wall" value="${s.wall}"/><span id="val-wall">${s.wall.toUpperCase()}</span></div><div class="label">Floor color</div><div class="swatch-line"><input type="color" id="color-floor" value="${s.floor}"/><span id="val-floor">${s.floor.toUpperCase()}</span></div>`,false)+
+group('♡ A memory of light',`<p class="minor">Does this light remind you of a place, person or moment?</p><textarea id="mood-note" maxlength="500" placeholder="This light reminds me of…">${escapeHTML(s.note)}</textarea>`,false)+ (state.mood===3?group('Share your study',`<div class="label">Study title</div><input id="study-title" type="text" maxlength="80" value="${escapeAttr(state.title)}" placeholder="Give your light a name"/><div class="label">Final thoughts · optional</div><textarea id="study-note" maxlength="500">${escapeHTML(state.note)}</textarea><button class="primary" style="width:100%;margin-top:12px" id="publishStudy">Save to shared gallery ↗</button><p class="minor">Public studies can be viewed and downloaded by anyone.</p>`,true):'');}
+$('controls').innerHTML=content;
+$('controls').querySelectorAll('[data-mood]').forEach(b=>b.onclick=()=>{state.mood=+b.dataset.mood;setControls()});
+$('controls').querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{s.objects.push({type:b.dataset.add,x:1.1,z:1.1});propagateRoom();syncScene();notify('Added! Drag it to a new spot.')});
+$('controls').querySelectorAll('[data-kelvin]').forEach(b=>b.onclick=()=>{s.temperature=+b.dataset.kelvin;setControls()});
+$('addWindow')?.addEventListener('click',()=>{if(s.windows.length>=5)return notify('You can add up to five windows.');s.windows.push({x:Math.min(2,-1.7+s.windows.length*.8),y:2.45,width:1.1});propagateRoom();setControls()});
+$('removeWindow')?.addEventListener('click',()=>{if(s.windows.length<2)return notify('Keep at least one window.');s.windows.pop();propagateRoom();setControls()});
+$('removeLast')?.addEventListener('click',()=>{s.objects.pop();propagateRoom();syncScene()});
+$('controls').querySelectorAll('[data-window-wall]').forEach(b=>b.onclick=()=>{s.windows[+b.dataset.windowWall].wall=b.dataset.wall;propagateRoom();setControls()});
+$('controls').querySelectorAll('[data-win-width]').forEach(el=>{el.oninput=()=>{const w=s.windows[+el.dataset.winWidth];w.width=+el.value;$('win-value-'+el.dataset.winWidth).textContent=w.width.toFixed(2)+' m';syncScene()};el.onchange=propagateRoom});
+for(const id of ['brightness','softness','artificial','temperature','curtain','time','sunAzimuth']){const el=$('field-'+id);if(el)el.oninput=()=>{s[id]=+el.value;$('val-'+id).textContent=el.value+({temperature:' K',sunAzimuth:'°',time:' h'}[id]||'%');liveUpdate(id);if(state.step===0&&id==='curtain')propagateRoom()}}
+for(const id of ['wall','floor'])$('color-'+id)?.addEventListener('input',e=>{s[id]=e.target.value;$('val-'+id).textContent=e.target.value.toUpperCase();liveUpdate(id)});
 $('mood-note')?.addEventListener('input',e=>s.note=e.target.value);$('study-title')?.addEventListener('input',e=>state.title=e.target.value);$('study-note')?.addEventListener('input',e=>state.note=e.target.value);$('publishStudy')?.addEventListener('click',saveStudy);
 syncScene();}
 function escapeHTML(t){return (t||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')};function escapeAttr(t){return escapeHTML(t).replaceAll("'",'&#39;')}
-$('next').onclick=async()=>{if(state.step<7)state.step++;else if(state.mood<3){state.mood++;state.step=0}else{exportFinalJPEG();return}setControls()};$('back').onclick=()=>{if(state.step>0)state.step--;else if(state.mood>0){state.mood--;state.step=7}setControls()};
+$('next').onclick=()=>{if(state.step===0){propagateRoom();state.step=1;state.mood=0;}else if(state.mood<3){state.mood++;}else{exportFinalJPEG();return;}setControls()};$('back').onclick=()=>{if(state.step===1){state.step=0;state.mood=0;setControls()}else if(confirm('Start with a fresh room?')){state.results=MOODS.map(()=>DEFAULT());state.mood=0;setControls()}};
 $('resetView').onclick=()=>{camera.position.set(7,5.8,8.8);orbit.target.set(0,1.6,0);orbit.update();render()};
 function jpgData(){renderer.render(scene,camera);let source=renderer.domElement;const out=document.createElement('canvas');out.width=source.width;out.height=source.height;let ctx=out.getContext('2d');ctx.drawImage(source,0,0);let sz=Math.max(22,out.width/43);ctx.fillStyle='rgba(251,250,244,.87)';ctx.fillRect(0,out.height-sz*2.2,out.width,sz*2.2);ctx.fillStyle='#2c332d';ctx.font=`${sz}px Georgia`;ctx.fillText(`A Measure of Daylight — ${MOODS[state.mood]}`,sz,out.height-sz*.75);return out.toDataURL('image/jpeg',.91)}
 function download(data,name){let a=document.createElement('a');a.href=data;a.download=name;a.click()};
