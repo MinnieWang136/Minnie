@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#060713" />
+<title>IN RAINBOWS — A Galaxy of Sound</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+:root{--ink:#f3f1f7;--muted:#afadc0;--glass:rgba(13,13,28,.58);--line:rgba(255,255,255,.16);--accent:#d8a8ff}*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#060713;color:var(--ink);font-family:'DM Sans',Arial,sans-serif}body{touch-action:pan-x pan-y}button,input{font:inherit}button{cursor:pointer}#sky{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}#grain{position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");mix-blend-mode:screen}header{position:fixed;top:0;left:0;right:0;z-index:8;display:flex;align-items:flex-start;justify-content:space-between;padding:clamp(18px,3vw,38px);gap:12px;pointer-events:none}.brand,.header-actions{pointer-events:auto}.eyebrow{font-size:10px;letter-spacing:.23em;color:#c0b8d0;text-transform:uppercase}.brand h1{margin:7px 0 0;line-height:.95;letter-spacing:-.06em;font-weight:600;font-family:'Space Grotesk',sans-serif;font-size:clamp(29px,5vw,59px)}.brand h1 span{color:#d6b1f2}.sub{margin:8px 0 0;color:var(--muted);font-size:11px;letter-spacing:.1em}.header-actions{display:flex;gap:7px}.pill,.circle-btn{border:1px solid var(--line);background:rgba(15,15,33,.55);backdrop-filter:blur(20px);color:#f5f0fa;border-radius:100px;min-height:37px;padding:0 15px;font-size:11px;letter-spacing:.04em;transition:background .2s,border-color .2s}.pill:hover,.circle-btn:hover{background:rgba(70,53,91,.66);border-color:rgba(255,255,255,.37)}.pill[aria-pressed=true]{background:#f2e7ff;color:#181222}.hint{position:fixed;top:52%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:3;opacity:.8;text-align:center;transition:opacity .35s}.hint strong{font-family:'Space Grotesk';font-weight:500;letter-spacing:.24em;font-size:11px}.hint p{color:#b7afc9;font-size:11px;letter-spacing:.08em;margin:12px 0}.hint.hide{opacity:0}.bottom{position:fixed;bottom:0;left:0;right:0;z-index:10;pointer-events:none;padding:24px clamp(18px,3vw,38px) 23px;display:flex;align-items:flex-end;gap:20px;justify-content:space-between;background:linear-gradient(transparent,rgba(4,5,14,.65))}.track-strip{display:flex;gap:6px;max-width:min(100%,840px);overflow-x:auto;padding:5px 0;pointer-events:auto;scrollbar-width:none}.track-strip::-webkit-scrollbar{display:none}.track-chip{flex:0 0 auto;display:flex;align-items:center;gap:9px;padding:8px 11px;border:1px solid rgba(255,255,255,.12);border-radius:100px;background:rgba(8,9,22,.48);color:#c6c2d5;backdrop-filter:blur(12px);white-space:nowrap;font-size:11px;transition:all .2s}.track-chip:hover,.track-chip.active{background:rgba(245,235,255,.14);border-color:rgba(255,255,255,.45);color:white}.dot{width:7px;height:7px;border-radius:50%;background:var(--dot);box-shadow:0 0 12px var(--dot)}.footer-tag{font-size:10px;line-height:1.5;color:#b8afc6;text-align:right;letter-spacing:.09em;white-space:nowrap}.panel{position:fixed;z-index:12;right:clamp(18px,4vw,60px);top:50%;transform:translate(18px,-41%);width:min(370px,calc(100vw - 36px));border:1px solid rgba(255,255,255,.17);border-radius:24px;background:rgba(10,10,24,.65);box-shadow:0 20px 85px rgba(0,0,0,.29);backdrop-filter:blur(27px);padding:25px;opacity:0;pointer-events:none;transition:opacity .38s,transform .38s}.panel.visible{opacity:1;pointer-events:auto;transform:translate(0,-41%)}.panel-top{display:flex;justify-content:space-between;align-items:center;gap:8px}.panel-num{font-size:10px;letter-spacing:.22em;color:#c8bdd6}.close{border:1px solid var(--line);border-radius:50%;height:30px;width:30px;background:rgba(255,255,255,.08);color:white;font-size:18px}.track-name{font:500 clamp(27px,3vw,42px)/1.02 'Space Grotesk',sans-serif;letter-spacing:-.055em;margin:25px 0 12px}.descriptor{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}.story{font-size:13px;line-height:1.75;color:#d0c9d9;margin:22px 0}.tiny{color:#a59eb4;font-size:11px;line-height:1.6}.control{margin:17px 0}.control label{display:flex;justify-content:space-between;font-size:11px;color:#ddd5e8;margin-bottom:8px}.control input{width:100%;accent-color:#dcb5fb;cursor:pointer}.panel-buttons{display:flex;gap:8px;margin-top:20px}.primary{background:#f3eafd;color:#170f22;border:0;padding:12px 16px;border-radius:100px;font-size:11px;font-weight:700;flex:1}.secondary{background:transparent;border:1px solid var(--line);color:#f4effa;padding:12px 16px;border-radius:100px;font-size:11px}.first-time{position:fixed;z-index:9;left:clamp(18px,3vw,38px);top:40%;max-width:240px;pointer-events:none;opacity:.85;transition:opacity .3s}.first-time h2{font:400 16px/1.5 'Space Grotesk';letter-spacing:.01em;margin:0 0 12px}.first-time p{font-size:11px;line-height:1.7;color:#bdb7c8}.first-time.hide{opacity:0}.about{position:fixed;z-index:20;inset:0;background:rgba(5,5,14,.73);backdrop-filter:blur(15px);display:none;align-items:center;justify-content:center;padding:20px}.about.visible{display:flex}.about-inner{width:min(480px,100%);border:1px solid var(--line);background:#111022;border-radius:23px;padding:28px}.about-inner h2{font:500 28px 'Space Grotesk';margin:0 0 12px}.about-inner p{font-size:13px;line-height:1.8;color:#c9c3d7}.about-inner a{color:#e5befa}.about-inner .pill{margin-top:10px}.music-note{font-size:10px;color:#9e98ac;line-height:1.6;margin-top:14px}.mobile-guide{display:none}@media(max-width:800px){header{padding:18px 18px 0}.brand h1{font-size:33px}.brand .sub{font-size:9px}.eyebrow{font-size:9px}.pill{padding:0 10px;font-size:10px;min-height:33px}.header-actions{gap:5px}.first-time{top:27%;max-width:190px;left:20px}.first-time h2{font-size:13px}.hint{top:45%}.bottom{padding:14px 14px 17px;display:block}.footer-tag{display:none}.track-strip{width:100%}.track-chip{font-size:10px;padding:8px}.panel{top:auto;bottom:81px;left:13px;right:13px;width:auto;transform:translateY(15px);padding:17px 20px 16px;max-height:min(52vh,430px);overflow-y:auto;border-radius:20px}.panel.visible{transform:translateY(0)}.track-name{font-size:29px;margin:12px 0 8px}.story{margin:11px 0;font-size:12px;line-height:1.5}.control{margin:10px 0}.panel-buttons{margin-top:12px}.tiny{font-size:10px}.mobile-guide{display:block;position:fixed;bottom:72px;left:18px;font-size:10px;color:#c9bed7;opacity:.65;z-index:4;pointer-events:none}.mobile-guide.hide{display:none}}@media(max-height:650px) and (min-width:801px){.panel{top:52%;padding:16px;}.story{margin:12px 0}.track-name{margin:12px 0}.control{margin:10px 0}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.spotify-section{margin-top:19px;padding-top:16px;border-top:1px solid rgba(255,255,255,.15)}.spotify-heading{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.15em;color:#d3c8e0;margin-bottom:10px}.spotify-heading span:last-child{color:var(--accent)}.spotify-explainer{font-size:10px;line-height:1.5;color:#b5abc5;margin-top:8px}.panel{max-height:min(85vh,780px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#54425f transparent}@media(max-width:800px){.panel{max-height:60vh}.spotify-section{margin-top:14px;padding-top:12px}}
+
+.audio-sync{margin:15px 0 5px;padding:14px;border:1px solid rgba(204,177,243,.28);border-radius:15px;background:rgba(111,73,144,.12)}
+.audio-sync h3{font-size:11px;letter-spacing:.13em;margin:0 0 7px;color:#f2e6ff}.sync-buttons{display:flex;gap:7px;flex-wrap:wrap;margin:11px 0}.sync-btn{border:1px solid rgba(255,255,255,.27);border-radius:30px;color:#f5edff;background:rgba(119,78,147,.35);padding:9px 12px;font-size:11px}.sync-btn:disabled{opacity:.5;cursor:not-allowed}.sync-btn.active{background:#f1e1fd;color:#170f22}.sync-status{font-size:10px;line-height:1.55;color:#cfc3de}.sync-meter{height:5px;background:#30283e;border-radius:10px;overflow:hidden;margin:10px 0 0}.sync-meter div{height:100%;width:0;background:linear-gradient(90deg,#6ccbd2,#dba2fb,#faaf72);transition:width .08s}.sync-tip{font-size:10px;line-height:1.5;color:#b6a9c6;margin-top:8px}
+</style>
+</head>
+<body>
+<canvas id="sky" aria-label="An interactive galaxy of ten songs. Choose a glowing planet or a track button."></canvas><div id="grain"></div>
+<header><div class="brand"><div class="eyebrow">An interactive interpretation of Radiohead's 2007 album</div><h1>IN <span>RAINBOWS</span></h1><p class="sub">A GALAXY OF SOUND &nbsp; / &nbsp; A JOURNEY THROUGH FEELING</p></div><div class="header-actions"><button class="pill" id="reset" title="Return to galaxy">GALAXY ↗</button><button class="pill" id="aboutBtn">ABOUT</button></div></header>
+<div class="first-time" id="intro"><h2>What if an album<br>became a universe?</h2><p>Ten songs. Ten celestial worlds.<br>Move your cursor through space and select a planet to enter its atmosphere.</p></div>
+<div class="hint" id="hint"><strong>EXPLORE THE GALAXY</strong><p>SELECT A PLANET OR CHOOSE A TRACK BELOW</p></div>
+<div class="mobile-guide" id="mobileGuide">Tap a planet or choose a song below ↘</div>
+<aside class="panel" id="panel" aria-live="polite"><div class="panel-top"><span class="panel-num" id="trackNum">01 / 10</span><button class="close" id="close" aria-label="Close and return to galaxy">×</button></div><h2 class="track-name" id="trackName">15 Step</h2><div class="descriptor" id="descriptor">RHYTHM / MOVEMENT</div><p class="story" id="story"></p><div class="control"><label for="motion">PARTICLE MOTION <span id="motionVal">60%</span></label><input id="motion" type="range" min="0" max="100" value="60" /></div><div class="control"><label for="glow">LIGHT INTENSITY <span id="glowVal">70%</span></label><input id="glow" type="range" min="10" max="100" value="70" /></div><section class="audio-sync"><h3>LIVE SOUND REACTIVE</h3><div class="sync-status" id="syncStatus" role="status">Visuals currently follow the song's preset mood.</div><div class="sync-buttons"><button type="button" class="sync-btn" id="captureTab">SYNC TAB AUDIO</button><button type="button" class="sync-btn" id="captureMic">USE MICROPHONE</button><button type="button" class="sync-btn" id="stopSync" disabled>STOP</button></div><div class="sync-meter"><div id="audioMeter"></div></div><div class="sync-tip">Chrome / Edge: choose <b>This Tab</b> and turn on <b>Share tab audio</b>. Start Spotify playback first. Nothing is recorded or uploaded. A secure HTTPS site or localhost is required.</div></section><div class="panel-buttons"><button class="primary" id="nextTrack">NEXT UNIVERSE →</button><button class="secondary" id="randomize">REMIX</button></div><section class="spotify-section"><div class="spotify-heading"><span>LISTEN ON SPOTIFY</span><span id="spotifyType">15 STEP</span></div><iframe id="spotifyPlayer" title="Spotify music player" src="about:blank" width="100%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" style="border:0;border-radius:12px;display:block"></iframe><div class="spotify-explainer" id="spotifyExplanation">Press Play in the Spotify player to listen to 15 Step.</div></section><div class="music-note">An independent visual interpretation. Music is embedded from Spotify; availability and playback depend on Spotify.</div></aside>
+<div class="bottom"><div class="track-strip" id="trackStrip" aria-label="Choose one of ten album tracks"></div><div class="footer-tag">SCROLL / DRAG TO EXPLORE<br>DESIGNED AS A SOUND-TO-SPACE STUDY</div></div>
+<div class="about" id="about"><div class="about-inner"><h2>Sound becomes space.</h2><p><em>In Rainbows — A Galaxy of Sound</em> is an interactive artefact inspired by listening to Radiohead's album. Each track becomes a different celestial environment. Its colors, rhythm, light, and movement are subjective translations of the listening experience, not claims about the artists' intentions.</p><p>The project extends <em>Translating Sound</em> from shapes and colors into an explorable world: an imagined galaxy of nostalgia, retro-futurism, floating, travel, and memory.</p><p>Choose one of the ten tracks to enter its visual world; adjust motion and light or remix the particles. A Spotify player is available for each track. For live sound-reactive visuals, start music and explicitly share browser tab audio or use the microphone; Spotify iframe audio cannot be read directly. Audio stays local in your browser.</p><button class="pill" id="aboutClose">RETURN TO GALAXY</button></div></div>
+<script>
+(()=>{
+'use strict';
+const tracks=[
+{name:'15 Step',tag:'ASYMMETRY / IGNITION',color:'#ff9b61',alt:'#ec4568',motion:44,glow:80,story:'An ignition sequence. Syncopated rhythms become rapid orange signals and fragments of light: an energetic, playful departure into a retro-futuristic galaxy.'},
+{name:'Bodysnatchers',tag:'FRICTION / VELOCITY',color:'#ff5c5c',alt:'#ed9d43',motion:53,glow:83,story:'A world of friction and acceleration. Rough guitar textures become streaks of hot red light, unstable orbits, and magnetic turbulence.'},
+{name:'Nude',tag:'WEIGHTLESS / LONGING',color:'#9ba5f9',alt:'#dd8ed1',motion:12,glow:59,story:'Time slows down. A quiet blue-violet nebula opens around a drifting figure, suspended between memory, longing, and the unknown.'},
+{name:'Weird Fishes / Arpeggi',tag:'DRIFTING / SEARCHING',color:'#55c5d0',alt:'#537cc0',motion:25,glow:70,story:'Arpeggios become spiraling currents. The galaxy feels like an underwater universe, pulling the traveler deeper into a beautiful, unfamiliar landscape.'},
+{name:'All I Need',tag:'ATTRACTION / GRAVITY',color:'#a679d7',alt:'#e2a2a8',motion:30,glow:58,story:'Gravity holds everything close. Dark purple dust gathers around a bright center, building tension between distance and desire.'},
+{name:'Faust Arp',tag:'FRAGMENTS / MEMORY',color:'#b9b18a',alt:'#bc7791',motion:18,glow:57,story:'Brief and delicate. Thin paths, soft gold fragments, and uneven constellations appear like recollections in motion.'},
+{name:'Reckoner',tag:'SHIMMER / TRANSCENDENCE',color:'#e9bc80',alt:'#c8a4e8',motion:33,glow:84,story:'Light scatters across the void like tiny bells. Organic, almost classical textures become a golden field of orbiting particles.'},
+{name:'House of Cards',tag:'INTIMACY / HAZE',color:'#ef9e9e',alt:'#f3bd82',motion:14,glow:63,story:'A warm and uncertain atmosphere. Soft rose-colored dust hovers at the edge of a distant home, somewhere between dream and reality.'},
+{name:'Jigsaw Falling Into Place',tag:'MOMENTUM / COLLISION',color:'#ff9863',alt:'#d05b89',motion:48,glow:76,story:'The universe accelerates again. Sharp motion and converging trails resemble a late-night chase through a nostalgic science-fiction city.'},
+{name:'Videotape',tag:'FAREWELL / AFTERIMAGE',color:'#b2b4cb',alt:'#dec7a8',motion:6,glow:43,story:'The final transmission. A nearly still universe: pale light, fading memories, and the quiet feeling of looking back on an entire journey.'}
+];
+const spotifyTrackIds=["4oXg7xT4ksBxHTx8PcmSXw", "4pWIwnnqx8k01fuF95UMIg", "35YyxFpE0ZTOoqFx5bADW8", "4wajJ1o7jWIg62YqpkHC7S", "5Qv2Nby1xTr9pQyjkrc94J", "15irEKZ9D6FQqLoZ1qJ1Cx", "02ppMPbg1OtEdHgoPqoqju", "48X4D1FYOShPz2VF3YdfCF", "0YJ9FWWHn9EfnN0lHwbzvV", "4T1iiabe7G0UjWQJCY6NE2"];
+const cv=document.getElementById('sky'),ctx=cv.getContext('2d',{alpha:false});if(!ctx)return;
+const el=id=>document.getElementById(id);const strip=el('trackStrip');let dpr=1,w=0,h=0,now=0,selected=-1,hover=-1,mouse={x:0,y:0,active:false},drag={active:false,x:0,y:0},pan={x:0,y:0},particles=[],stars=[],nebula=[],orbits=[],currentMotion=60,currentGlow=70,seed=33;
+const rng=(a,b)=>a+Math.random()*(b-a),clamp=(a,l,r)=>Math.max(l,Math.min(r,a));function hex(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}function rgba(h,a){const c=hex(h);return `rgba(${c[0]},${c[1]},${c[2]},${a})`}
+function resize(){dpr=Math.min(window.devicePixelRatio||1,2);w=window.innerWidth;h=window.innerHeight;cv.width=Math.floor(w*dpr);cv.height=Math.floor(h*dpr);cv.style.width=w+'px';cv.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);stars=Array.from({length:Math.floor(Math.min(440,130+w*h/4300))},()=>({x:Math.random(),y:Math.random(),r:rng(.4,1.5),a:rng(.2,.9),s:rng(.2,1.4)}));nebula=Array.from({length:36},()=>({x:rng(.1,.9),y:rng(.13,.88),r:rng(75,225),a:rng(.012,.06),c:tracks[Math.floor(rng(0,10))].color}))}
+function initParticles(){particles=Array.from({length:165},(_,i)=>({angle:rng(0,Math.PI*2),rad:Math.pow(Math.random(),.67),z:rng(.2,1),r:rng(.55,1.9),phase:rng(0,Math.PI*2),kind:i%7}))}
+function layout(time=now){const mobile=w<801;let mx=w*(mobile?.5:.47),my=h*(mobile?.47:.51),sx=Math.min(w*(mobile?.42:.34),380),sy=Math.min(h*(mobile?.31:.32),245);return tracks.map((t,i)=>{let a=i*Math.PI*2/10-Math.PI*.73;let rr=(i%3===0?1.08:i%3===1?.76:1.26);return {x:mx+Math.cos(a)*sx*rr+pan.x+Math.sin(time*.25+i*1.9)*(mobile?5:11),y:my+Math.sin(a)*sy*rr+pan.y+Math.cos(time*.19+i*2.3)*(mobile?7:14),r:mobile?13+(i%3)*3:17+(i%3)*4,i}})}
+function dot(x,y,r,c,a){ctx.beginPath();ctx.arc(x,y,Math.max(.1,r),0,Math.PI*2);ctx.fillStyle=rgba(c,a);ctx.fill()}
+function glow(x,y,r,color,opacity){const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,rgba(color,opacity));g.addColorStop(.25,rgba(color,opacity*.28));g.addColorStop(1,rgba(color,0));ctx.fillStyle=g;ctx.fillRect(x-r,y-r,2*r,2*r)}
+function bg(time){ctx.fillStyle='#060713';ctx.fillRect(0,0,w,h);const center=ctx.createRadialGradient(w*.5,h*.43,0,w*.5,h*.43,Math.max(w,h)*.74);center.addColorStop(0,'#17112b');center.addColorStop(.45,'#0c0b1e');center.addColorStop(1,'#050611');ctx.fillStyle=center;ctx.fillRect(0,0,w,h);for(const n of nebula)glow(n.x*w+pan.x*.13,n.y*h+pan.y*.13,n.r,n.c,n.a);for(const s of stars){let x=s.x*w+pan.x*.03,y=s.y*h+pan.y*.03;ctx.beginPath();ctx.arc(x,y,s.r,0,7);ctx.fillStyle=`rgba(222,219,248,${s.a*(.84+.16*Math.sin(time*s.s+s.x*20))})`;ctx.fill()}}
+function drawGalaxy(time){const nodes=layout(time),ox=w*(w<800?.5:.47)+pan.x,oy=h*(w<800?.47:.51)+pan.y;glow(ox,oy,Math.min(w,h)*.33,'#8d65b9',.12);ctx.save();ctx.strokeStyle='rgba(181,161,224,.08)';ctx.lineWidth=1;for(let i=0;i<3;i++){ctx.beginPath();ctx.ellipse(ox,oy,Math.min(w*.34,400)*(i*.27+.42),Math.min(h*.28,250)*(i*.29+.4),-.36,0,7);ctx.stroke()}ctx.restore();nodes.forEach((p,i)=>{let t=tracks[i],pulse=Math.sin(time*1.3+i)*1.8,focus=hover===i;glow(p.x,p.y,p.r*(focus?6:4.2),t.color,focus?.35:.22);glow(p.x-p.r*.2,p.y-p.r*.2,p.r*1.5,t.alt,.3);const sphere=ctx.createRadialGradient(p.x-p.r*.35,p.y-p.r*.35,1,p.x,p.y,p.r+1);sphere.addColorStop(0,'#f6e8f5');sphere.addColorStop(.22,t.color);sphere.addColorStop(.72,t.alt);sphere.addColorStop(1,'#1e142d');ctx.beginPath();ctx.arc(p.x,p.y,p.r+pulse*(focus?1:0),0,7);ctx.fillStyle=sphere;ctx.fill();ctx.lineWidth=focus?2:1;ctx.strokeStyle=rgba(t.color,focus?.95:.48);ctx.stroke();ctx.save();ctx.translate(p.x,p.y);ctx.rotate(-.37+i*.13);ctx.beginPath();ctx.ellipse(0,0,p.r*1.75,p.r*.37,0,Math.PI*.1,Math.PI*1.9);ctx.strokeStyle=rgba(t.color,.24);ctx.lineWidth=1;ctx.stroke();ctx.restore();const show= w>800||hover===i; if(show){ctx.font=(focus?'600 ':'400 ')+(w<800?'10':'11')+'px DM Sans, sans-serif';ctx.fillStyle=focus?'#fff':'rgba(224,217,235,.7)';ctx.textAlign='center';ctx.fillText(t.name.toUpperCase(),p.x,p.y+p.r+21)}})}
+// Calm but visibly alive: a wide, breathing nebula with independent stellar drift.
+// Audio emphasizes slow luminosity and expanding waves, not rapid orbital spinning.
+function drawWorld(time){
+ const t=tracks[selected];if(!t)return;
+ const mobile=w<801,cx=w*(mobile?.5:.43),cy=h*(mobile?.42:.51);
+ const base=Math.min(w,h)*(mobile?.46:.55);
+ const reactive=liveMode!=='preset';
+ const motion=currentMotion/100,light=currentGlow/100;
+ const breathe=Math.sin(time*(.9+motion*.30)+selected*.43)*.5+.5;
+ const secondary=Math.sin(time*.46+selected*1.13)*.5+.5;
+ const energy=reactive?clamp(live.level*.65+live.bass*.35,0,1):(.24+breathe*.30);
+ const beat=reactive?live.beat:(Math.pow(Math.max(0,Math.sin(time*(1.35+motion*.95)+selected)),5)*.24);
+ const pulse=energy*.12+beat*.29;
+ const expansion=1+pulse;
+ // Broad overlapping, slowly-moving light clouds give the nebula its physical volume.
+ glow(cx+Math.sin(time*.21)*base*.24,cy+Math.cos(time*.17)*base*.12,base*2.55*expansion,t.alt,light*(.11+energy*.10));
+ glow(cx-Math.sin(time*.27+.8)*base*.20,cy+Math.sin(time*.23)*base*.18,base*1.83*expansion,t.color,light*(.23+energy*.22));
+ glow(cx+Math.cos(time*.29+1.2)*base*.35,cy-Math.sin(time*.24)*base*.18,base*1.12,t.alt,light*(.07+beat*.15));
+ // Diffuse ripples follow the dynamics, with no dizzying angular motion.
+ ctx.save();ctx.translate(cx,cy);ctx.rotate(-.22);
+ for(let ring=0;ring<3;ring++){
+  ctx.beginPath();ctx.ellipse(0,0,base*(.59+ring*.40)*(1+pulse*.48),base*(.31+ring*.19)*(1+pulse*.48),0,0,Math.PI*2);
+  ctx.strokeStyle=rgba(ring%2?t.alt:t.color,light*(.08+energy*.065-ring*.012));ctx.lineWidth=.8+beat*.5;ctx.stroke();
+ }
+ ctx.restore();
+ particles.forEach((p,i)=>{
+  const distance=base*(.16+p.rad*1.40)*(1+pulse*(reactive?1.35:.52));
+  const driftScale=base*(.055+motion*.11)*(.55+p.z*.6);
+  const driftX=Math.sin(time*(.22+motion*.18)+p.phase)*driftScale+Math.cos(time*.13+p.angle)*driftScale*.4;
+  const driftY=Math.cos(time*(.17+motion*.15)+p.phase*1.3)*driftScale*.68;
+  // A tiny orbital phase change keeps the constellation traveling without spinning.
+  const angle=p.angle+Math.sin(time*.12+p.phase)*(.045+motion*.09);
+  // Musical onsets create a visible outward displacement; slower natural drift remains underneath.
+  const strike=reactive?beat*base*(.13+.12*p.z):0;
+  const x=cx+Math.cos(angle)*(distance+strike)+driftX;
+  const y=cy+Math.sin(angle)*(distance+strike)*.72+driftY;
+  const sparkle=reactive?live.high*.35:0;
+  const opacity=clamp((.34+p.z*.38+energy*.20+beat*.46+sparkle)*light,.1,1);
+  const size=p.r*(.75+light*.31+beat*(reactive?1.6:.25))*(.68+p.z*.42);
+  dot(x,y,size,p.kind%5===0?t.alt:t.color,opacity);
+ });
+ // A real, substantial floating planet in each song universe (not a tiny light point).
+ // The large illuminated sphere stays readable against the gently breathing nebula.
+ const planetRadius=base*(mobile?.39:.43)*(1+pulse*.13);
+ const px=cx+Math.sin(time*.25+selected)*base*.045;
+ const py=cy+Math.cos(time*.19+selected*.7)*base*.035;
+ glow(px,py,planetRadius*2.5,t.color,light*(.16+beat*.10));
+ ctx.save();
+ ctx.beginPath();ctx.arc(px,py,planetRadius,0,Math.PI*2);ctx.clip();
+ const surface=ctx.createRadialGradient(px-planetRadius*.42,py-planetRadius*.52,planetRadius*.06,px+planetRadius*.18,py+planetRadius*.18,planetRadius*1.38);
+ surface.addColorStop(0,'#f6e9fa');surface.addColorStop(.16,t.alt);surface.addColorStop(.52,t.color);surface.addColorStop(.78,'#2a244d');surface.addColorStop(1,'#090b1d');
+ ctx.fillStyle=surface;ctx.fillRect(px-planetRadius,py-planetRadius,2*planetRadius,2*planetRadius);
+ // Subtle curved atmospheric bands follow the sphere rather than spinning chaotically.
+ for(let k=0;k<9;k++){
+  const yy=py-planetRadius*.79+k*planetRadius*.21+Math.sin(time*.12+k*1.5)*planetRadius*.018;
+  ctx.beginPath();ctx.ellipse(px+Math.sin(k*2.1)*planetRadius*.12,yy,planetRadius*(.75+Math.sin(k*.7)*.18),planetRadius*.10,-.22,0,Math.PI*2);
+  ctx.strokeStyle=rgba(k%2?t.color:t.alt,.09+light*.055);ctx.lineWidth=planetRadius*(k%3===0?.048:.024);ctx.stroke();
+ }
+ const terminator=ctx.createLinearGradient(px-planetRadius,py,px+planetRadius,py);
+ terminator.addColorStop(0,'rgba(255,255,255,.09)');terminator.addColorStop(.53,'rgba(255,255,255,0)');terminator.addColorStop(1,'rgba(0,0,14,.39)');ctx.fillStyle=terminator;ctx.fillRect(px-planetRadius,py-planetRadius,planetRadius*2,planetRadius*2);
+ ctx.restore();
+ ctx.beginPath();ctx.arc(px,py,planetRadius,0,Math.PI*2);ctx.lineWidth=1.5;ctx.strokeStyle=rgba(t.alt,.45+beat*.15);ctx.stroke();
+ // Thin orbital ring reinforces scale and echoes the central journey motif.
+ ctx.save();ctx.translate(px,py);ctx.rotate(-.36);ctx.beginPath();ctx.ellipse(0,0,planetRadius*1.67,planetRadius*.35,0,.08*Math.PI,.92*Math.PI);ctx.strokeStyle=rgba(t.alt,.25);ctx.lineWidth=1.7;ctx.stroke();ctx.beginPath();ctx.ellipse(0,0,planetRadius*1.67,planetRadius*.35,0,1.08*Math.PI,1.92*Math.PI);ctx.strokeStyle=rgba(t.alt,.54);ctx.lineWidth=2;ctx.stroke();ctx.restore();
+ ctx.save();ctx.textAlign='center';ctx.font='10px DM Sans';ctx.fillStyle='rgba(237,227,246,.62)';
+ ctx.fillText('SONIC ENVIRONMENT   /   '+String(selected+1).padStart(2,'0'),cx,cy+base*.87);ctx.restore();
+}
+let captureStream=null,audioContext=null,analyser=null,spectrum=null,sourceNode=null,liveMode='preset',live={bass:0,mid:0,high:0,level:0,beat:0},smoothedEnergy=0,lastBeatAt=0,previousBands=null,fluxBaseline=0,beatFlash=0;
+function setSyncStatus(message){el('syncStatus').textContent=message}
+function stopAudioSync(message){if(captureStream){captureStream.getTracks().forEach(track=>track.stop());captureStream=null}if(sourceNode){try{sourceNode.disconnect()}catch(e){}sourceNode=null}if(analyser){try{analyser.disconnect()}catch(e){}analyser=null}if(audioContext){audioContext.close().catch(()=>{});audioContext=null}spectrum=null;liveMode='preset';live={bass:0,mid:0,high:0,level:0,beat:0};smoothedEnergy=0;previousBands=null;fluxBaseline=0;beatFlash=0;el('audioMeter').style.width='0%';el('stopSync').disabled=true;el('captureTab').classList.remove('active');el('captureMic').classList.remove('active');setSyncStatus(message||'Sync stopped. Visuals follow the song preset.');}
+async function beginAudioSync(kind){stopAudioSync('Requesting permission…');try{if(!window.isSecureContext)throw new Error('Open this website over HTTPS or localhost to enable audio capture.');if(!navigator.mediaDevices)throw new Error('Audio capture is unavailable in this browser.');const stream=kind==='tab'?await navigator.mediaDevices.getDisplayMedia({video:true,audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}}):await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});if(!stream.getAudioTracks().length){stream.getTracks().forEach(t=>t.stop());throw new Error('No audio was shared. Select a browser tab and enable “Share tab audio”.')}captureStream=stream;const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)throw new Error('Web Audio is not supported in this browser.');audioContext=new Ctx();await audioContext.resume();sourceNode=audioContext.createMediaStreamSource(stream);analyser=audioContext.createAnalyser();analyser.fftSize=2048;analyser.smoothingTimeConstant=.36;sourceNode.connect(analyser);spectrum=new Uint8Array(analyser.frequencyBinCount);liveMode=kind;el('stopSync').disabled=false;el(kind==='tab'?'captureTab':'captureMic').classList.add('active');setSyncStatus(kind==='tab'?'Listening to shared tab audio · LIVE (beat reactive)':'Listening to microphone · LIVE (beat reactive)');stream.getAudioTracks().forEach(t=>t.addEventListener('ended',()=>{if(captureStream===stream)stopAudioSync('Audio sharing ended.')}));stream.getVideoTracks().forEach(t=>t.addEventListener('ended',()=>{if(captureStream===stream)stopAudioSync('Tab sharing ended.')}));}catch(e){stopAudioSync('Could not start: '+(e.message||'permission denied'));}}
+function updateAudio(dt){
+ if(!analyser||!spectrum){live.beat=Math.max(0,live.beat-dt*3);return}
+ analyser.getByteFrequencyData(spectrum);
+ const hz=audioContext.sampleRate/analyser.fftSize;
+ function band(a,b){const lo=Math.max(1,Math.floor(a/hz)),hi=Math.min(spectrum.length,Math.ceil(b/hz));let total=0;for(let i=lo;i<hi;i++)total+=spectrum[i];return total/Math.max(1,hi-lo)/255}
+ const bass=band(45,190),mid=band(190,2000),high=band(2000,8500);
+ live.bass+=(bass-live.bass)*.35;live.mid+=(mid-live.mid)*.31;live.high+=(high-live.high)*.28;
+ const target=Math.min(1,(bass*.52+mid*.32+high*.16)*2.8);
+ live.level+=(target-live.level)*.25;
+ // Detect musical attacks (kick, snare and rhythmic transients) rather than raw loudness.
+ // Adaptive baseline allows quiet songs to trigger while avoiding constant pulsing on sustained sounds.
+ let flux=0;
+ if(!previousBands)previousBands=new Float32Array(48);
+ for(let k=0;k<48;k++){
+  const idx=Math.max(2,Math.floor(2*Math.pow(1.117,k)));
+  const current=spectrum[Math.min(idx,spectrum.length-1)]/255;
+  flux+=Math.max(0,current-previousBands[k]);previousBands[k]=current;
+ }
+ flux/=48;
+ fluxBaseline+=(flux-fluxBaseline)*.025;
+ smoothedEnergy+=(bass-smoothedEnergy)*.055;
+ const bassAttack=bass-smoothedEnergy;
+ const stamp=performance.now();
+ const transient=(flux>Math.max(.012,fluxBaseline*1.75) && flux>.009);
+ const kick=bass>.07 && bassAttack>Math.max(.022,smoothedEnergy*.18);
+ if((transient||kick)&&stamp-lastBeatAt>170){beatFlash=1;lastBeatAt=stamp}
+ // Crisp attack, smooth 280 ms falloff: particles visibly jump on each detected beat.
+ beatFlash=Math.max(0,beatFlash-dt*3.5);
+ live.beat=beatFlash;
+ el('audioMeter').style.width=Math.round(Math.min(100,live.level*140))+'%';
+}
+el('captureTab').onclick=()=>beginAudioSync('tab');el('captureMic').onclick=()=>beginAudioSync('mic');el('stopSync').onclick=()=>stopAudioSync();window.addEventListener('pagehide',()=>stopAudioSync());
+let prev=0;function frame(ms){let dt=Math.min((ms-prev)/1000,.05)||.016;prev=ms;now+=dt;updateAudio(dt);bg(now);if(selected===-1)drawGalaxy(now);else drawWorld(now);requestAnimationFrame(frame)}
+function choose(i){selected=(i+10)%10;const t=tracks[selected];const spotifySource='https://open.spotify.com/embed/track/'+spotifyTrackIds[selected]+'?utm_source=generator&theme=0';if(el('spotifyPlayer').getAttribute('src')!==spotifySource)el('spotifyPlayer').setAttribute('src',spotifySource);el('spotifyType').textContent=t.name.toUpperCase();el('spotifyExplanation').textContent='Press Play in Spotify to listen to '+t.name+'.';el('trackNum').textContent=String(selected+1).padStart(2,'0')+' / 10';el('trackName').textContent=t.name;el('descriptor').textContent=t.tag;el('story').textContent=t.story;currentMotion=t.motion;currentGlow=t.glow;el('motion').value=currentMotion;el('glow').value=currentGlow;el('motionVal').textContent=currentMotion+'%';el('glowVal').textContent=currentGlow+'%';document.documentElement.style.setProperty('--accent',t.color);el('panel').classList.add('visible');el('intro').classList.add('hide');el('hint').classList.add('hide');el('mobileGuide').classList.add('hide');document.querySelectorAll('.track-chip').forEach((b,j)=>b.classList.toggle('active',j===selected));if(w<801){strip.children[selected]?.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'})}}
+function reset(){/* Unload the Spotify iframe to reliably stop playback on return to the galaxy. */
+const player=el('spotifyPlayer');if(player.getAttribute('src')!=='about:blank')player.setAttribute('src','about:blank');
+selected=-1;hover=-1;el('panel').classList.remove('visible');el('hint').classList.remove('hide');el('mobileGuide').classList.remove('hide');document.querySelectorAll('.track-chip').forEach(b=>b.classList.remove('active'))}
+tracks.forEach((t,i)=>{let b=document.createElement('button');b.className='track-chip';b.style.setProperty('--dot',t.color);b.innerHTML='<span class="dot"></span><span>'+String(i+1).padStart(2,'0')+' &nbsp; '+t.name+'</span>';b.onclick=()=>choose(i);strip.append(b)});
+function locate(e){const rect=cv.getBoundingClientRect();return {x:e.clientX-rect.left,y:e.clientY-rect.top}}
+cv.addEventListener('pointermove',e=>{let p=locate(e);mouse=p;if(selected===-1){if(drag.active){pan.x=clamp(pan.x+p.x-drag.x,-w*.25,w*.25);pan.y=clamp(pan.y+p.y-drag.y,-h*.25,h*.25);drag.x=p.x;drag.y=p.y}else{const nodes=layout();let found=nodes.find(n=>Math.hypot(p.x-n.x,p.y-n.y)<n.r+20);hover=found?found.i:-1;cv.style.cursor=hover>=0?'pointer':'grab'}}});
+cv.addEventListener('pointerdown',e=>{drag={active:true,...locate(e),original:locate(e)};cv.setPointerCapture(e.pointerId)});
+cv.addEventListener('pointerup',e=>{let p=locate(e),moved=Math.hypot(p.x-drag.original.x,p.y-drag.original.y);drag.active=false;if(selected===-1&&moved<12){let node=layout().find(n=>Math.hypot(p.x-n.x,p.y-n.y)<n.r+24);if(node)choose(node.i)}});
+cv.addEventListener('pointercancel',()=>drag.active=false);
+el('close').onclick=reset;el('reset').onclick=()=>{pan={x:0,y:0};reset()};el('nextTrack').onclick=()=>choose(selected+1);el('motion').oninput=e=>{currentMotion=Number(e.target.value);el('motionVal').textContent=currentMotion+'%'};el('glow').oninput=e=>{currentGlow=Number(e.target.value);el('glowVal').textContent=currentGlow+'%'};el('randomize').onclick=()=>{particles.forEach(p=>{p.angle=rng(0,Math.PI*2);p.rad=Math.pow(Math.random(),.67);p.phase=rng(0,7)});currentMotion=Math.floor(rng(10,55));currentGlow=Math.floor(rng(30,100));el('motion').value=currentMotion;el('glow').value=currentGlow;el('motionVal').textContent=currentMotion+'%';el('glowVal').textContent=currentGlow+'%'};
+el('aboutBtn').onclick=()=>el('about').classList.add('visible');el('aboutClose').onclick=()=>el('about').classList.remove('visible');el('about').onclick=e=>{if(e.target===el('about'))el('about').classList.remove('visible')};window.addEventListener('keydown',e=>{if(e.key==='Escape'){el('about').classList.remove('visible');reset()}if(selected>=0&&e.key==='ArrowRight')choose(selected+1);if(selected>=0&&e.key==='ArrowLeft')choose(selected-1)});window.addEventListener('resize',resize);resize();initParticles();requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
