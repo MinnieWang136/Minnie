@@ -1,1455 +1,370 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A Measure of Daylight</title>
-
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>A Measure of Daylight — Light Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-:root {
-  --ink: #181816;
-  --paper: #f7f6f1;
-  --line: rgba(24,24,22,.18);
-}
-
-* { box-sizing: border-box; }
-
-html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  overflow: hidden;
-  font-family: Arial, Helvetica, sans-serif;
-  color: var(--ink);
-  background: var(--paper);
-}
-
-button, input, textarea { font: inherit; }
-button { cursor: pointer; }
-button:disabled { opacity: .4; cursor: default; }
-
-button:focus-visible, input:focus-visible,
-textarea:focus-visible, .color-ring:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 4px;
-}
-
-[hidden] { display: none !important; }
-
-/* Full-screen experiment */
-#experiment {
-  position: fixed;
-  inset: 0;
-  height: 100vh;
-  height: 100dvh;
-  display: grid;
-  grid-template-columns: minmax(0,1.65fr) minmax(320px,.85fr);
-  overflow: hidden;
-}
-
-/* Left panel stays in place */
-.room-section {
-  position: relative;
-  height: 100%;
-  min-height: 0;
-  overflow: hidden;
-  background: #ddd;
-}
-
-.room {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  transition: filter .2s;
-}
-
-.wall {
-  position: absolute;
-  inset: 0 0 28%;
-  background: #e8e4dc;
-}
-
-.floor {
-  position: absolute;
-  left: -10%;
-  right: -10%;
-  bottom: -15%;
-  height: 50%;
-  background: #bda98d;
-  transform: perspective(800px) rotateX(58deg);
-  transform-origin: center top;
-}
-
-.corner-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 72%;
-  height: 1px;
-  background: #0001;
-}
-
-.window {
-  position: absolute;
-  width: 35%;
-  height: 57%;
-  left: 12%;
-  top: 13%;
-  border: 10px solid #f8f8f2;
-  overflow: hidden;
-  box-shadow: 0 8px 35px #0001;
-}
-
-.window::before, .window::after {
-  content: "";
-  position: absolute;
-  background: #f8f8f2;
-  z-index: 7;
-}
-
-.window::before {
-  left: 50%;
-  top: 0;
-  width: 7px;
-  height: 100%;
-  transform: translateX(-50%);
-}
-
-.window::after {
-  left: 0;
-  top: 50%;
-  width: 100%;
-  height: 7px;
-}
-
-.sky {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(#bdd6e5, #e9ebdc 72%, #c7c6a8);
-}
-
-.diffusion {
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,.78);
-  z-index: 4;
-}
-
-.curtain {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  z-index: 5;
-  background: repeating-linear-gradient(
-    90deg, #f8f7eff0 0 12px, #e1e0d6b8 22px, #f8f7efe6 34px
-  );
-  box-shadow: 8px 0 20px #0001;
-}
-
-.light-beam {
-  position: absolute;
-  width: 77%;
-  height: 72%;
-  left: 26%;
-  top: 30%;
-  z-index: 2;
-  background: linear-gradient(
-    110deg, #fff2b7b8, #fff8da3b, transparent 68%
-  );
-  clip-path: polygon(0 0,44% 0,100% 100%,20% 100%);
-  transform-origin: top left;
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
-.shadow {
-  position: absolute;
-  width: 56%;
-  height: 18%;
-  left: 22%;
-  bottom: 8%;
-  z-index: 3;
-  background: #36332c;
-  pointer-events: none;
-}
-
-.chair {
-  position: absolute;
-  right: 20%;
-  bottom: 20%;
-  width: 112px;
-  height: 150px;
-  z-index: 4;
-  filter: drop-shadow(12px 18px 10px #0002);
-}
-
-.chair-back {
-  position: absolute;
-  width: 100%;
-  height: 72px;
-  bottom: 75px;
-  background: #7f7a70;
-  border-radius: 2px;
-}
-
-.chair-seat {
-  position: absolute;
-  width: 100%;
-  height: 18px;
-  bottom: 58px;
-  background: #6f6b63;
-}
-
-.leg {
-  position: absolute;
-  width: 7px;
-  height: 62px;
-  bottom: 0;
-  background: #504d47;
-}
-
-.leg.left { left: 15px; }
-.leg.right { right: 15px; }
-
-.room-info {
-  position: absolute;
-  top: 30px;
-  left: 32px;
-  z-index: 20;
-}
-
-.project-name {
-  font-size: 11px;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-}
-
-.step { margin-top: 7px; font-size: 11px; opacity: .55; }
-
-/* Only this right panel scrolls during the experiment */
-.controls {
-  height: 100%;
-  min-height: 0;
-  padding: 28px 30px 36px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  overscroll-behavior-y: contain;
-  scrollbar-gutter: stable;
-  background: #faf9f5;
-  border-left: 1px solid var(--line);
-}
-
-.prompt-label, .section-label {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: .14em;
-  opacity: .6;
-}
-
-h1 {
-  font-size: 46px;
-  font-weight: 400;
-  letter-spacing: -.045em;
-  margin: 7px 0 22px;
-}
-
-.section-label {
-  padding-top: 14px;
-  margin-bottom: 18px;
-  border-top: 1px solid var(--line);
-}
-
-.control { margin-bottom: 20px; }
-
-.control-header {
-  display: flex;
-  justify-content: space-between;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: .09em;
-  margin-bottom: 10px;
-}
-
-.value { opacity: .55; }
-
-.range-labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 9px;
-  opacity: .5;
-  margin-top: 7px;
-}
-
-input[type="range"] {
-  appearance: none;
-  display: block;
-  width: 100%;
-  height: 2px;
-  margin: 8px 0;
-  background: #77766f;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  appearance: none;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--ink);
-  cursor: pointer;
-}
-
-input[type="range"]::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
-  border: 0;
-  border-radius: 50%;
-  background: var(--ink);
-  cursor: pointer;
-}
-
-.color-pickers {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.color-picker { min-width: 0; }
-
-.swatch-title {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: .09em;
-}
-
-.color-ring {
-  position: relative;
-  width: 86px;
-  height: 86px;
-  border-radius: 50%;
-  margin: 10px auto 14px;
-  background: conic-gradient(
-    from 90deg, red, #ff0, #0f0, #0ff, #00f, #f0f, red
-  );
-  touch-action: none;
-  cursor: crosshair;
-}
-
-.color-ring::before {
-  content: "";
-  position: absolute;
-  inset: 13px;
-  border-radius: 50%;
-  background: #faf9f5;
-}
-
-.color-ring-center {
-  position: absolute;
-  inset: 25px;
-  border-radius: 50%;
-  border: 1px solid #0002;
-  pointer-events: none;
-}
-
-.color-marker {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  border: 2px solid white;
-  box-shadow: 0 0 0 1px #222;
-  border-radius: 50%;
-  transform: translate(-50%,-50%);
-  pointer-events: none;
-}
-
-.color-picker label {
-  display: block;
-  font-size: 10px;
-  margin: 15px 0 8px;
-}
-
-.color-entry { display: flex; gap: 8px; align-items: center; }
-
-.color-code {
-  width: 100%;
-  min-width: 0;
-  padding: 6px;
-  border: 1px solid var(--line);
-  background: transparent;
-  font-size: 11px;
-}
-
-input[type="color"] {
-  flex: 0 0 26px;
-  width: 26px;
-  height: 26px;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-.note {
-  font-size: 11px;
-  line-height: 1.5;
-  opacity: .6;
-}
-
-.controls .note { margin: 16px 0; }
-
-button {
-  border: 1px solid var(--ink);
-  background: transparent;
-  padding: 11px 16px;
-  font-size: 11px;
-  letter-spacing: .05em;
-}
-
-button:hover:not(:disabled) { background: var(--ink); color: white; }
-
-.record-button, .gallery-link {
-  display: block;
-  width: 100%;
-  margin-top: 10px;
-}
-
-.admin-access { border-top: 1px solid var(--line); margin-top: 20px; padding: 15px 0; max-width: 700px; }
-.admin-access summary { cursor: pointer; font-size: 11px; letter-spacing: .09em; }
-.admin-form { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
-.admin-form input { border: 1px solid var(--line); background: transparent; padding: 10px; min-width: 175px; flex: 1; }
-.admin-delete { border-color: #a34242; color: #963a3a; }
-.admin-delete:hover:not(:disabled) { background: #963a3a; color: white; }
-/* Results and gallery have their own scrolling screens */
-.screen {
-  position: fixed;
-  inset: 0;
-  overflow-y: auto;
-  padding: 30px 40px;
-  background: var(--paper);
-}
-
-h2 {
-  font-weight: 400;
-  font-size: 42px;
-  letter-spacing: -.04em;
-  margin: 14px 0 10px;
-}
-
-.results-intro {
-  max-width: 620px;
-  font-size: 14px;
-  line-height: 1.5;
-  opacity: .7;
-}
-
-.result-grid, .gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(4,minmax(0,1fr));
-  gap: 18px;
-  margin-top: 24px;
-}
-
-.result-card { border-top: 1px solid var(--ink); padding-top: 12px; }
-
-.result-preview {
-  position: relative;
-  height: 160px;
-  overflow: hidden;
-  background: #ddd;
-  border: 1px solid #0001;
-}
-
-/* Scale furniture appropriately inside previews */
-.result-preview .chair {
-  width: 40px;
-  height: 54px;
-  filter: drop-shadow(4px 6px 3px #0002);
-}
-
-.result-preview .chair-back { height: 26px; bottom: 27px; }
-.result-preview .chair-seat { height: 6px; bottom: 21px; }
-.result-preview .leg { width: 3px; height: 22px; }
-.result-preview .leg.left { left: 5px; }
-.result-preview .leg.right { right: 5px; }
-.result-preview .window { border-width: 4px; }
-.result-preview .window::before { width: 3px; }
-.result-preview .window::after { height: 3px; }
-
-.result-emotion { font-size: 22px; margin: 12px 0 8px; }
-
-.result-data {
-  font-size: 10px;
-  line-height: 1.7;
-  text-transform: uppercase;
-}
-
-.save-panel {
-  max-width: 700px;
-  margin-top: 26px;
-  border-top: 1px solid var(--line);
-  padding-top: 16px;
-}
-
-.save-panel label { display: block; font-size: 12px; margin: 12px 0 6px; }
-
-.save-panel input, .save-panel textarea {
-  width: 100%;
-  padding: 10px;
-  background: transparent;
-  border: 1px solid var(--line);
-}
-
-.save-panel textarea { height: 70px; resize: vertical; }
-
-.gallery-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin: 16px 0;
-}
-
-.status { font-size: 12px; min-height: 18px; }
-
-.saved-card { border: 1px solid var(--line); padding: 14px; }
-.saved-card h3 { font-size: 19px; font-weight: 400; overflow-wrap: anywhere; }
-.saved-card p { font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
-.saved-card time { font-size: 10px; opacity: .6; }
-
-.saved-previews {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 7px;
-}
-
-.saved-previews .result-preview { height: 100px; }
-
-.preview-label {
-  position: absolute;
-  bottom: 6px;
-  left: 6px;
-  font-size: 8px;
-  background: #ffffffe0;
-  padding: 3px;
-}
-
-.saved-card .gallery-actions { flex-direction: column; }
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  margin: 24px 0;
-  font-size: 12px;
-}
-
-@media (max-width: 800px) {
-  #experiment {
-    grid-template-columns: minmax(0,1fr) minmax(280px,1fr);
-  }
-
-  .controls { padding: 22px 18px 30px; }
-  .room-info { top: 20px; left: 18px; }
-  .project-name { font-size: 9px; }
-  .result-grid, .gallery-grid { grid-template-columns: repeat(2,1fr); }
-  .screen { padding: 24px 20px; }
-}
-
-@media (max-width: 520px) {
-  #experiment { grid-template-columns: minmax(0,1fr) minmax(220px,1.4fr); }
-  .controls { padding: 18px 12px 28px; }
-  h1 { font-size: 32px; }
-  .color-pickers { gap: 10px; }
-  .room-section > .room .chair { right: 8%; transform: scale(.65); }
-  .room-info { left: 10px; right: 8px; }
-  .result-grid, .gallery-grid { grid-template-columns: 1fr; }
-}
+:root{--ink:#252924;--muted:#77786f;--paper:#f5f4ef;--line:#d9d9d1;--accent:#506653;--panel:#fcfbf8}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--paper);font:14px/1.45 'DM Sans',sans-serif}button,input,textarea{font:inherit}button{cursor:pointer}header{height:76px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 3.2vw;background:var(--panel)}.brand{font-family:'Instrument Serif',serif;font-size:27px;letter-spacing:-.3px}.eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700}.header-right{display:flex;gap:22px;align-items:center}.outline{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:0;padding:10px 15px}.outline:hover{border-color:var(--ink)}main{display:grid;grid-template-columns:minmax(0,1fr) 390px;height:calc(100dvh - 76px);min-height:560px}.viewport{position:relative;overflow:hidden;background:#dddcd3}.viewport canvas{display:block;width:100%;height:100%;touch-action:none}.overlay-top{position:absolute;left:30px;top:25px;pointer-events:none;color:#2a302e}.overlay-top .eyebrow{color:#49544f}.overlay-top h2{font:italic 37px/1 'Instrument Serif',serif;margin:9px 0}.hint{position:absolute;left:27px;bottom:24px;background:#fcfbf8dc;backdrop-filter:blur(10px);padding:12px 15px;font-size:11px;max-width:370px}.panel{background:var(--panel);border-left:1px solid var(--line);display:flex;flex-direction:column;min-height:0}.panel-content{padding:30px 30px 18px;overflow-y:auto;flex:1}.progress{display:flex;gap:5px;margin:14px 0 30px}.progress i{display:block;height:3px;background:#e2e3dc;flex:1}.progress i.active{background:var(--accent)}.step-count{color:var(--muted);font-size:11px;letter-spacing:.14em}.panel h1{font:43px/1.03 'Instrument Serif',serif;font-weight:400;margin:17px 0}.desc{color:#74786f;margin:0 0 27px;line-height:1.65}.label{display:block;margin:20px 0 10px;font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:700}.choice{width:100%;padding:13px 15px;text-align:left;border:1px solid var(--line);margin:0 0 9px;background:transparent;display:flex;justify-content:space-between;align-items:center}.choice:hover,.choice.selected{background:#e6ebe3;border-color:#8d9d8d}.choice span:last-child{font-family:'Instrument Serif',serif;font-size:21px}.tool-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.tool{border:1px solid var(--line);background:transparent;padding:12px 8px;text-align:center}.tool.selected{background:#e5eae3;border-color:#697f6c}.tool small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.range-head{display:flex;justify-content:space-between;margin:0 0 9px}.range-head b{font-weight:500}input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}input[type=color]{appearance:none;border:1px solid var(--line);background:transparent;width:58px;height:45px;padding:4px;cursor:pointer}.swatch-line{display:flex;gap:12px;align-items:center}.swatch-line span{flex:1}input[type=text],textarea{width:100%;padding:12px;border:1px solid var(--line);background:transparent;outline:none}textarea{resize:vertical;min-height:95px}.foot{border-top:1px solid var(--line);padding:19px 30px;display:flex;justify-content:space-between;gap:8px}.primary{background:var(--ink);color:white;border:1px solid var(--ink);padding:12px 21px;min-width:120px}.primary:hover{background:var(--accent)}button:disabled{opacity:.35;cursor:not-allowed}.minor{font-size:11px;color:var(--muted);margin-top:11px}.pills{display:flex;gap:6px;flex-wrap:wrap}.pill{border:1px solid var(--line);padding:7px 9px;background:transparent}.pill.selected{background:var(--ink);color:white}.toolbar{position:absolute;right:20px;bottom:20px;display:flex;gap:7px}.toolbar button{background:#fcfbf8ed;border:1px solid #dadbd6;padding:10px 12px}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);padding:13px 20px;color:white;background:#2e3831;z-index:20;display:none;max-width:85vw}.gallery{display:none;position:fixed;inset:0;z-index:12;background:#f5f4ef;padding:34px 5vw;overflow:auto}.gallery.visible{display:block}.gallery-header{display:flex;justify-content:space-between;align-items:center}.gallery h2{font:52px 'Instrument Serif',serif;font-weight:400}.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:17px}.gallery-card{background:white;padding:13px;border:1px solid var(--line)}.gallery-card img{width:100%;aspect-ratio:1.4;object-fit:cover;background:#ddd}.gallery-card h3{margin:9px 0 2px}.gallery-card p{font-size:12px;color:var(--muted)}.inline-actions{display:flex;gap:8px;margin-top:12px}.inline-actions button{padding:9px;font-size:11px;background:transparent;border:1px solid var(--line)}@media(max-width:900px){header{height:64px;padding:0 17px}.brand{font-size:22px}.header-right .eyebrow{display:none}main{display:flex;flex-direction:column;height:auto;min-height:calc(100dvh - 64px)}.viewport{height:48vh;min-height:300px}.panel{min-height:52vh;border-left:0}.panel-content{overflow:visible;padding:25px}.foot{padding:15px 25px}.overlay-top{top:15px;left:17px}.overlay-top h2{font-size:28px}.hint{bottom:14px;left:14px;font-size:10px}.toolbar{right:12px;bottom:12px}.panel h1{font-size:38px}}
+
+/* Softer editorial controls — rounded, accessible, still minimal. */
+:root { --ui-radius: 15px; }
+button, .choice, .tool, .pill, .gallery-card, input[type=text], textarea, input[type=color] { border-radius: var(--ui-radius); transition: background-color .2s ease, border-color .2s ease, transform .2s ease; }
+button:focus-visible,input:focus-visible,textarea:focus-visible { outline: 2px solid #647c67; outline-offset: 3px; }
+button:not(:disabled):active { transform: translateY(1px); }
+.primary { background:#39463d; border-color:#39463d; border-radius:999px; font-weight:600; padding:13px 22px; }
+.primary:hover { background:#556b59; border-color:#556b59; }
+.outline, .toolbar button, .inline-actions button { border-radius:999px; padding:11px 17px; }
+.pill { border-radius:999px; padding:9px 13px; }
+.choice { border-radius:17px; }
+.tool { border-radius:13px; }
+.hint { border-radius:12px; }
+.gallery-card { border-radius:18px; overflow:hidden; }
+.toast { border-radius:14px; }
+input[type=range] { accent-color:#607966; }
 </style>
 </head>
-
 <body>
-<main id="experiment">
-  <section class="room-section" aria-label="Live room preview">
-    <div class="room-info">
-      <div class="project-name">A Measure of Daylight</div>
-      <div class="step" id="step">01 / 04</div>
-    </div>
-
-    <div class="room" id="room">
-      <div class="wall"></div>
-      <div class="floor"></div>
-      <div class="corner-line"></div>
-      <div class="window">
-        <div class="sky"></div>
-        <div class="diffusion"></div>
-        <div class="curtain"></div>
-      </div>
-      <div class="light-beam"></div>
-      <div class="shadow"></div>
-      <div class="chair">
-        <div class="chair-back"></div>
-        <div class="chair-seat"></div>
-        <div class="leg left"></div>
-        <div class="leg right"></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="controls" aria-label="Room controls" tabindex="0">
-    <div class="prompt-label">Make this space feel</div>
-    <h1 id="emotion">CALM</h1>
-    <div class="section-label">01 — Daylight</div>
-
-    <div class="control">
-      <div class="control-header">
-        <label for="intensity">Intensity</label>
-        <output class="value" id="intensityValue">50</output>
-      </div>
-      <input id="intensity" type="range" min="0" max="100" value="50">
-      <div class="range-labels"><span>DIM</span><span>BRIGHT</span></div>
-    </div>
-
-    <div class="control">
-      <div class="control-header">
-        <label for="diffusion">Diffusion</label>
-        <output class="value" id="diffusionValue">50</output>
-      </div>
-      <input id="diffusion" type="range" min="0" max="100" value="50">
-      <div class="range-labels"><span>DIRECT</span><span>SOFT</span></div>
-    </div>
-
-    <div class="control">
-      <div class="control-header">
-        <label for="openness">Openness</label>
-        <output class="value" id="opennessValue">50</output>
-      </div>
-      <input id="openness" type="range" min="0" max="100" value="50">
-      <div class="range-labels"><span>FILTERED</span><span>OPEN</span></div>
-    </div>
-
-    <div class="control">
-      <div class="control-header">
-        <label for="direction">Direction</label>
-        <output class="value" id="directionValue">50</output>
-      </div>
-      <input id="direction" type="range" min="0" max="100" value="50">
-      <div class="range-labels"><span>INDIRECT</span><span>DIRECT</span></div>
-    </div>
-
-    <div class="section-label">02 — Surface</div>
-    <div class="color-pickers" id="colorPickers"></div>
-
-    <p class="note">
-      Drag a ring to choose a hue. Adjust saturation and brightness
-      for any shade. Arrow keys also adjust the ring.
-    </p>
-
-    <button class="record-button" id="recordButton">
-      THIS IS THE SPACE I NEED
-    </button>
-    <button class="gallery-link" id="openGallery">VIEW SAVED GALLERY</button>
-
-    <p class="note">
-      There is no correct setting. Adjust the room until it matches
-      your own interpretation of the word.
-    </p>
-  </section>
+<header><div class="brand">A Measure of Daylight <span style="font-size:13px;font-family:'DM Sans';color:var(--muted)">/ Light Study</span></div><div class="header-right"><span class="eyebrow">Prototype 01 · Refined</span><button class="outline" id="galleryOpen" type="button">Shared Gallery ↗</button></div></header>
+<main>
+<section class="viewport" id="viewport"><div class="overlay-top"><div class="eyebrow" id="moodLabel">01 / CALM</div><h2 id="roomHeadline">A room for calm.</h2></div><div class="hint" id="hint">Drag furniture or windows in the active step. Drag a window to the room corner to snap it onto the next wall.</div><div class="toolbar"><button id="resetView" title="Reset camera">Reset view ↺</button></div></section>
+<aside class="panel"><div class="panel-content"><div class="step-count" id="stepCount">01 / 08</div><div class="progress" id="progress"></div><div id="controls"></div></div><div class="foot"><button class="outline" id="back">← Back</button><button class="primary" id="next">Next step →</button></div></aside>
 </main>
-
-<section class="screen" id="results" hidden>
-  <div class="project-name">A Measure of Daylight</div>
-  <h2>Your Light Portrait</h2>
-  <p class="results-intro">
-    Four emotional prompts, four different relationships between
-    daylight and the surfaces around it.
-  </p>
-
-  <div class="result-grid" id="resultGrid"></div>
-
-  <div class="save-panel" id="savePanel">
-    <label for="portraitTitle">Name your light portrait (optional)</label>
-    <input id="portraitTitle" maxlength="80" placeholder="My afternoon light">
-
-    <label for="portraitNote">
-      What do these spaces remind you of? (optional)
-    </label>
-    <textarea id="portraitNote" maxlength="500"
-      placeholder="A place, a feeling, or a memory…"></textarea>
-
-    <div class="gallery-actions">
-      <button id="savePortrait">SAVE TO GALLERY</button>
-    </div>
-    <p class="status" id="saveStatus" role="status"></p>
-    <p class="note">
-      Submitted portraits are stored in the shared Light Library. Do not include personal or sensitive information. Download a copy if you wish.
-    </p>
-  </div>
-
-  <div class="gallery-actions">
-    <button id="resultsGallery">VIEW GALLERY</button>
-    <button id="downloadJpeg">DOWNLOAD JPEG</button>
-    <button id="downloadCurrent">DOWNLOAD JSON</button>
-    <button id="startAgain">START AGAIN</button>
-  </div>
-</section>
-
-<section class="screen" id="gallery" hidden>
-  <div class="project-name">A Measure of Daylight</div>
-  <h2>The Light Library</h2>
-  <p class="results-intro">
-    Different people, different needs. A collection of light,
-    color, and emotional comfort.
-  </p>
-  <p class="note">
-    This is a shared public library. Submitted portraits can be viewed by anyone with the website link. Do not include personal information.
-  </p>
-
-  <div class="gallery-actions">
-    <button id="closeGallery">BACK</button>
-    <button id="exportGallery">DOWNLOAD GALLERY</button>
-  </div>
-
-  <details class="admin-access" id="adminAccess">
-    <summary>RESEARCHER ACCESS</summary>
-    <p class="note">Admin sign-in is only for the researcher. Passwords are never stored in this page.</p>
-    <form id="adminLoginForm" class="admin-form">
-      <input id="adminEmail" type="email" autocomplete="username" placeholder="Admin email" required>
-      <input id="adminPassword" type="password" autocomplete="current-password" placeholder="Password" required>
-      <button type="submit" id="adminLogin">SIGN IN</button>
-    </form>
-    <div class="gallery-actions" id="adminLoggedIn" hidden>
-      <span class="note">Administrator signed in — delete controls enabled.</span>
-      <button id="adminLogout">SIGN OUT</button>
-    </div>
-    <p class="status" id="adminStatus" role="status"></p>
-  </details>
-  <p class="status" id="galleryStatus" role="status"></p>
-  <div class="gallery-grid" id="galleryGrid"></div>
-
-  <div class="pagination">
-    <button id="galleryPrev">PREVIOUS</button>
-    <span id="galleryPage" aria-live="polite"></span>
-    <button id="galleryNext">NEXT</button>
-  </div>
-</section>
-
+<div class="toast" id="toast" role="status"></div>
+<section class="gallery" id="gallery"><div class="gallery-header"><div><div class="eyebrow">Collected Light Studies</div><h2>Shared Light Library</h2></div><button class="outline" id="galleryClose">Close ×</button></div><p class="desc">Explore participant light studies. Every work can be downloaded as a four-room JPEG. Connect Supabase to share across devices.</p><div class="gallery-grid" id="galleryGrid"></div></section>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"}}</script>
 <script>
-const $ = id => document.getElementById(id);
-const emotions = ["CALM", "SAFE", "FOCUSED", "ENERGIZED"];
-const lightKeys = ["intensity", "diffusion", "openness", "direction"];
-const SUPABASE_URL = "https://twnlwkptasbjllmakazt.supabase.co";
-const SUPABASE_KEY = "sb_publishable_-ApwE4jnADQ4yT9lIxdQjQ_Y17THrUL";
-const API_URL = `${SUPABASE_URL}/rest/v1/light_portraits`;
-const colorPickers = {};
-let currentEmotion = 0;
-let results = [];
-let wallColor = "#e8e4dc";
-let floorColor = "#bda98d";
-let savedPortraitId = null;
-let portraitCreatedAt = null;
-let galleryReturn = "experiment";
-let galleryPageIndex = 0;
-const pageSize = 4;
-// Short-lived admin session stays in memory only (never localStorage).
-let adminAccessToken = null;
-
-function showScreen(id) {
-  ["experiment", "results", "gallery"].forEach(name => {
-    $(name).hidden = name !== id;
-  });
-}
-
-function currentSettings() {
-  return {
-    emotion: emotions[currentEmotion],
-    ...Object.fromEntries(lightKeys.map(key => [key, Number($(key).value)])),
-    wallColor,
-    floorColor
-  };
-}
-
-function paintRoom(element, settings) {
-  const { intensity: i, diffusion: d, openness: o, direction: dir } = settings;
-  element.style.filter = `brightness(${.48 + i / 100 * 1.12})`;
-  element.querySelector(".wall").style.backgroundColor = settings.wallColor;
-  element.querySelector(".floor").style.backgroundColor = settings.floorColor;
-
-  const diffusionLayer = element.querySelector(".diffusion");
-  diffusionLayer.style.opacity = d / 120;
-  diffusionLayer.style.backdropFilter = `blur(${d / 7}px)`;
-  element.querySelector(".curtain").style.width = `${100 - o}%`;
-
-  const beam = element.querySelector(".light-beam");
-  beam.style.filter = `blur(${3 + d / 4}px)`;
-  beam.style.transform = `rotate(${-18 + dir / 100 * 38}deg)`;
-  beam.style.opacity = .18 + dir / 100 * .72;
-
-  const shadow = element.querySelector(".shadow");
-  shadow.style.filter = `blur(${3 + d / 3}px)`;
-  shadow.style.transform = `skewX(${-40 + dir / 2}deg)`;
-  shadow.style.opacity = .1 + dir / 100 * .24;
-}
-
-function updateLight() {
-  paintRoom($("room"), currentSettings());
-  lightKeys.forEach(key => $(key + "Value").textContent = $(key).value);
-}
-
-function hexToHSV(hex) {
-  const rgb = hex.slice(1).match(/../g).map(x => parseInt(x,16) / 255);
-  const [r,g,b] = rgb;
-  const max = Math.max(...rgb);
-  const delta = max - Math.min(...rgb);
-  let h = 0;
-
-  if (delta) {
-    if (max === r) h = ((g - b) / delta) % 6;
-    else if (max === g) h = (b - r) / delta + 2;
-    else h = (r - g) / delta + 4;
-    h = (h * 60 + 360) % 360;
-  }
-
-  return { h, s: max ? delta / max * 100 : 0, v: max * 100 };
-}
-
-function hsvToHex({h,s,v}) {
-  s /= 100;
-  v /= 100;
-  const c = v * s;
-  const x = c * (1 - Math.abs((h / 60) % 2 - 1));
-  const m = v - c;
-  const rgb = h < 60 ? [c,x,0] :
-    h < 120 ? [x,c,0] :
-    h < 180 ? [0,c,x] :
-    h < 240 ? [0,x,c] :
-    h < 300 ? [x,0,c] : [c,0,x];
-
-  return "#" + rgb.map(n =>
-    Math.round((n + m) * 255).toString(16).padStart(2,"0")
-  ).join("");
-}
-
-function setupColorPicker(target, initial) {
-  const root = document.createElement("div");
-  root.className = "color-picker";
-  root.innerHTML = `
-    <div class="swatch-title">${target}</div>
-    <div class="color-ring" role="slider" tabindex="0"
-      aria-label="${target} hue" aria-valuemin="0" aria-valuemax="359">
-      <div class="color-ring-center"></div>
-      <div class="color-marker"></div>
-    </div>
-    <label for="${target}Saturation">Saturation <output></output></label>
-    <input id="${target}Saturation" class="saturation"
-      type="range" min="0" max="100">
-    <label for="${target}Brightness">Brightness <output></output></label>
-    <input id="${target}Brightness" class="brightness"
-      type="range" min="0" max="100">
-    <label for="${target}Hex">Exact color</label>
-    <div class="color-entry">
-      <input type="color" aria-label="${target} color picker">
-      <input id="${target}Hex" class="color-code" maxlength="7"
-        aria-label="${target} hexadecimal color" spellcheck="false">
-    </div>
-  `;
-  $("colorPickers").append(root);
-
-  const ring = root.querySelector(".color-ring");
-  const marker = root.querySelector(".color-marker");
-  const saturation = root.querySelector(".saturation");
-  const brightness = root.querySelector(".brightness");
-  const hex = root.querySelector(".color-code");
-  const native = root.querySelector('[type="color"]');
-  const outputs = root.querySelectorAll("output");
-  let state = hexToHSV(initial);
-
-  function render(exact) {
-    const color = exact || hsvToHex(state);
-    const rad = state.h * Math.PI / 180;
-    marker.style.left = `${50 + 42.5 * Math.cos(rad)}%`;
-    marker.style.top = `${50 + 42.5 * Math.sin(rad)}%`;
-    root.querySelector(".color-ring-center").style.background = color;
-    ring.setAttribute("aria-valuenow", Math.min(359, Math.round(state.h)));
-    ring.setAttribute("aria-valuetext", `${Math.round(state.h)} degrees`);
-    saturation.value = Math.round(state.s);
-    brightness.value = Math.round(state.v);
-    outputs[0].textContent = `${Math.round(state.s)}%`;
-    outputs[1].textContent = `${Math.round(state.v)}%`;
-    hex.value = color;
-    hex.setCustomValidity("");
-    native.value = color;
-    if (target === "wall") wallColor = color;
-    else floorColor = color;
-    updateLight();
-  }
-
-  function point(event) {
-    const rect = ring.getBoundingClientRect();
-    state.h = (
-      Math.atan2(
-        event.clientY - rect.top - rect.height / 2,
-        event.clientX - rect.left - rect.width / 2
-      ) * 180 / Math.PI + 360
-    ) % 360;
-    render();
-  }
-
-  ring.addEventListener("pointerdown", event => {
-    ring.focus();
-    ring.setPointerCapture(event.pointerId);
-    point(event);
-  });
-
-  ring.addEventListener("pointermove", event => {
-    if (ring.hasPointerCapture(event.pointerId)) point(event);
-  });
-
-  ring.addEventListener("keydown", event => {
-    if (!["ArrowLeft","ArrowDown","ArrowRight","ArrowUp","Home","End"]
-      .includes(event.key)) return;
-    event.preventDefault();
-
-    if (event.key === "Home") state.h = 0;
-    else if (event.key === "End") state.h = 359;
-    else {
-      const sign = ["ArrowLeft","ArrowDown"].includes(event.key) ? -1 : 1;
-      state.h = (state.h + sign * (event.shiftKey ? 10 : 1) + 360) % 360;
-    }
-    render();
-  });
-
-  saturation.addEventListener("input", () => {
-    state.s = Number(saturation.value);
-    render();
-  });
-
-  brightness.addEventListener("input", () => {
-    state.v = Number(brightness.value);
-    render();
-  });
-
-  function setColor(color) {
-    state = hexToHSV(color);
-    render(color.toLowerCase());
-  }
-
-  native.addEventListener("input", () => setColor(native.value));
-
-  hex.addEventListener("input", () => {
-    const color = hex.value.startsWith("#") ? hex.value : "#" + hex.value;
-    if (/^#[0-9a-f]{6}$/i.test(color)) setColor(color);
-    else hex.setCustomValidity("Enter a six-digit color, such as #aabbcc.");
-  });
-
-  hex.addEventListener("change", () => {
-    if (!hex.checkValidity()) hex.reportValidity();
-  });
-
-  colorPickers[target] = setColor;
-  render(initial);
-}
-
-function resetControls() {
-  lightKeys.forEach(key => $(key).value = 50);
-  colorPickers.wall("#e8e4dc");
-  colorPickers.floor("#bda98d");
-  updateLight();
-}
-
-function makePreview(settings) {
-  const box = document.createElement("div");
-  box.className = "result-preview";
-  const clone = $("room").cloneNode(true);
-  clone.removeAttribute("id");
-  paintRoom(clone, settings);
-  box.append(clone);
-  return box;
-}
-
-function showResults() {
-  showScreen("results");
-  $("results").scrollTop = 0;
-  $("resultGrid").replaceChildren();
-
-  results.forEach(settings => {
-    const card = document.createElement("article");
-    card.className = "result-card";
-    const emotion = document.createElement("div");
-    emotion.className = "result-emotion";
-    emotion.textContent = settings.emotion;
-
-    const data = document.createElement("div");
-    data.className = "result-data";
-
-    [
-      ...lightKeys.map(key => `${key} ${settings[key]}%`),
-      `Wall ${settings.wallColor}`,
-      `Floor ${settings.floorColor}`
-    ].forEach(line => {
-      const row = document.createElement("div");
-      row.textContent = line;
-      data.append(row);
-    });
-
-    card.append(makePreview(settings), emotion, data);
-    $("resultGrid").append(card);
-  });
-}
-
-$("recordButton").onclick = () => {
-  const invalid = [...document.querySelectorAll(".color-code")]
-    .find(input => !input.checkValidity());
-  if (invalid) {
-    invalid.reportValidity();
-    return;
-  }
-
-  results.push(currentSettings());
-  currentEmotion++;
-
-  if (currentEmotion < emotions.length) {
-    $("emotion").textContent = emotions[currentEmotion];
-    $("step").textContent = `0${currentEmotion + 1} / 04`;
-    resetControls();
-    document.querySelector(".controls").scrollTop = 0;
-  } else {
-    portraitCreatedAt = new Date().toISOString();
-    $("savePanel").hidden = false;
-    showResults();
-  }
-};
-
-async function apiRequest(query = "", options = {}) {
-  const response = await fetch(API_URL + query, {
-    ...options,
-    headers: {
-      apikey: SUPABASE_KEY,
-      "Content-Type": "application/json",
-      ...options.headers
-    }
-  });
-  if (!response.ok) {
-    let message = `HTTP ${response.status}`;
-    try {
-      const body = await response.json();
-      message = body.message || body.error || message;
-    } catch {}
-    throw new Error(message);
-  }
-  return response;
-}
-
-function fromDatabase(row) {
-  return {
-    id: row.id,
-    title: row.title,
-    note: row.note || "",
-    createdAt: row.created_at,
-    results: row.results
-  };
-}
-
-async function fetchPortraits(limit, offset = 0, count = false) {
-  const query = `?select=id,title,note,created_at,results&order=created_at.desc&limit=${limit}&offset=${offset}`;
-  const response = await apiRequest(query, {
-    headers: count ? { Prefer: "count=exact" } : {}
-  });
-  const rows = (await response.json()).map(fromDatabase);
-  const total = count ? Number((response.headers.get("content-range") || "").split("/")[1]) : null;
-  return { rows, total: Number.isFinite(total) ? total : null };
-}
-
-function downloadJSON(data, filename) {
-  const url = URL.createObjectURL(new Blob(
-    [JSON.stringify(data,null,2)],
-    {type:"application/json"}
-  ));
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  document.body.append(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url),1000);
-}
-
-// Standalone JPEG export: no third-party libraries or network requests.
-// Renders the four saved spaces as an editorial contact sheet.
-function downloadPortraitJPEG(portrait) {
-  const canvas = document.createElement("canvas");
-  const W = 2400, H = 1840;
-  canvas.width = W;
-  canvas.height = H;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) { alert("JPEG export is not supported in this browser."); return; }
-
-  const rect = (x,y,w,h,color) => { ctx.fillStyle=color; ctx.fillRect(x,y,w,h); };
-  const text = (t,x,y,size=24,color="#252521",weight="400") => {
-    ctx.fillStyle=color;
-    ctx.font=`${weight} ${size}px Arial, Helvetica, sans-serif`;
-    ctx.fillText(String(t),x,y);
-  };
-  const wrap = (value,x,y,maxWidth,lineHeight,maxLines=3) => {
-    ctx.font="26px Arial, Helvetica, sans-serif";
-    const words=String(value || "").split(/\s+/);
-    let line="", n=0;
-    for(const word of words){
-      const next=line ? line+" "+word : word;
-      if(ctx.measureText(next).width>maxWidth && line){
-        text(line,x,y+n*lineHeight,26,"#51514b"); n++; line=word;
-        if(n>=maxLines) return;
-      } else line=next;
-    }
-    if(line && n<maxLines) text(line,x,y+n*lineHeight,26,"#51514b");
-  };
-  const clamp = (v,min,max) => Math.max(min,Math.min(max,Number(v)||0));
-  const paint = (s,x,y,w,h) => {
-    ctx.save();
-    ctx.beginPath(); ctx.rect(x,y,w,h); ctx.clip();
-    rect(x,y,w,h,s.wallColor || "#e8e4dc");
-    // Soft ambient light based on intensity.
-    const intensity=clamp(s.intensity,0,100), diffusion=clamp(s.diffusion,0,100);
-    const openness=clamp(s.openness,0,100), direction=clamp(s.direction,0,100);
-    rect(x,y+h*.73,w,h*.27,s.floorColor || "#bda98d");
-    ctx.strokeStyle="rgba(30,30,30,.2)";ctx.lineWidth=2;
-    ctx.beginPath();ctx.moveTo(x,y+h*.73);ctx.lineTo(x+w,y+h*.73);ctx.stroke();
-    const wx=x+w*.125,wy=y+h*.13,ww=w*.34,wh=h*.57;
-    rect(wx,wy,ww,wh,"#f4f5ee");
-    const sky=ctx.createLinearGradient(0,wy,0,wy+wh);
-    sky.addColorStop(0,"#aecde3"); sky.addColorStop(1,"#e1e5d4");
-    rect(wx+8,wy+8,ww-16,wh-16,sky);
-    rect(wx,wy,ww,9,"#fbfaf5");rect(wx,wy+wh-9,ww,9,"#fbfaf5");
-    rect(wx,wy,9,wh,"#fbfaf5");rect(wx+ww-9,wy,9,wh,"#fbfaf5");
-    rect(wx+ww*.5-5,wy,10,wh,"#fbfaf5");
-    rect(wx,wy+wh*.5-5,ww,10,"#fbfaf5");
-    // Filtered daylight curtain.
-    ctx.fillStyle=`rgba(248,247,239,${(1-openness/100)*.83})`;
-    ctx.fillRect(wx+9,wy+9,(ww-18)*(1-openness/100),wh-18);
-    // Sun beam; both softness and direction respond to original sliders.
-    ctx.save();ctx.translate(x+w*.28,y+h*.33);
-    ctx.rotate((-18+direction*.38)*Math.PI/180);
-    const beam=ctx.createLinearGradient(0,0,w*.65,h*.7);
-    beam.addColorStop(0,`rgba(255,245,194,${(.14+intensity*.006)*(.8-diffusion*.003)})`);
-    beam.addColorStop(1,"rgba(255,245,194,0)");
-    ctx.fillStyle=beam;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(w*.35,0);ctx.lineTo(w*.73,h*.63);ctx.lineTo(w*.18,h*.63);ctx.closePath();ctx.fill();ctx.restore();
-    // Simple chair, same composition as the interactive room.
-    const cx=x+w*.68,cy=y+h*.62,cw=w*.12,ch=h*.22;
-    rect(cx,cy,cw,ch*.57,"#807a71");
-    rect(cx,cy+ch*.52,cw,ch*.13,"#6d6961");
-    rect(cx+cw*.14,cy+ch*.65,cw*.07,ch*.45,"#504d47");
-    rect(cx+cw*.79,cy+ch*.65,cw*.07,ch*.45,"#504d47");
-    // Global wash matches the CSS room brightness control.
-    rect(x,y,w,h,`rgba(${intensity<50?'0,0,0':'255,255,255'},${Math.abs(intensity-50)/50*.23})`);
-    ctx.restore();
-  };
-
-  rect(0,0,W,H,"#f7f6f1");
-  text("A MEASURE OF DAYLIGHT",100,100,31,"#181816","400");
-  rect(100,126,W-200,2,"#c9c9c3");
-  text("YOUR LIGHT PORTRAIT",100,211,66,"#181816","400");
-  const title=portrait.title || "Untitled light portrait";
-  wrap(title,104,263,1940,38,2);
-  const arr=Array.isArray(portrait.results)?portrait.results:[];
-  const top=340, panelW=1060, panelH=590, gapX=60, gapY=45;
-  arr.slice(0,4).forEach((s,i)=>{
-    const x=100+(i%2)*(panelW+gapX), y=top+Math.floor(i/2)*(panelH+gapY);
-    rect(x,y,panelW,2,"#2a2926");
-    text(`${String(i+1).padStart(2,"0")}  ${s.emotion || "SPACE"}`,x,y+53,37,"#242420");
-    paint(s,x,y+78,572,420);
-    text("DAYLIGHT",x+605,y+110,20,"#7d7b74");
-    const items=[["Intensity",s.intensity],["Diffusion",s.diffusion],["Openness",s.openness],["Direction",s.direction]];
-    items.forEach(([name,val],j)=>{
-      const yy=y+159+j*64;
-      text(name.toUpperCase(),x+605,yy,22,"#4d4c48");
-      text(`${Math.round(Number(val)||0)}%`,x+985,yy,23,"#1d1d1b");
-      rect(x+605,yy+12,380,3,"#d7d6d0");
-      rect(x+605,yy+12,380*clamp(val,0,100)/100,3,"#5a5b56");
-    });
-    text("SURFACE",x+605,y+436,20,"#7d7b74");
-    rect(x+605,y+455,25,25,s.wallColor || "#e8e4dc");
-    text(`WALL  ${s.wallColor || ""}`,x+641,y+476,18,"#33332f");
-    rect(x+605,y+485,25,25,s.floorColor || "#bda98d");
-    text(`FLOOR  ${s.floorColor || ""}`,x+641,y+506,18,"#33332f");
-  });
-  rect(100,1631,W-200,2,"#c9c9c3");
-  text("REFLECTION",100,1682,21,"#77766f");
-  wrap(portrait.note || "Four emotional prompts. Four relationships between light and space.",100,1723,W-200,34,2);
-  text("LIGHT  ·  SPACE  ·  EMOTION",1720,1794,18,"#6b6b65");
-  canvas.toBlob(blob=>{
-    if(!blob){alert("Could not create JPEG. Please try again.");return;}
-    const url=URL.createObjectURL(blob), link=document.createElement("a");
-    link.href=url;link.download="light-portrait.jpg";
-    document.body.append(link);link.click();link.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),3000);
-  },"image/jpeg",.94);
-}
-
-function currentPortrait() {
-  return {
-    id: savedPortraitId || (
-      globalThis.crypto?.randomUUID
-        ? crypto.randomUUID()
-        : Date.now().toString(36) + Math.random().toString(36).slice(2)
-    ),
-    title: $("portraitTitle").value.trim() || "Untitled light portrait",
-    note: $("portraitNote").value.trim(),
-    createdAt: portraitCreatedAt || new Date().toISOString(),
-    results: results.map(settings => ({...settings}))
-  };
-}
-
-function showAdminState() {
-  $("adminLoginForm").hidden = Boolean(adminAccessToken);
-  $("adminLoggedIn").hidden = !adminAccessToken;
-}
-
-$("adminLoginForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  const button = $("adminLogin");
-  button.disabled = true;
-  $("adminStatus").textContent = "Checking researcher access…";
-  try {
-    const response = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
-      method: "POST",
-      headers: { "apikey": SUPABASE_KEY, "Content-Type": "application/json" },
-      body: JSON.stringify({ email: $("adminEmail").value.trim(), password: $("adminPassword").value })
-    });
-    const auth = await response.json();
-    if (!response.ok || !auth.access_token) throw new Error(auth.msg || auth.error_description || auth.message || "Invalid credentials");
-    // Verify the signed-in user is on the server-controlled researcher allowlist.
-    const check = await fetch(`${SUPABASE_URL}/rest/v1/light_admins?select=user_id&limit=1`, {
-      headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${auth.access_token}` }
-    });
-    if (!check.ok) throw new Error("Cannot verify researcher access. Run the admin SQL setup.");
-    const members = await check.json();
-    if (!Array.isArray(members) || !members.length) throw new Error("This account is not authorized to delete portraits.");
-    adminAccessToken = auth.access_token;
-    $("adminPassword").value = "";
-    $("adminStatus").textContent = "Researcher access granted. Delete buttons are available below.";
-    showAdminState();
-    renderGallery();
-  } catch(error) {
-    adminAccessToken = null;
-    $("adminStatus").textContent = "Sign-in failed: " + error.message;
-    showAdminState();
-  } finally { button.disabled = false; }
-});
-
-$("adminLogout").onclick = () => {
-  adminAccessToken = null;
-  $("adminStatus").textContent = "Signed out.";
-  showAdminState();
-  renderGallery();
-};
-
-async function deleteAdminPortrait(portrait) {
-  if (!adminAccessToken) return;
-  if (!confirm(`Permanently delete “${portrait.title}” from the shared Library? This cannot be undone.`)) return;
-  $("galleryStatus").textContent = "Deleting portrait…";
-  try {
-    const res = await fetch(`${API_URL}?id=eq.${encodeURIComponent(portrait.id)}&select=id`, {
-      method: "DELETE",
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${adminAccessToken}`,
-        Prefer: "return=representation"
-      }
-    });
-    if (!res.ok) {
-      const body = await res.json().catch(()=>({}));
-      throw new Error(body.message || `HTTP ${res.status}`);
-    }
-    const deleted = await res.json();
-    if (!Array.isArray(deleted) || deleted.length !== 1) throw new Error("Nothing deleted; check admin permission or session expiry.");
-    await renderGallery();
-    $("galleryStatus").textContent = "Portrait permanently deleted.";
-  } catch(error) {
-    $("galleryStatus").textContent = "Delete failed: " + error.message;
-  }
-}
-
-function openGallery() {
-  galleryReturn = $("results").hidden ? "experiment" : "results";
-  galleryPageIndex = 0;
-  showScreen("gallery");
-  $("gallery").scrollTop = 0;
-  renderGallery();
-}
-
-async function renderGallery() {
-  $("galleryGrid").replaceChildren();
-  $("galleryStatus").textContent = "";
-  $("galleryStatus").textContent = "Loading shared portraits…";
-  let portraits, total;
-  try {
-    ({ rows: portraits, total } = await fetchPortraits(pageSize, galleryPageIndex * pageSize, true));
-    if (total !== null && galleryPageIndex > 0 && galleryPageIndex * pageSize >= total) {
-      galleryPageIndex = Math.max(0, Math.ceil(total / pageSize) - 1);
-      ({ rows: portraits, total } = await fetchPortraits(pageSize, galleryPageIndex * pageSize, true));
-    }
-    $("galleryStatus").textContent = "";
-  } catch (error) {
-    $("galleryStatus").textContent = "Could not load shared gallery: " + error.message;
-    $("galleryPage").textContent = "";
-    $("galleryPrev").disabled = true;
-    $("galleryNext").disabled = true;
-    return;
-  }
-  const pageCount = Math.max(1, Math.ceil((total ?? portraits.length) / pageSize));
-  $("galleryPage").textContent = `${galleryPageIndex + 1} / ${pageCount}`;
-  $("galleryPrev").disabled = galleryPageIndex === 0;
-  $("galleryNext").disabled = galleryPageIndex >= pageCount - 1;
-
-  if (!portraits.length) {
-    const empty = document.createElement("p");
-    empty.className = "note";
-    empty.textContent =
-      "The shared library is empty. Finish the four prompts to add the first portrait.";
-    $("galleryGrid").append(empty);
-    return;
-  }
-
-  portraits.forEach(portrait => {
-    const card = document.createElement("article");
-    card.className = "saved-card";
-    const previews = document.createElement("div");
-    previews.className = "saved-previews";
-
-    (portrait.results || []).forEach(settings => {
-      const box = makePreview(settings);
-      const label = document.createElement("span");
-      label.className = "preview-label";
-      label.textContent = settings.emotion;
-      box.append(label);
-      previews.append(box);
-    });
-
-    const title = document.createElement("h3");
-    title.textContent = portrait.title;
-    const date = document.createElement("time");
-    date.textContent = new Date(portrait.createdAt).toLocaleString();
-    const note = document.createElement("p");
-    note.textContent = portrait.note || "";
-
-    const actions = document.createElement("div");
-    actions.className = "gallery-actions";
-
-    const view = document.createElement("button");
-    view.textContent = "VIEW PORTRAIT";
-    view.onclick = () => {
-      results = portrait.results.map(settings => ({...settings}));
-      savedPortraitId = portrait.id;
-      portraitCreatedAt = portrait.createdAt;
-      $("portraitTitle").value = portrait.title;
-      $("portraitNote").value = portrait.note || "";
-      $("savePanel").hidden = true;
-      showResults();
-    };
-
-    const download = document.createElement("button");
-    download.textContent = "DOWNLOAD JSON";
-    download.onclick = () => downloadJSON(portrait,"light-portrait.json");
-
-    const jpeg = document.createElement("button");
-    jpeg.textContent = "DOWNLOAD JPEG";
-    jpeg.onclick = () => downloadPortraitJPEG(portrait);
-    actions.append(view, jpeg, download);
-    if (adminAccessToken) {
-      const remove = document.createElement("button");
-      remove.className = "admin-delete";
-      remove.textContent = "DELETE (ADMIN)";
-      remove.onclick = () => deleteAdminPortrait(portrait);
-      actions.append(remove);
-    }
-    card.append(previews,title,date,note,actions);
-    $("galleryGrid").append(card);
-  });
-}
-
-$("savePortrait").onclick = async () => {
-  if (savedPortraitId) {
-    $("saveStatus").textContent = "This portrait is already submitted.";
-    return;
-  }
-  const portrait = currentPortrait();
-  const button = $("savePortrait");
-  button.disabled = true;
-  $("saveStatus").textContent = "Saving to the shared Light Library…";
-  try {
-    await apiRequest("", {
-      method: "POST",
-      headers: { Prefer: "return=minimal" },
-      body: JSON.stringify({
-        id: portrait.id,
-        title: portrait.title,
-        note: portrait.note,
-        results: portrait.results
-      })
-    });
-    savedPortraitId = portrait.id;
-    $("saveStatus").textContent = "Saved to the shared Light Library. You can now view it from another device.";
-  } catch (error) {
-    button.disabled = false;
-    $("saveStatus").textContent = "Could not save online: " + error.message + ". Please download your results and try again.";
-  }
-};
-
-$("openGallery").onclick = openGallery;
-$("resultsGallery").onclick = openGallery;
-$("closeGallery").onclick = () => showScreen(galleryReturn);
-$("downloadJpeg").onclick = () => downloadPortraitJPEG(currentPortrait());
-$("downloadCurrent").onclick = () =>
-  downloadJSON(currentPortrait(),"light-portrait.json");
-
-$("exportGallery").onclick = async () => {
-  $("galleryStatus").textContent = "Preparing gallery download…";
-  try {
-    const all = [];
-    for (let offset = 0; ; offset += 500) {
-      const { rows } = await fetchPortraits(500, offset);
-      all.push(...rows);
-      if (rows.length < 500) break;
-    }
-    downloadJSON(all, "daylight-shared-gallery.json");
-    $("galleryStatus").textContent = `Downloaded ${all.length} portraits.`;
-  } catch (error) {
-    $("galleryStatus").textContent = "Gallery download failed: " + error.message;
-  }
-};
-
-$("galleryPrev").onclick = () => {
-  galleryPageIndex--;
-  renderGallery();
-  $("gallery").scrollTop = 0;
-};
-
-$("galleryNext").onclick = () => {
-  galleryPageIndex++;
-  renderGallery();
-  $("gallery").scrollTop = 0;
-};
-
-$("startAgain").onclick = () => {
-  results = [];
-  currentEmotion = 0;
-  savedPortraitId = null;
-  portraitCreatedAt = null;
-  $("emotion").textContent = emotions[0];
-  $("step").textContent = "01 / 04";
-  $("portraitTitle").value = "";
-  $("portraitNote").value = "";
-  $("saveStatus").textContent = "";
-  $("savePortrait").disabled = false;
-  $("savePanel").hidden = false;
-  resetControls();
-  showScreen("experiment");
-  document.querySelector(".controls").scrollTop = 0;
-};
-
-lightKeys.forEach(key => $(key).addEventListener("input",updateLight));
-setupColorPicker("wall",wallColor);
-setupColorPicker("floor",floorColor);
-updateLight();
+window.addEventListener('error', function(e) { const ctl=document.getElementById('controls'); if(ctl&&!ctl.children.length) ctl.innerHTML='<h1>Room could not load.</h1><p class="desc">The 3D library needs an internet connection. Please run this page using VS Code Live Server and refresh.</p>'; });
+setTimeout(function(){ if(!window.__lightAppReady){const ctl=document.getElementById('controls');if(ctl&&!ctl.children.length) ctl.innerHTML='<h1>Unable to load the 3D room.</h1><p class="desc">Check your internet connection and open with VS Code Live Server. The room requires the Three.js library. Refresh to try again.</p>'; } },6500);
+window.addEventListener('unhandledrejection', function(e) { const ctl=document.getElementById('controls'); if(ctl&&!ctl.children.length) ctl.innerHTML='<h1>Room could not load.</h1><p class="desc">Please check your internet connection, then refresh this page.</p>'; });
 </script>
-</body>
-</html>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+
+// OPTIONAL: enter the same public URL and anon/publishable key as your existing project.
+// Never put a service_role key in browser code. Existing public SELECT/INSERT policies apply.
+const SUPABASE_URL = 'https://twnlwkptasbjllmakazt.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_-ApwE4jnADQ4yT9lIxdQjQ_Y17THrUL';
+
+const MOODS=['Calm','Safe','Focused','Energized'];
+const STEPS=['emotion','layout','window','brightness','softness','artificial','color','reflect'];
+const DEFAULT=()=>({brightness:72,softness:68,temperature:3900,artificial:58,wall:'#e8e5da',floor:'#ad987e',windowX:-1.35,windowY:2.45,windowWidth:1.7,curtain:100,windows:[{x:-1.65,y:2.45,width:1.35},{x:.65,y:2.45,width:1.1}],layout:'Bedroom',objects:[{type:'bed',x:-1.2,z:.9},{type:'desk',x:1.65,z:-.7},{type:'chair',x:1.65,z:.45},{type:'floorlamp',x:2.25,z:1.6},{type:'plant',x:-2.3,z:-1.25},{type:'desklamp',x:1.65,z:-.7}],note:''});
+const state={mood:0,step:0,results:MOODS.map(()=>DEFAULT()),selected:'sofa',title:'',note:''};
+const $=id=>document.getElementById(id);const current=()=>state.results[state.mood];
+const hex=n=>'#'+new THREE.Color(n).getHexString();
+function notify(t){const el=$('toast');el.textContent=t;el.style.display='block';clearTimeout(notify.timer);notify.timer=setTimeout(()=>el.style.display='none',3100)}
+const scene=new THREE.Scene();scene.background=new THREE.Color('#d7d8d1');
+const camera=new THREE.PerspectiveCamera(38,1,.1,100);camera.position.set(7,5.8,8.8);
+const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio,1.5));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.35;$('viewport').prepend(renderer.domElement);
+const orbit=new OrbitControls(camera,renderer.domElement);orbit.target.set(0,1.6,0);orbit.enablePan=false;orbit.minDistance=6;orbit.maxDistance=16;orbit.maxPolarAngle=Math.PI/2-.08;orbit.update();
+const ambient=new THREE.HemisphereLight('#edf3ff','#988573',.65);scene.add(ambient);
+const sunlight=new THREE.DirectionalLight('#fff4df',3);sunlight.position.set(-3,6,4);sunlight.castShadow=true;sunlight.shadow.mapSize.set(1024,1024);sunlight.shadow.camera.left=-8;sunlight.shadow.camera.right=8;sunlight.shadow.camera.top=8;sunlight.shadow.camera.bottom=-8;sunlight.shadow.bias=-.0002;sunlight.shadow.radius=3;scene.add(sunlight);
+const lamps=[];let lightPatches=[];let lastLampTint=null;const sunBeam=new THREE.Group();scene.add(sunBeam);
+const MAT=(color,roughness=.88)=>new THREE.MeshStandardMaterial({color,roughness,metalness:0,side:THREE.DoubleSide});
+let floor,back,left,windowGroups=[],objectGroups=[];const highlight=new THREE.BoxHelper(new THREE.Object3D(),0x678675);scene.add(highlight);highlight.visible=false;
+function mesh(geo,mat,x=0,y=0,z=0,parent=scene){let o=new THREE.Mesh(geo,mat);o.position.set(x,y,z);o.receiveShadow=true;o.castShadow=true;parent.add(o);return o}
+function cube(parent,w,h,d,color,x,y,z){return mesh(new THREE.BoxGeometry(w,h,d),MAT(color),x,y,z,parent)}
+function cylinder(parent,r1,r2,h,color,x,y,z){return mesh(new THREE.CylinderGeometry(r1,r2,h,18),MAT(color),x,y,z,parent)}
+function buildRoom(){floor=cube(scene,6.2,.16,5.8,'#ad987e',0,-.08,0);back=cube(scene,6.2,4.1,.13,'#e8e5da',0,2.05,-2.9);left=cube(scene,.13,4.1,5.8,'#dad6c9',-3.1,2.05,0);cube(scene,6.25,.11,.08,'#d1c6b5',0,.07,-2.8); }
+function createWindow(w,index){
+ const g=new THREE.Group();g.userData.windowIndex=index;g.userData.baseWidth=w.width;g.userData.curtainParts=[];scene.add(g);
+ const width=w.width, ht=1.53;
+ const glass=cube(g,width,ht,.035,'#beddef',0,0,.04);
+ glass.material=new THREE.MeshBasicMaterial({color:0xc2e4f8,transparent:true,opacity:.94});
+ const frame='#f9f5e8';
+ cube(g,width+.13,.075,.12,frame,0,ht/2,.09);cube(g,width+.13,.075,.12,frame,0,-ht/2,.09);
+ cube(g,.075,ht+.14,.12,frame,-width/2,0,.09);cube(g,.075,ht+.14,.12,frame,width/2,0,.09);
+ cube(g,.045,ht,.11,frame,0,0,.14);
+ cube(g,width+.27,.085,.22,'#e2d9c8',0,-ht/2-.09,.17);
+ // Curtains hang in front of the glazing; openness controls the gathered fabric width.
+ const opening=Math.max(0,Math.min(1,current().curtain/100));
+ const covered=width*(1-opening)*.48;
+ for(const side of [-1,1]){
+   const cw=Math.max(.035,covered);
+   const curtain=cube(g,cw,ht+.23,.085,'#ece6d9',side*(width/2-cw/2),.01,.24);
+   curtain.material=new THREE.MeshStandardMaterial({color:'#ede6d9',roughness:1,transparent:true,opacity:.94,side:THREE.DoubleSide});g.userData.curtainParts.push({mesh:curtain,side,baseWidth:cw});
+   for(let f=0;f<4;f++){const fold=cube(g,.016,ht+.2,.105,'#d7cfbf',side*(width/2-cw)+((f+.5)*cw/4)*side,.01,.305);fold.castShadow=false;}
+ }
+ cube(g,width+.28,.036,.14,'#b0a899',0,ht/2+.12,.27);
+ if(w.wall==='left'){g.rotation.y=Math.PI/2;g.position.set(-2.96,w.y,w.x)}else{g.position.set(w.x,w.y,-2.76)}
+ windowGroups.push(g);
+}
+function syncWindows(s){windowGroups.forEach(g=>scene.remove(g));windowGroups=[];(s.windows||[]).forEach((w,i)=>createWindow(w,i))}
+buildRoom();
+function addObject(data){const group=new THREE.Group();group.userData.object=data;group.position.set(data.x,0,data.z);group.rotation.y=data.rotation||0;scene.add(group);objectGroups.push(group);
+ if(data.type==='sofa'){cube(group,1.8,.37,.83,'#a6ada2',0,.38,0);cube(group,1.8,.75,.19,'#929d93',0,.7,-.37);cube(group,.2,.54,.85,'#98a598',-.83,.53,0);cube(group,.2,.54,.85,'#98a598',.83,.53,0);cube(group,1.4,.12,.68,'#c1c3b7',0,.59,.09)}
+ if(data.type==='table'){cylinder(group,.58,.58,.10,'#9e7b5f',0,.68,0);cylinder(group,.11,.15,.66,'#8e755d',0,.34,0);cylinder(group,.44,.44,.09,'#8e755d',0,.07,0)}
+ if(data.type==='bed'){cube(group,1.65,.24,2.1,'#b8a18d',0,.33,0);cube(group,1.53,.25,1.93,'#f1eee5',0,.56,.04);cube(group,1.58,.67,.14,'#a88c77',0,.6,-1.03);cube(group,1.5,.11,1.12,'#c2cbbf',0,.72,.34);for(let x of [-.43,.43])cube(group,.58,.13,.38,'#faf8f1',x,.77,-.63)}
+ if(data.type==='desk'){cube(group,1.45,.12,.74,'#ac9074',0,.83,0);for(let x of [-.62,.62])for(let z of [-.26,.26])cube(group,.075,.79,.075,'#796550',x,.4,z);cube(group,.42,.05,.09,'#c4b7a7',0,.91,-.17)}
+ if(data.type==='chair'){cube(group,.72,.14,.72,'#b98d66',0,.53,0);cube(group,.72,.8,.12,'#ad835f',0,.93,-.31);for(let x of [-.25,.25])for(let z of [-.25,.25])cube(group,.1,.52,.1,'#735d49',x,.26,z)}
+ if(data.type==='floorlamp'){cylinder(group,.26,.26,.07,'#68625a',0,.04,0);cylinder(group,.04,.05,1.75,'#68625a',0,.91,0);let shade=mesh(new THREE.CylinderGeometry(.23,.4,.46,24,1,true),MAT('#f0e4c7'),0,1.82,0,group);shade.castShadow=false;cube(group,.06,.06,.06,'#fff0bf',0,1.63,0)}
+ if(data.type==='desklamp'){cube(group,.75,.58,.7,'#a18b73',0,.3,0);cylinder(group,.19,.19,.04,'#4c514d',0,.62,0);cylinder(group,.035,.035,.56,'#4c514d',0,.9,0);mesh(new THREE.CylinderGeometry(.12,.33,.37,24,1,true),MAT('#f0e5d6'),0,1.29,0,group)}
+ if(data.type==='plant'){cylinder(group,.32,.25,.45,'#b58a75',0,.22,0);cylinder(group,.06,.06,.9,'#4e6945',0,.85,0);for(let i=0;i<7;i++){let a=i*Math.PI*2/7;let leaf=mesh(new THREE.SphereGeometry(.17,8,8),MAT('#638163'),Math.cos(a)*.26,1.18+Math.sin(i*1.9)*.18,Math.sin(a)*.26,group);leaf.scale.set(1.3,2,.6)}}
+ if(data.type==='rug'){let rug=cube(group,1.7,.025,1.35,'#d4cabc',0,.025,0);rug.castShadow=false}
+ if(data.type==='floorlamp'||data.type==='desklamp'){
+   const isDesk=data.type==='desklamp';const height=isDesk?1.18:1.64;
+   const bulb=mesh(new THREE.SphereGeometry(.095,12,8),new THREE.MeshBasicMaterial({color:'#fff1cb'}),0,height,0,group);
+   const light=new THREE.PointLight('#ffd4a1',0,7,1.6);light.position.set(0,height-.08,.03);group.add(light);lamps.push({light,bulb,data});
+   const glow=mesh(new THREE.SphereGeometry(isDesk?.38:.52,14,10),new THREE.MeshBasicMaterial({color:'#ffe5a9',transparent:true,opacity:.14,depthWrite:false}),0,height-.06,0,group);glow.castShadow=false;lamps[lamps.length-1].glow=glow;
+ }
+ return group;}
+function kelvinColor(k){const t=k/100;let r=t<=66?255:329.698727446*Math.pow(t-60,-.1332047592);let g=t<=66?99.4708025861*Math.log(t)-161.1195681661:288.1221695283*Math.pow(t-60,-.0755148492);let b=t>=66?255:t<=19?0:138.5177312231*Math.log(t-10)-305.0447927307;return new THREE.Color(`rgb(${Math.max(0,Math.min(255,r))},${Math.max(0,Math.min(255,g))},${Math.max(0,Math.min(255,b))})`)}
+// Distinct angular direct light vs broad feathered diffusion. Cache generated textures.
+const sunTextureCache=new Map();
+function sunTexture(soft){
+ const key=Math.round(soft/2)*2;if(sunTextureCache.has(key))return sunTextureCache.get(key);
+ const canvas=document.createElement('canvas');canvas.width=canvas.height=256;
+ const ctx=canvas.getContext('2d'),u=key/100;
+ const data=ctx.createImageData(256,256);
+ // Sharp light is a rectangular patch; diffuse light has a broad penumbra.
+ const smooth=(a,b,v)=>{let t=Math.max(0,Math.min(1,(v-a)/(b-a)));return t*t*(3-2*t)};
+ for(let y=0;y<256;y++)for(let x=0;x<256;x++){
+  const px=Math.abs((x-127.5)/127.5),py=Math.abs((y-127.5)/127.5);
+  const d=Math.max(px/.82,py/.72);
+  const edge=.008+u*.67;
+  let alpha=(1-smooth(1-edge,1+edge,d))*(.93-u*.30);
+  // Keep distinct color boundaries in direct light.
+  let i=(y*256+x)*4;data.data[i]=255;data.data[i+1]=231;data.data[i+2]=163;data.data[i+3]=Math.round(alpha*255);
+ }
+ ctx.putImageData(data,0,0);const texture=new THREE.CanvasTexture(canvas);sunTextureCache.set(key,texture);return texture;
+}
+function createSunPatches(s){
+ for(const item of lightPatches){scene.remove(item);item.geometry.dispose();item.material.dispose()}
+ lightPatches=[];
+ const open=s.curtain/100;
+ const tex=sunTexture(s.softness);
+ (s.windows||[]).forEach((w,i)=>{
+  // Visible moving pools of daylight, with spread controlled by the softness slider.
+  const wide=w.width*(.78+s.softness/68);
+  const patch=new THREE.Mesh(new THREE.PlaneGeometry(wide,1.4+s.softness/38),new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:(s.brightness/100)*open*(1.15-s.softness*.004),depthWrite:false,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2}));
+  patch.rotation.x=-Math.PI/2;patch.rotation.z=-.24;patch.position.set(w.wall==='left'?-1.25+i*.15:Math.max(-2.4,Math.min(2.4,w.x+.50)),.011,w.wall==='left'?Math.max(-2,Math.min(2,w.x+.35)):-.78+i*.22);
+  scene.add(patch);lightPatches.push(patch);
+  const wallPatch=new THREE.Mesh(new THREE.PlaneGeometry(wide*.9,.9+s.softness/125),new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:open*s.brightness/140,depthWrite:false,side:THREE.DoubleSide}));
+  if(w.wall==='left'){wallPatch.rotation.y=Math.PI/2;wallPatch.position.set(-2.856,1.24,w.x+.17)}else{wallPatch.position.set(Math.max(-2.5,Math.min(2.5,w.x+.17)),1.24,-2.666)}scene.add(wallPatch);lightPatches.push(wallPatch);
+ });
+}
+function updateWindowPatchPositions(){
+ const s=current();s.windows.forEach((w,i)=>{
+  const ground=lightPatches[i*2],wall=lightPatches[i*2+1];if(!ground||!wall)return;
+  ground.position.x=w.wall==='left'?-1.25+i*.15:Math.max(-2.4,Math.min(2.4,w.x+.50));
+  ground.position.z=w.wall==='left'?Math.max(-2,Math.min(2,w.x+.35)):-.78+i*.22;
+  if(w.wall==='left')wall.position.z=w.x+.17;else wall.position.x=Math.max(-2.5,Math.min(2.5,w.x+.17));
+ });
+}
+function syncScene(){
+ const s=current();if(!s.windows?.length)s.windows=[{x:-1.5,y:2.45,width:1.35}];
+ if(s.curtain===undefined)s.curtain=100;
+ floor.material.color.set(s.floor);back.material.color.set(s.wall);left.material.color.set(s.wall).multiplyScalar(.93);
+ const opening=s.curtain/100;sunlight.intensity=(.25+s.brightness/42)*(.25+.75*opening);
+ ambient.intensity=.38+s.brightness/230;sunlight.color.set('#fff0d5');
+ sunlight.shadow.radius=1+s.softness/3;
+ sunlight.position.set(-3.5+(s.windows[0]?.x??0)*.32,6,2.8);
+ syncWindows(s);
+ for(const g of objectGroups)scene.remove(g);objectGroups=[];lamps.length=0;
+ s.objects.forEach(addObject);
+ const col=kelvinColor(s.temperature);
+ for(const l of lamps){const tint=new THREE.Color(s.temperature<3900?'#ff9b42':s.temperature>5000?'#8acbff':'#fff0cd');l.light.color.copy(tint);l.light.intensity=s.artificial/100*24;l.light.distance=7;l.light.decay=1.6;l.bulb.material.color.copy(tint);l.glow.material.color.copy(tint);l.glow.material.opacity=s.artificial/100*.62;}
+ createSunPatches(s);
+ render();
+}
+let framePending=false;
+function render(){if(framePending)return;framePending=true;requestAnimationFrame(()=>{framePending=false;renderer.render(scene,camera)})}
+// Lightweight live updates: never rebuild furniture or window meshes for ordinary slider movement.
+let patchPending=false;
+function schedulePatches(){if(patchPending)return;patchPending=true;requestAnimationFrame(()=>{patchPending=false;createSunPatches(current());render()})}
+function liveUpdate(id){
+ const s=current();
+ if(id==='wall'||id==='floor'){floor.material.color.set(s.floor);back.material.color.set(s.wall);left.material.color.set(s.wall).multiplyScalar(.93)}
+ if(['brightness','curtain','softness'].includes(id)){
+  const opening=s.curtain/100;sunlight.intensity=(.25+s.brightness/42)*(.25+.75*opening);
+  ambient.intensity=.38+s.brightness/230;sunlight.shadow.radius=1+s.softness/3;
+  if(id==='curtain')windowGroups.forEach(g=>{if(g.userData.curtainParts)g.userData.curtainParts.forEach(part=>{const width=g.userData.baseWidth;const cover=width*(1-opening)*.48;part.mesh.scale.x=Math.max(.035,cover)/part.baseWidth;part.mesh.position.x=part.side*(width/2-Math.max(.035,cover)/2)})});
+  schedulePatches();
+ }
+ if(id==='artificial'||id==='temperature'){
+  const col=kelvinColor(s.temperature);for(const l of lamps){const tint=new THREE.Color(s.temperature<3900?'#ff9b42':s.temperature>5000?'#8acbff':'#fff0cd');l.light.color.copy(tint);l.light.intensity=s.artificial/100*24;l.light.distance=7;l.light.decay=1.6;l.bulb.material.color.copy(tint);l.glow.material.color.copy(tint);l.glow.material.opacity=s.artificial/100*.62;}
+ }
+ render();
+}
+function resize(){const r=$('viewport').getBoundingClientRect();renderer.setSize(r.width,r.height);camera.aspect=r.width/r.height;camera.updateProjectionMatrix();render()}window.addEventListener('resize',resize);orbit.addEventListener('change',render);
+const ray=new THREE.Raycaster(),pointer=new THREE.Vector2();let drag=null,windowDrag=null;const dragPlane=new THREE.Plane(new THREE.Vector3(0,1,0),0),wallPlane=new THREE.Plane(new THREE.Vector3(0,0,1),-2.76),leftWallPlane=new THREE.Plane(new THREE.Vector3(1,0,0),2.96);
+function point(e){let r=renderer.domElement.getBoundingClientRect();pointer.x=(e.clientX-r.left)/r.width*2-1;pointer.y=-(e.clientY-r.top)/r.height*2+1;ray.setFromCamera(pointer,camera)}
+function findGroup(obj){while(obj&&obj.parent!==scene){if(obj.userData.windowIndex!==undefined||obj.userData.object)return obj;obj=obj.parent}return obj&&(obj.userData.windowIndex!==undefined||obj.userData.object)?obj:null}
+renderer.domElement.addEventListener('pointerdown',e=>{if(!['layout','window','artificial'].includes(STEPS[state.step]))return;point(e);let hits=ray.intersectObjects([...objectGroups,...windowGroups],true);if(!hits.length)return;let group=findGroup(hits[0].object);if(!group)return;const isWindow=group.userData.windowIndex!==undefined;if(isWindow&&STEPS[state.step]!=='window')return;if(!isWindow&&STEPS[state.step]==='window')return;drag=group;
+windowDrag=null;
+if(isWindow){
+ const w=current().windows[group.userData.windowIndex], side=w.wall||'back';
+ const plane=side==='left'?leftWallPlane:wallPlane;
+ const hit=new THREE.Vector3();
+ // Preserve the exact grab point relative to the window center.
+ const didHit=ray.ray.intersectPlane(plane,hit);
+ const coordinate=didHit?(side==='left'?hit.z:hit.x):w.x;
+ windowDrag={startX:e.clientX,startY:e.clientY,side,offset:coordinate-w.x,hasMoved:false};
+}
+orbit.enabled=false;renderer.shadowMap.autoUpdate=false;renderer.domElement.setPointerCapture(e.pointerId)});
+// Choose the wall directly from the pointer's 3D ray. Near the shared corner,
+// score both snapped wall positions in SCREEN pixels so dragging stays intuitive.
+const snapProjection=new THREE.Vector3(), wallHit=new THREE.Vector3();
+function windowSnapCandidate(w,side,offset=0){
+ const plane=side==='left'?leftWallPlane:wallPlane;
+ if(!ray.ray.intersectPlane(plane,wallHit))return null;
+ const limit=2.8-w.width/2-.14;
+ const value=Math.max(-limit,Math.min(limit,(side==='left'?wallHit.z:wallHit.x)-offset));
+ const position=side==='left'?new THREE.Vector3(-2.96,w.y,value):new THREE.Vector3(value,w.y,-2.76);
+ snapProjection.copy(position).project(camera);
+ const rect=renderer.domElement.getBoundingClientRect();
+ const dx=(snapProjection.x-pointer.x)*rect.width*.5,dy=(snapProjection.y-pointer.y)*rect.height*.5;
+ return {side,value,error:Math.hypot(dx,dy),raw:side==='left'?wallHit.z:wallHit.x};
+}
+function updateDraggedWindow(w,group,side,value){
+ const changed=w.wall!==side;
+ w.wall=side;w.x=value;
+ group.rotation.y=side==='left'?Math.PI/2:0;
+ group.position.set(side==='left'?-2.96:value,w.y,side==='left'?value:-2.76);
+ if(changed){
+  const patch=lightPatches[group.userData.windowIndex*2+1];
+  if(patch){patch.rotation.y=side==='left'?Math.PI/2:0;patch.position.set(side==='left'?-2.856:Math.max(-2.5,Math.min(2.5,value+.17)),1.24,side==='left'?value+.17:-2.666);}
+ }
+ updateWindowPatchPositions();
+}
+renderer.domElement.addEventListener('pointermove',e=>{
+ if(!drag)return;
+ point(e);
+ if(drag.userData.windowIndex!==undefined){
+  const w=current().windows[drag.userData.windowIndex];if(!w)return;
+  if(!windowDrag)return;
+  const distance=Math.hypot(e.clientX-windowDrag.startX,e.clientY-windowDrag.startY);
+  // No window movement on click, micro-jitter or first hover event.
+  if(distance<5&&!windowDrag.hasMoved)return;
+  windowDrag.hasMoved=true;
+  const active=w.wall||'back',other=active==='back'?'left':'back';
+  const primary=windowSnapCandidate(w,active,windowDrag.offset);
+  if(!primary)return;
+  let selected=primary;
+  // Auto-switch only on deliberate movement into the shared corner.
+  // Use a larger hysteresis to prevent snapping to the opposite wall prematurely.
+  const secondary=distance>45?windowSnapCandidate(w,other,0):null;
+  const cornerLimit=2.8-w.width/2-.14;
+  const nearCorner=primary.value < -cornerLimit+.32;
+  const otherNearCorner=secondary&&secondary.value < -cornerLimit+.45;
+  if(secondary&&nearCorner&&otherNearCorner&&secondary.error+35<primary.error){
+    selected=secondary;
+    // Re-anchor after changing wall, so the next frame won't snap backward.
+    const targetPlane=other==='left'?leftWallPlane:wallPlane;
+    const anchor=new THREE.Vector3();
+    windowDrag.offset=ray.ray.intersectPlane(targetPlane,anchor)?(other==='left'?anchor.z:anchor.x)-selected.value:0;
+    windowDrag.startX=e.clientX;windowDrag.startY=e.clientY;
+  }
+  updateDraggedWindow(w,drag,selected.side,selected.value);
+ }else{
+  let hit=new THREE.Vector3();if(ray.ray.intersectPlane(dragPlane,hit)){
+   drag.position.x=Math.max(-2.5,Math.min(2.5,hit.x));drag.position.z=Math.max(-2.35,Math.min(2.35,hit.z));
+   drag.userData.object.x=drag.position.x;drag.userData.object.z=drag.position.z;
+  }
+ }
+ render();
+});
+function endDrag(){drag=null;windowDrag=null;orbit.enabled=true;renderer.shadowMap.autoUpdate=true;renderer.shadowMap.needsUpdate=true;render()}renderer.domElement.addEventListener('pointerup',endDrag);renderer.domElement.addEventListener('pointercancel',endDrag);
+const range=(id,label,min,max,step=1,suffix='')=>{let v=current()[id];return `<div class="label">${label}</div><div class="range-head"><span>Adjust the room</span><b id="val-${id}">${v}${suffix}</b></div><input type="range" id="field-${id}" min="${min}" max="${max}" step="${step}" value="${v}"/>`};
+function setControls(){const s=current(),step=STEPS[state.step];$('moodLabel').textContent=`0${state.mood+1} / ${MOODS[state.mood].toUpperCase()}`;$('roomHeadline').textContent=`A room for ${MOODS[state.mood].toLowerCase()}.`;$('stepCount').textContent=String(state.step+1).padStart(2,'0')+' / 08';$('progress').innerHTML=STEPS.map((_,i)=>`<i class="${i<=state.step?'active':''}"></i>`).join('');$('back').disabled=state.step===0&&state.mood===0;$('next').textContent=state.step===7?(state.mood===3?'Download my JPEG ↓':'Next emotion →'):'Next step →';
+let content='';if(step==='emotion'){content=`<h1>Begin with a feeling.</h1><p class="desc">Create four spaces, each expressing a different emotional state. The order is fixed so the studies can be compared.</p><div class="label">Current emotion · ${state.mood+1} of 4</div><button class="choice selected">${MOODS[state.mood]} <span>↗</span></button><div class="minor">Take your time. There is no correct arrangement of light.</div>`}
+if(step==='layout'){content=`<h1>Shape your space.</h1><p class="desc">Drag furniture and light fixtures inside the room. Rotate the camera to look around.</p><div class="label">Room setting</div><div class="pills">${['Living room','Bedroom','Studio'].map(x=>`<button class="pill ${s.layout===x?'selected':''}" data-layout="${x}">${x}</button>`).join('')}</div><div class="label">In this room</div><p class="minor">${s.objects.map(o=>({bed:'Bed',desk:'Desk',chair:'Chair',floorlamp:'Floor lamp',desklamp:'Table lamp',plant:'Plant',sofa:'Sofa',table:'Coffee table',rug:'Rug'}[o.type]||o.type)).join(' · ')}</p><div class="label">Add furniture</div><div class="tool-row">${[['bed','Bed'],['desk','Desk'],['chair','Chair'],['sofa','Sofa'],['table','Coffee table'],['rug','Rug'],['plant','Plant'],['floorlamp','Floor lamp'],['desklamp','Table lamp']].map(([type,name])=>`<button class="tool" data-add="${type}">＋ ${name}<small>Add to room</small></button>`).join('')}</div><button class="outline" style="margin-top:13px" id="removeLast">Remove last object −</button>`}
+if(step==='window'){content=`<h1>Place your windows.</h1><p class="desc">Drag a window toward the shared room corner to snap it automatically onto the adjacent wall. You can still use wall buttons for precise placement.</p><div class="label">Windows · ${s.windows.length}</div><div class="tool-row"><button class="tool" id="addWindow">＋ Add window<small>Up to 5 windows</small></button><button class="tool" id="removeWindow">− Remove last<small>Keep at least one</small></button></div>${range('curtain','Curtains open',0,100,1,'%')}${s.windows.map((w,i)=>`<div class="label">Window ${i+1}</div><div class="pills"><button class="pill ${(w.wall||'back')==='back'?'selected':''}" data-window-wall="${i}" data-wall="back">Back wall</button><button class="pill ${w.wall==='left'?'selected':''}" data-window-wall="${i}" data-wall="left">Left wall</button></div><div class="range-head"><span>Width</span><b id="win-value-${i}">${w.width.toFixed(2)} m</b></div><input type="range" data-win-width="${i}" min="0.6" max="2.4" step="0.05" value="${w.width}"/><div class="range-head"><span>Height</span><b>${w.y.toFixed(2)} m</b></div><input type="range" data-win-y="${i}" min="1.4" max="3.1" step="0.05" value="${w.y}"/>`).join('')}<div class="minor">Open or close the curtains, then move windows to change where sunlight lands.</div>`}
+if(step==='brightness'){content=`<h1>How much light?</h1><p class="desc">Set the intensity of natural daylight reaching your space.</p>${range('brightness','Daylight intensity',0,100,1,'%')}`}
+if(step==='softness'){content=`<h1>Soft or direct?</h1><p class="desc">At 0% sunlight has sharper edges; at 100% it spreads into a broad, gentle pool. Adjust while looking at the floor.</p>${range('softness','Light softness',0,100,1,'%')}`}
+if(step==='artificial'){content=`<h1>Bring in a second sun.</h1><p class="desc">Each table lamp and floor lamp emits light. Adjust brightness and select warm or cool white.</p><div class="tool-row"><button class="tool" data-add="floorlamp">＋ Floor lamp</button><button class="tool" data-add="desklamp">＋ Table lamp</button></div>${range('artificial','Lamp brightness',0,100,1,'%')}<div class="label">Light appearance</div><div class="tool-row"><button class="tool" data-kelvin="2700">Warm white ☀<small>2700 K</small></button><button class="tool" data-kelvin="6000">Cool white ❄<small>6000 K</small></button></div>${range('temperature','Lamp color temperature',2200,6500,100,' K')}`}
+if(step==='color'){content=`<h1>What colors hold the light?</h1><p class="desc">Choose colors for the surfaces. Use any color you like rather than predefined palettes.</p><div class="label">Wall color</div><div class="swatch-line"><input type="color" id="color-wall" value="${s.wall}"/><span id="val-wall">${s.wall.toUpperCase()}</span></div><div class="label">Floor color</div><div class="swatch-line"><input type="color" id="color-floor" value="${s.floor}"/><span id="val-floor">${s.floor.toUpperCase()}</span></div>`}
+if(step==='reflect'){content=`<h1>What does this room remind you of?</h1><p class="desc">Briefly describe the memory, situation, or feeling associated with this space.</p><div class="label">Your association · optional</div><textarea id="mood-note" maxlength="500" placeholder="This reminds me of…">${s.note||''}</textarea><div class="minor">${state.mood+1} of 4 environments created</div>${state.mood===3?'<div class="label">Collection title</div><input type="text" id="study-title" maxlength="80" placeholder="Name your light study" value="'+escapeAttr(state.title)+'"/><div class="label">Additional note · optional</div><textarea id="study-note" maxlength="500" placeholder="What did you notice across the four rooms?">'+escapeHTML(state.note)+'</textarea><button class="primary" style="width:100%;margin-top:18px" id="publishStudy" type="button">Publish to Shared Gallery ↗</button><p class="minor">Publishing shares this work publicly; anyone can download its JPEG.</p>':''}`}
+$('controls').innerHTML=content;$('hint').textContent=step==='layout'||step==='artificial'?'Drag furniture and lamps across the floor; orbit by dragging empty space.':step==='window'?'Drag windows toward the back-left corner to snap them onto the adjacent wall. Curtains control sunlight.':'Drag empty space to orbit and inspect the room.';
+$('controls').querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>{let type=b.dataset.add;current().objects.push({type,x:Math.random()*1.3-.5,z:Math.random()*1.5-.6});syncScene();notify(`${type} added — drag to reposition`)}));
+$('controls').querySelectorAll('[data-kelvin]').forEach(b=>b.addEventListener('click',()=>{s.temperature=+b.dataset.kelvin;setControls()}));
+$('controls').querySelectorAll('[data-layout]').forEach(b=>b.addEventListener('click',()=>{s.layout=b.dataset.layout;setControls()}));
+$('addWindow')?.addEventListener('click',()=>{if(s.windows.length>=5){notify('Maximum five windows');return;}s.windows.push({x:Math.max(-2.2,Math.min(2.2,-1.7+s.windows.length*.9)),y:2.45,width:1.1});setControls()});$('removeWindow')?.addEventListener('click',()=>{if(s.windows.length>1){s.windows.pop();setControls()}else notify('Keep at least one window')});$('controls').querySelectorAll('[data-window-wall]').forEach(b=>b.addEventListener('click',()=>{const w=s.windows[+b.dataset.windowWall];w.wall=b.dataset.wall;w.x=Math.max(-2.8+w.width/2+.14,Math.min(2.8-w.width/2-.14,w.x));setControls()}));$('controls').querySelectorAll('[data-win-width]').forEach(el=>{
+ const i=+el.dataset.winWidth;
+ el.addEventListener('input',()=>{const w=s.windows[i];w.width=+el.value;w.x=Math.max(-2.8+w.width/2+.14,Math.min(2.8-w.width/2-.14,w.x));$('win-value-'+i).textContent=w.width.toFixed(2)+' m';const g=windowGroups[i];if(g){g.scale.x=w.width/g.userData.baseWidth;if(w.wall==='left')g.position.z=w.x;else g.position.x=w.x;}updateWindowPatchPositions();render()});
+ el.addEventListener('change',()=>syncScene());
+ });
+ $('controls').querySelectorAll('[data-win-y]').forEach(el=>{
+ const i=+el.dataset.winY;const value=el.previousElementSibling?.querySelector('b');
+ el.addEventListener('input',()=>{s.windows[i].y=+el.value;if(windowGroups[i])windowGroups[i].position.y=+el.value;if(value)value.textContent=(+el.value).toFixed(2)+' m';render()});
+ });$('removeLast')?.addEventListener('click',()=>{if(s.objects.length){s.objects.pop();syncScene()}});
+for(let id of ['windowWidth','windowY','brightness','softness','artificial','temperature','curtain']){let el=$('field-'+id);if(el)el.addEventListener('input',()=>{s[id]=+el.value;$('val-'+id).textContent=el.value+(id==='temperature'?' K':id==='windowWidth'||id==='windowY'?' m':'%');liveUpdate(id)})}
+for(let id of ['wall','floor'])$('color-'+id)?.addEventListener('input',e=>{s[id]=e.target.value;$('val-'+id).textContent=e.target.value.toUpperCase();liveUpdate(id)});
+$('mood-note')?.addEventListener('input',e=>s.note=e.target.value);$('study-title')?.addEventListener('input',e=>state.title=e.target.value);$('study-note')?.addEventListener('input',e=>state.note=e.target.value);$('publishStudy')?.addEventListener('click',saveStudy);
+syncScene();}
+function escapeHTML(t){return (t||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')};function escapeAttr(t){return escapeHTML(t).replaceAll("'",'&#39;')}
+$('next').onclick=async()=>{if(state.step<7)state.step++;else if(state.mood<3){state.mood++;state.step=0}else{exportFinalJPEG();return}setControls()};$('back').onclick=()=>{if(state.step>0)state.step--;else if(state.mood>0){state.mood--;state.step=7}setControls()};
+$('resetView').onclick=()=>{camera.position.set(7,5.8,8.8);orbit.target.set(0,1.6,0);orbit.update();render()};
+function jpgData(){renderer.render(scene,camera);let source=renderer.domElement;const out=document.createElement('canvas');out.width=source.width;out.height=source.height;let ctx=out.getContext('2d');ctx.drawImage(source,0,0);let sz=Math.max(22,out.width/43);ctx.fillStyle='rgba(251,250,244,.87)';ctx.fillRect(0,out.height-sz*2.2,out.width,sz*2.2);ctx.fillStyle='#2c332d';ctx.font=`${sz}px Georgia`;ctx.fillText(`A Measure of Daylight — ${MOODS[state.mood]}`,sz,out.height-sz*.75);return out.toDataURL('image/jpeg',.91)}
+function download(data,name){let a=document.createElement('a');a.href=data;a.download=name;a.click()};
+function compositeJPEG(record=null){
+ // Rebuild the downloadable image from the four stored room settings.
+ const previousMood=state.mood, previousResults=state.results, previousTitle=state.title;
+ const images=[];
+ try{
+  if(record){
+   if(!Array.isArray(record.results)||record.results.length!==4)throw new Error('Invalid study results');
+   state.results=record.results.map(s=>({...DEFAULT(),...structuredClone(s)}));state.title=record.title||'';
+  }
+  for(let i=0;i<MOODS.length;i++){
+   state.mood=i;syncScene();renderer.render(scene,camera);
+   const preview=document.createElement('canvas');preview.width=renderer.domElement.width;preview.height=renderer.domElement.height;
+   preview.getContext('2d').drawImage(renderer.domElement,0,0);images.push(preview);
+  }
+ }finally{state.mood=previousMood;state.results=previousResults;state.title=previousTitle;syncScene();}
+ const width=1800,pad=64,gap=20,cellW=(width-pad*2-gap)/2,cellH=Math.round(cellW*.72);
+ const result=document.createElement('canvas');result.width=width;result.height=pad*2+148+cellH*2+gap+115;
+ const ctx=result.getContext('2d');ctx.fillStyle='#f5f4ef';ctx.fillRect(0,0,result.width,result.height);
+ ctx.fillStyle='#27332d';ctx.font='56px Georgia';ctx.fillText('A Measure of Daylight',pad,96);
+ ctx.font='23px sans-serif';ctx.fillText(((record?.title||previousTitle).trim()||'Personal light study')+'  ·  Four emotional spaces',pad,136);
+ images.forEach((im,i)=>{
+  const x=pad+(i%2)*(cellW+gap),y=pad+130+Math.floor(i/2)*(cellH+gap);
+  ctx.save();ctx.beginPath();ctx.rect(x,y,cellW,cellH);ctx.clip();ctx.drawImage(im,x,y,cellW,cellH);ctx.restore();
+  ctx.fillStyle='rgba(249,248,241,.93)';ctx.fillRect(x+14,y+14,170,40);
+  ctx.fillStyle='#26342c';ctx.font='23px sans-serif';ctx.fillText(MOODS[i],x+27,y+41);
+ });
+ ctx.font='19px sans-serif';ctx.fillStyle='#566258';ctx.fillText('Prototype 01  /  Personal Light Study',pad,result.height-47);
+ return result.toDataURL('image/jpeg',.90);
+}
+function exportFinalJPEG(record=null){
+ try{const title=(record?.title||state.title||'a-measure-of-daylight').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,55);
+ download(compositeJPEG(record),`light-study-${title||'untitled'}.jpg`);notify('JPEG downloaded.');}
+ catch(e){console.error(e);notify('Could not create JPEG. Please try again.');}
+}
+async function saveStudy(){
+ if(!state.title.trim()){notify('Enter a collection title before publishing.');$('study-title')?.focus();return;}
+ if(!SUPABASE_URL||!SUPABASE_ANON_KEY){notify('Connect the Supabase URL and public key to publish for everyone.');return;}
+ const btn=$('publishStudy');if(btn){btn.disabled=true;btn.textContent='Publishing…';}
+ const data={id:crypto.randomUUID(),title:state.title.trim(),note:state.note||'',results:state.results.map((s,i)=>({emotion:MOODS[i],...structuredClone(s)})),created_at:new Date().toISOString()};
+ try{
+  const res=await fetch(`${SUPABASE_URL}/rest/v1/light_portraits`,{method:'POST',headers:{apikey:SUPABASE_ANON_KEY,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify(data)});
+  if(!res.ok)throw new Error(await res.text());notify('Published to Shared Light Library.');await openGallery();
+ }catch(e){console.error(e);notify('Publish failed. Check Supabase URL, key and INSERT policy.');}
+ finally{if(btn){btn.disabled=false;btn.textContent='Publish to Shared Gallery ↗';}}
+}
+async function galleryRecords(){
+ if(!SUPABASE_URL||!SUPABASE_ANON_KEY)return {items:[],error:'Public gallery is not connected yet. Add your Supabase URL and public anon key in the HTML.'};
+ try{
+  const res=await fetch(`${SUPABASE_URL}/rest/v1/light_portraits?select=id,title,note,results,created_at&order=created_at.desc&limit=60`,{headers:{apikey:SUPABASE_ANON_KEY}});
+  if(!res.ok)throw new Error(await res.text());return {items:await res.json()};
+ }catch(e){console.error(e);return {items:[],error:'Could not reach the public gallery. Check the Supabase configuration and SELECT policy.'};}
+}
+async function openGallery(){
+ $('gallery').classList.add('visible');$('galleryGrid').innerHTML='<p>Loading public studies…</p>';
+ const {items,error}=await galleryRecords();if(error){$('galleryGrid').innerHTML=`<p>${escapeHTML(error)}</p>`;return;}
+ $('galleryGrid').innerHTML=items.length?items.map((x,i)=>`<article class="gallery-card"><div class="gallery-preview" style="aspect-ratio:1.4;background:#dedcd2;display:grid;place-items:center;font:italic 24px Georgia">${escapeHTML(x.title)}</div><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.note||'Four emotional spaces')} · ${new Date(x.created_at).toLocaleDateString()}</p><div class="inline-actions"><button type="button" data-jpeg="${i}">Download JPEG ↓</button></div></article>`).join(''):'<p>No public studies yet. Create four rooms and publish the collection.</p>';
+ $('galleryGrid').querySelectorAll('[data-jpeg]').forEach(b=>b.onclick=()=>exportFinalJPEG(items[+b.dataset.jpeg]));
+ // Generate visual previews only for visible cards, to keep larger galleries responsive.
+ const previews=$('galleryGrid').querySelectorAll('.gallery-preview');
+ const observer=new IntersectionObserver(entries=>{for(const ent of entries){if(!ent.isIntersecting)continue;observer.unobserve(ent.target);const i=Array.prototype.indexOf.call(previews,ent.target);requestAnimationFrame(()=>{try{const url=compositeJPEG(items[i]);const img=document.createElement('img');img.src=url;img.alt='Four room light study';img.loading='lazy';ent.target.replaceChildren(img);}catch(e){console.error(e);}});}}, {root:$('gallery'),rootMargin:'200px'});
+ previews.forEach(el=>observer.observe(el));
+}
+$('galleryOpen').onclick=openGallery;
+$('galleryClose').onclick=()=>$('gallery').classList.remove('visible');
+// Public users intentionally have no delete control: safe admin deletion must be server-authorized.
+setControls();resize();window.__lightAppReady=true;
+</script>
+</body></html>
