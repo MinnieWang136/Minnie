@@ -86,7 +86,7 @@ input[type=range] { accent-color:#607966; }
   .object-menu button { min-height: 40px; }
 }
 
-/* Prototype I redesign: cinematic intro + compact edit controls */
+/* Cinematic intro + compact edit controls */
 body.intro-mode main{grid-template-columns:minmax(0,1fr)}
 body.intro-mode .panel{display:none}
 body.intro-mode .viewport{height:calc(100dvh - 76px)}
@@ -124,13 +124,26 @@ body.intro-mode .intro-screen{display:flex}
 .panel-content{padding-top:17px}
 @media(max-width:900px){body.intro-mode main{display:block;height:calc(100dvh - 66px);min-height:0}body.intro-mode .viewport{height:calc(100dvh - 66px);min-height:0}.intro-screen{padding:22px}.intro-center{margin-bottom:10vh}.intro-center h1{font-size:clamp(38px,9vw,58px)}.intro-track{width:120px}.intro-bottom .primary{min-width:120px}}
 @media(prefers-reduced-motion:reduce){.weather-fx{animation:none}.intro-center h1{transition:none}}
+
+/* Final step: visible submission area, independent of panel scrolling. */
+.foot #publishStudy[hidden]{display:none!important}
+.foot.final-actions{align-items:center;gap:9px;flex-wrap:wrap}
+.foot.final-actions #back{display:none}
+.foot.final-actions #next{order:1;background:transparent;color:#39463d;border-color:#b9c5b9;min-width:0;flex:1;padding:12px 14px}
+.foot.final-actions #publishStudy{order:2;flex:1.4;min-width:155px;white-space:nowrap;box-shadow:0 5px 18px rgba(57,70,61,.14)}
+.final-submit{margin:12px 0 18px;padding:15px;background:#e8eee7;border:1px solid #b9cbbc;border-radius:17px}
+.final-submit label{font-weight:700;font-size:12px;display:block;margin-bottom:9px}
+.final-submit input{background:#fff;border-radius:10px}
+.final-submit .minor{margin:8px 0 0}
+@media(max-width:900px){.foot.final-actions{position:sticky;bottom:0;flex-wrap:nowrap}.foot.final-actions #publishStudy{min-width:0}.foot.final-actions #next{min-width:0}}
+@media(max-width:400px){.foot.final-actions #next{font-size:11px;padding:10px 7px}.foot.final-actions #publishStudy{font-size:11px;padding:11px 8px}}
 </style>
 </head>
 <body>
-<header><div class="brand">A Measure of Daylight <span style="font-size:13px;font-family:'DM Sans';color:var(--muted)">/ Light Study</span></div><div class="header-right"><span class="eyebrow">Prototype 01 · Refined</span><button class="outline" id="galleryOpen" type="button">Shared Gallery ↗</button></div></header>
+<header><div class="brand">A Measure of Daylight <span style="font-size:13px;font-family:'DM Sans';color:var(--muted)">/ Light Study</span></div><div class="header-right"><button class="outline" id="galleryOpen" type="button">Shared Gallery ↗</button></div></header>
 <main>
 <section class="viewport" id="viewport"><div class="overlay-top"><div class="eyebrow" id="moodLabel">01 / CALM</div><h2 id="roomHeadline">A room for calm.</h2></div><div class="hint" id="hint">Drag furniture or windows in the active step. Drag a window to the room corner to snap it onto the next wall.</div><div class="weather-fx" id="weatherFx" aria-hidden="true"></div><div class="intro-screen" id="introScreen" aria-label="Introduction to the light experiment"><div class="intro-top"><span class="intro-mark">A Measure of Daylight / A Day in Light</span><button type="button" class="intro-skip" id="skipIntro">Skip intro ↗</button></div><div class="intro-center" aria-live="polite"><div class="intro-time" id="introTime">06:00 · Morning</div><h1 id="introTitle">Light changes throughout the day.</h1><p id="introDescription">Watch the same room move through morning, afternoon, dusk and night.</p></div><div class="intro-bottom"><div class="intro-track" aria-hidden="true"><i id="introProgress"></i></div><button class="primary" type="button" id="beginIntro">Begin experiment →</button></div></div><div class="object-menu" id="objectMenu"></div><div class="toolbar"><button id="resetView" title="Reset camera">Reset view ↺</button></div></section>
-<aside class="panel"><div class="panel-content"><div class="step-count" id="stepCount">01 / 08</div><div class="progress" id="progress"></div><div id="controls"></div></div><div class="foot"><button class="outline" id="back">← Back</button><button class="primary" id="next">Next step →</button></div></aside>
+<aside class="panel"><div class="panel-content"><div class="step-count" id="stepCount">01 / 08</div><div class="progress" id="progress"></div><div id="controls"></div></div><div class="foot"><button class="outline" id="back">← Back</button><button class="primary" id="next">Next step →</button><button class="primary" id="publishStudy" type="button" hidden>Save to Gallery ↗</button></div></aside>
 </main>
 <div class="toast" id="toast" role="status"></div>
 <section class="gallery" id="gallery"><div class="gallery-header"><div><div class="eyebrow">Collected Light Studies</div><h2>Shared Light Library</h2></div><button class="outline" id="galleryClose">Close ×</button></div><p class="desc">Explore participant light studies. Every work can be downloaded as a four-room JPEG. Connect Supabase to share across devices.</p><div class="gallery-grid" id="galleryGrid"></div></section>
@@ -552,12 +565,12 @@ const range=(id,label,min,max,step=1,suffix='')=>{let v=current()[id];return `<d
 function propagateRoom(){const src=current();for(const r of state.results){if(r===src)continue;r.objects=structuredClone(src.objects);r.windows=structuredClone(src.windows);r.layout=src.layout;r.curtain=src.curtain;}}
 const inventory=[['bed','Bed'],['desk','Desk'],['chair','Chair'],['sofa','Sofa'],['table','Coffee table'],['rug','Rug'],['plant','Plant'],['floorlamp','Floor lamp'],['desklamp','Table lamp'],['walllamp','Wall sconce'],['ceilinglamp','Ceiling light']];
 function group(title,content,opened=false){return `<details class="control-group" ${opened?'open':''}><summary>${title}</summary>${content}</details>`}
-function setControls(){if(typeof closeObjectMenu==='function')closeObjectMenu();const s=current();$('moodLabel').textContent=state.step===0?'ROOM / SETUP':`0${state.mood+1} / ${MOODS[state.mood].toUpperCase()}`;$('roomHeadline').textContent=state.step===0?'Make this space yours.':`A room for ${MOODS[state.mood].toLowerCase()}.`;$('stepCount').textContent=state.step===0?'SET UP YOUR ROOM ONCE':'LIGHT STUDY · FOUR FEELINGS';$('progress').innerHTML='';$('back').textContent=state.step===0?'Reset room':'← Room setup';$('next').textContent=state.step===0?'Explore light →':state.mood===3?'Download JPEG ↓':'Save & next →';$('hint').textContent=state.step===0?(matchMedia('(hover: none)').matches?'Tap an object to edit it. Drag to move; drag empty space to rotate.':'Drag furniture or windows to move them. Hover or click an object to edit.'):'Adjust the light below. Drag empty space to rotate the room.';
+function setControls(){if(typeof closeObjectMenu==='function')closeObjectMenu();const s=current();$('moodLabel').textContent=state.step===0?'ROOM / SETUP':`0${state.mood+1} / ${MOODS[state.mood].toUpperCase()}`;$('roomHeadline').textContent=state.step===0?'Make this space yours.':`A room for ${MOODS[state.mood].toLowerCase()}.`;$('stepCount').textContent=state.step===0?'SET UP YOUR ROOM ONCE':'LIGHT STUDY · FOUR FEELINGS';$('progress').innerHTML='';$('back').textContent=state.step===0?'Reset room':'← Room setup';$('next').textContent=state.step===0?'Explore light →':state.mood===3?'Download JPEG ↓':'Save & next →';const finalStep=state.step===1&&state.mood===3;$('publishStudy').hidden=!finalStep;$('publishStudy').disabled=false;$('publishStudy').textContent='Save to Gallery ↗';$('next').parentElement.classList.toggle('final-actions',finalStep);$('hint').textContent=state.step===0?(matchMedia('(hover: none)').matches?'Tap an object to edit it. Drag to move; drag empty space to rotate.':'Drag furniture or windows to move them. Hover or click an object to edit.'):'Adjust the light below. Drag empty space to rotate the room.';
 let content='';
 if(state.step===0){content=`<h1>Your room.</h1><p class="compact-lead">Make it yours. Drag furniture to move it; drag empty space to rotate.</p>`+
  group('＋ Furniture',`<div class="tool-row">${inventory.map(([type,name])=>`<button class="tool" data-add="${type}">＋ ${name}</button>`).join('')}</div><div class="small-actions"><button id="removeLast">Undo last addition</button></div>`,false)+
  group('Windows & curtains',`<div class="small-actions"><button id="addWindow">＋ Window</button><button id="removeWindow">− Window</button></div>${range('curtain','Curtains',0,100,1,'%')}${s.windows.map((w,i)=>`<div class="compact-label">Window ${i+1}</div><div class="pills"><button class="pill ${(w.wall||'back')==='back'?'selected':''}" data-window-wall="${i}" data-wall="back">Back wall</button><button class="pill ${w.wall==='left'?'selected':''}" data-window-wall="${i}" data-wall="left">Left wall</button></div><div class="range-head"><span>Width</span><b id="win-value-${i}">${w.width.toFixed(2)} m</b></div><input type="range" data-win-width="${i}" min="0.6" max="2.4" step="0.05" value="${w.width}"/>`).join('')}`,false);}
-else{content=`<h1>${MOODS[state.mood]}</h1><p class="compact-lead">Make the room feel ${MOODS[state.mood].toLowerCase()} to you. There are no right answers.</p><div class="mood-tabs">${MOODS.map((m,i)=>`<button data-mood="${i}" class="${i===state.mood?'selected':''}">${m}</button>`).join('')}</div>`+
+else{content=`<h1>${MOODS[state.mood]}</h1><p class="compact-lead">Make the room feel ${MOODS[state.mood].toLowerCase()} to you. There are no right answers.</p><div class="mood-tabs">${MOODS.map((m,i)=>`<button data-mood="${i}" class="${i===state.mood?'selected':''}">${m}</button>`).join('')}</div>`+(state.mood===3?`<div class="final-submit"><label for="study-title">Almost done! Name your light study</label><input id="study-title" type="text" maxlength="80" value="${escapeAttr(state.title)}" placeholder="e.g. A quiet afternoon"/><p class="minor">Tap <b>Save to Gallery</b> below to share all four rooms. Public studies are visible and downloadable by others.</p></div>`:'')+
  `<div class="compact-label">Natural light</div>`+
  range('time','Time',6,22,.25,' h')+range('brightness','Daylight',0,100,1,'%')+range('softness','Softness',0,100,1,'%')+
  `<div class="compact-label">Indoor lighting</div>`+range('artificial','Lamp intensity',0,100,1,'%')+`<div class="weather-select"><button data-kelvin="2700">Warm</button><button data-kelvin="4000">Neutral</button><button data-kelvin="6000">Cool</button></div>`+
@@ -566,7 +579,7 @@ else{content=`<h1>${MOODS[state.mood]}</h1><p class="compact-lead">Make the room
  range('sunAzimuth','Sun direction',-180,180,1,'°')+range('curtain','Curtains',0,100,1,'%')+range('temperature','Color temperature',2200,6500,100,' K')+
  `<div class="compact-label">Room colors</div><div class="swatch-line"><input type="color" id="color-wall" aria-label="Wall color" value="${s.wall}"/><span>Wall</span><input type="color" id="color-floor" aria-label="Floor color" value="${s.floor}"/><span>Floor</span></div>`+
  `<div class="compact-label">A memory of light · optional</div><textarea id="mood-note" maxlength="500" placeholder="This light reminds me of…">${escapeHTML(s.note)}</textarea></details>`+
- (state.mood===3?group('Share your study',`<div class="compact-label">Study title</div><input id="study-title" type="text" maxlength="80" value="${escapeAttr(state.title)}" placeholder="Give your light a name"/><div class="compact-label">Final thoughts · optional</div><textarea id="study-note" maxlength="500">${escapeHTML(state.note)}</textarea><button class="primary" style="width:100%;margin-top:12px" id="publishStudy">Save to shared gallery ↗</button><p class="minor">Anyone can view and download published studies.</p>`,true):'');}
+ (state.mood===3?group('Final thoughts · optional',`<textarea id="study-note" maxlength="500" placeholder="What did you notice?">${escapeHTML(state.note)}</textarea>`,false):'');}
 $('controls').innerHTML=content;
 $('controls').querySelectorAll('[data-mood]').forEach(b=>b.onclick=()=>{state.mood=+b.dataset.mood;setControls()});
 $('controls').querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{s.objects.push({type:b.dataset.add,x:1.1,z:1.1});propagateRoom();syncScene();notify('Added! Drag it to a new spot.')});
@@ -579,9 +592,10 @@ $('controls').querySelectorAll('[data-window-wall]').forEach(b=>b.onclick=()=>{s
 $('controls').querySelectorAll('[data-win-width]').forEach(el=>{el.oninput=()=>{const w=s.windows[+el.dataset.winWidth];w.width=+el.value;$('win-value-'+el.dataset.winWidth).textContent=w.width.toFixed(2)+' m';syncScene()};el.onchange=propagateRoom});
 for(const id of ['brightness','softness','artificial','temperature','curtain','time','sunAzimuth']){const el=$('field-'+id);if(el)el.oninput=()=>{s[id]=+el.value;$('val-'+id).textContent=el.value+({temperature:' K',sunAzimuth:'°',time:' h'}[id]||'%');liveUpdate(id);if(state.step===0&&id==='curtain')propagateRoom()}}
 for(const id of ['wall','floor'])$('color-'+id)?.addEventListener('input',e=>{s[id]=e.target.value;$('val-'+id).textContent=e.target.value.toUpperCase();liveUpdate(id)});
-$('mood-note')?.addEventListener('input',e=>s.note=e.target.value);$('study-title')?.addEventListener('input',e=>state.title=e.target.value);$('study-note')?.addEventListener('input',e=>state.note=e.target.value);$('publishStudy')?.addEventListener('click',saveStudy);
+$('mood-note')?.addEventListener('input',e=>s.note=e.target.value);$('study-title')?.addEventListener('input',e=>state.title=e.target.value);$('study-note')?.addEventListener('input',e=>state.note=e.target.value);
 syncScene();}
 function escapeHTML(t){return (t||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')};function escapeAttr(t){return escapeHTML(t).replaceAll("'",'&#39;')}
+$('publishStudy').onclick=saveStudy;
 $('next').onclick=()=>{if(state.step===0){propagateRoom();state.step=1;state.mood=0;}else if(state.mood<3){state.mood++;}else{exportFinalJPEG();return;}setControls()};$('back').onclick=()=>{if(state.step===1){state.step=0;state.mood=0;setControls()}else if(confirm('Start with a fresh room?')){state.results=MOODS.map(()=>DEFAULT());state.mood=0;setControls()}};
 $('resetView').onclick=()=>{camera.position.set(7,5.8,8.8);orbit.target.set(0,1.6,0);orbit.update();render()};
 function jpgData(){renderer.render(scene,camera);let source=renderer.domElement;const out=document.createElement('canvas');out.width=source.width;out.height=source.height;let ctx=out.getContext('2d');ctx.drawImage(source,0,0);let sz=Math.max(22,out.width/43);ctx.fillStyle='rgba(251,250,244,.87)';ctx.fillRect(0,out.height-sz*2.2,out.width,sz*2.2);ctx.fillStyle='#2c332d';ctx.font=`${sz}px Georgia`;ctx.fillText(`A Measure of Daylight — ${MOODS[state.mood]}`,sz,out.height-sz*.75);return out.toDataURL('image/jpeg',.91)}
@@ -612,7 +626,7 @@ function compositeJPEG(record=null){
   ctx.fillStyle='rgba(249,248,241,.93)';ctx.fillRect(x+14,y+14,170,40);
   ctx.fillStyle='#26342c';ctx.font='23px sans-serif';ctx.fillText(MOODS[i],x+27,y+41);
  });
- ctx.font='19px sans-serif';ctx.fillStyle='#566258';ctx.fillText('Prototype 01  /  Personal Light Study',pad,result.height-47);
+ ctx.font='19px sans-serif';ctx.fillStyle='#566258';ctx.fillText('Personal Light Study  /  Shared Light Library',pad,result.height-47);
  return result.toDataURL('image/jpeg',.90);
 }
 function exportFinalJPEG(record=null){
@@ -621,15 +635,15 @@ function exportFinalJPEG(record=null){
  catch(e){console.error(e);notify('Could not create JPEG. Please try again.');}
 }
 async function saveStudy(){
- if(!state.title.trim()){notify('Enter a collection title before publishing.');$('study-title')?.focus();return;}
+ if(!state.title.trim()){notify('Please name your light study before saving.');const field=$('study-title');field?.scrollIntoView({behavior:'smooth',block:'center'});field?.focus();return;}
  if(!SUPABASE_URL||!SUPABASE_ANON_KEY){notify('Connect the Supabase URL and public key to publish for everyone.');return;}
- const btn=$('publishStudy');if(btn){btn.disabled=true;btn.textContent='Publishing…';}
+ const btn=$('publishStudy');if(btn){btn.disabled=true;btn.textContent='Saving…';}
  const data={id:crypto.randomUUID(),title:state.title.trim(),note:state.note||'',results:state.results.map((s,i)=>({emotion:MOODS[i],...structuredClone(s)})),created_at:new Date().toISOString()};
  try{
   const res=await fetch(`${SUPABASE_URL}/rest/v1/light_portraits`,{method:'POST',headers:{apikey:SUPABASE_ANON_KEY,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify(data)});
   if(!res.ok)throw new Error(await res.text());notify('Published to Shared Light Library.');await openGallery();
  }catch(e){console.error(e);notify('Publish failed. Check Supabase URL, key and INSERT policy.');}
- finally{if(btn){btn.disabled=false;btn.textContent='Publish to Shared Gallery ↗';}}
+ finally{if(btn){btn.disabled=false;btn.textContent='Save to Gallery ↗';}}
 }
 async function galleryRecords(){
  if(!SUPABASE_URL||!SUPABASE_ANON_KEY)return {items:[],error:'Public gallery is not connected yet. Add your Supabase URL and public anon key in the HTML.'};
