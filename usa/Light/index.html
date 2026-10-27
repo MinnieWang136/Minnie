@@ -25,7 +25,7 @@ button:not(:disabled):active { transform: translateY(1px); }
 .toast { border-radius:14px; }
 input[type=range] { accent-color:#607966; }
 
-.viewport::after{content:"";pointer-events:none;position:absolute;inset:0;box-shadow:inset 0 0 110px 35px rgba(81,54,35,.17);z-index:1}.overlay-top,.hint,.toolbar{z-index:2}.panel-content{padding-top:23px}.panel h1{font-size:37px}.desc{margin-bottom:12px}.label{margin:14px 0 7px}.control-group{border:1px solid var(--line);border-radius:18px;padding:12px 15px;margin:12px 0;background:#fffaf3}.control-group summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center}.control-group summary::after{content:'⌄';font-size:20px;color:var(--accent)}.control-group[open] summary::after{content:'⌃'}.control-group .minor{line-height:1.5}.mood-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:12px 0}.mood-tabs button{border:1px solid var(--line);background:transparent;padding:9px 3px;font-size:11px;border-radius:14px}.mood-tabs button.selected{background:#80664f;color:white}.small-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.small-actions button{border:1px solid var(--line);border-radius:14px;background:#fffaf4;padding:8px 12px}.object-menu{position:absolute;z-index:5;display:none;background:#fff9efef;backdrop-filter:blur(8px);padding:10px;border:1px solid #d6c2aa;border-radius:15px;box-shadow:0 12px 35px #48341c33;max-width:210px}.object-menu button{border:1px solid #decfbb;background:white;border-radius:10px;padding:7px 10px;margin:2px}.object-menu label{display:block;font-size:11px;margin:5px 0}.object-menu input[type=color]{width:43px;height:33px}.foot{padding:13px 24px}.progress{display:none}.step-count{font-size:10px}.toolbar button{background:#fff9efea}.gallery{background:#f3e9db}.control-group .control-group{margin:9px 0;background:#f6eee3;padding:9px 12px}.object-menu{min-width:190px}.object-menu .minor{margin-top:7px;font-size:10px}.control-group[open]>summary{margin-bottom:7px}
+.viewport::after{content:"";pointer-events:none;position:absolute;inset:0;box-shadow:inset 0 0 110px 35px rgba(81,54,35,.17);z-index:1}.overlay-top,.hint,.toolbar{z-index:2}.panel-content{padding-top:23px}.panel h1{font-size:37px}.desc{margin-bottom:12px}.label{margin:14px 0 7px}.control-group{border:1px solid var(--line);border-radius:18px;padding:12px 15px;margin:12px 0;background:#fffaf3}.control-group summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center}.control-group summary::after{content:'⌄';font-size:20px;color:var(--accent)}.control-group[open] summary::after{content:'⌃'}.control-group .minor{line-height:1.5}.mood-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:12px 0}.mood-tabs button{border:1px solid var(--line);background:transparent;padding:9px 3px;font-size:11px;border-radius:14px}.mood-tabs button.selected{background:#80664f;color:white}.small-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.small-actions button{border:1px solid var(--line);border-radius:14px;background:#fffaf4;padding:8px 12px}.object-menu{position:absolute;z-index:5;display:none;background:#fff9efef;backdrop-filter:blur(8px);padding:10px;border:1px solid #d6c2aa;border-radius:15px;box-shadow:0 12px 35px #48341c33;max-width:210px}.object-menu button{border:1px solid #decfbb;background:white;border-radius:10px;padding:7px 10px;margin:2px}.object-menu label{display:block;font-size:11px;margin:5px 0}.object-menu input[type=color]{width:43px;height:33px}.foot{padding:13px 24px}.progress{display:none}.step-count{font-size:10px}.toolbar button{background:#fff9efea}.gallery{background:#f3e9db}.control-group .control-group{margin:9px 0;background:#f6eee3;padding:9px 12px}.object-menu{min-width:218px;max-width:240px}.object-menu .rotate-actions{display:flex;gap:5px;margin:7px 0}.object-menu .rotate-actions button{flex:1;padding:8px 4px}.object-menu .rotate-range{width:100%;accent-color:#607966}.object-menu .rotate-label{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#586052}.object-menu{min-width:190px}.object-menu .minor{margin-top:7px;font-size:10px}.control-group[open]>summary{margin-bottom:7px}
 
 /* Mobile layout: the live 3D room stays ABOVE its controls. */
 @media (max-width: 900px) {
@@ -85,12 +85,51 @@ input[type=range] { accent-color:#607966; }
   .viewport canvas { touch-action: none; }
   .object-menu button { min-height: 40px; }
 }
+
+/* Prototype I redesign: cinematic intro + compact edit controls */
+body.intro-mode main{grid-template-columns:minmax(0,1fr)}
+body.intro-mode .panel{display:none}
+body.intro-mode .viewport{height:calc(100dvh - 76px)}
+body.intro-mode .overlay-top,body.intro-mode .hint,body.intro-mode .toolbar,body.intro-mode .object-menu{display:none!important}
+.intro-screen{display:none;position:absolute;inset:0;z-index:8;pointer-events:none;color:#fff;justify-content:space-between;flex-direction:column;padding:clamp(20px,3.5vw,52px)}
+body.intro-mode .intro-screen{display:flex}
+.intro-screen::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(17,27,32,.55),transparent 68%),linear-gradient(0deg,rgba(15,24,31,.53),transparent 35%);pointer-events:none}
+.intro-top,.intro-bottom{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.intro-mark{font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:700}
+.intro-skip{background:#ffffff25;color:white;border:1px solid #ffffff83;border-radius:100px;padding:10px 20px;pointer-events:auto;backdrop-filter:blur(8px)}
+.intro-center{max-width:540px;pointer-events:none;margin-top:auto;margin-bottom:7vh}
+.intro-center .intro-time{font-size:12px;letter-spacing:.2em;font-weight:700;text-transform:uppercase;margin-bottom:15px}
+.intro-center h1{font:clamp(36px,5vw,68px)/1.05 'Instrument Serif',serif;font-weight:400;margin:0 0 18px;text-wrap:balance;transition:opacity .5s ease}
+.intro-center p{font-size:15px;line-height:1.6;max-width:460px;color:#fffce9;margin:0}
+.intro-bottom .primary{pointer-events:auto;background:#fff;color:#28362d;border-color:#fff;min-width:175px}
+.intro-bottom .primary:hover{background:#f0e2cf;color:#28362d}
+.intro-track{height:3px;background:#ffffff63;width:min(330px,40vw);border-radius:5px;overflow:hidden}
+.intro-track i{display:block;height:100%;width:0%;background:white;transition:width .14s linear}
+.weather-fx{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity 1.1s ease;display:none}
+@keyframes rainShift{from{background-position:0 -260px}to{background-position:30px 260px}}
+.compact-lead{font-size:12px;color:var(--muted);line-height:1.5;margin:2px 0 14px}
+.compact-range{margin:12px 0 15px}
+.compact-range .range-head{margin-bottom:4px}
+.compact-range .range-head span{font-size:12px;color:var(--ink)}
+.compact-range .range-head b{color:var(--muted);font-size:11px}
+.compact-range input[type=range]{margin-top:4px}
+.compact-label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:700;margin:17px 0 8px}
+.weather-select{display:flex;gap:6px;flex-wrap:wrap}
+.weather-select button{flex:1;border:1px solid var(--line);background:transparent;border-radius:999px;padding:10px 6px;font-size:11px}
+.weather-select button.selected{background:#e2e9df;border-color:#728a78;font-weight:700}
+.compact-details{margin:14px 0;border-top:1px solid var(--line);padding-top:12px}
+.compact-details summary{cursor:pointer;color:#665e54;font-size:12px;font-weight:600}
+.compact-details .control-group{background:#f6eee3}
+.mood-tabs{margin:9px 0 18px}.panel h1{margin:9px 0 7px;font-size:35px}
+.panel-content{padding-top:17px}
+@media(max-width:900px){body.intro-mode main{display:block;height:calc(100dvh - 66px);min-height:0}body.intro-mode .viewport{height:calc(100dvh - 66px);min-height:0}.intro-screen{padding:22px}.intro-center{margin-bottom:10vh}.intro-center h1{font-size:clamp(38px,9vw,58px)}.intro-track{width:120px}.intro-bottom .primary{min-width:120px}}
+@media(prefers-reduced-motion:reduce){.weather-fx{animation:none}.intro-center h1{transition:none}}
 </style>
 </head>
 <body>
 <header><div class="brand">A Measure of Daylight <span style="font-size:13px;font-family:'DM Sans';color:var(--muted)">/ Light Study</span></div><div class="header-right"><span class="eyebrow">Prototype 01 · Refined</span><button class="outline" id="galleryOpen" type="button">Shared Gallery ↗</button></div></header>
 <main>
-<section class="viewport" id="viewport"><div class="overlay-top"><div class="eyebrow" id="moodLabel">01 / CALM</div><h2 id="roomHeadline">A room for calm.</h2></div><div class="hint" id="hint">Drag furniture or windows in the active step. Drag a window to the room corner to snap it onto the next wall.</div><div class="object-menu" id="objectMenu"></div><div class="toolbar"><button id="resetView" title="Reset camera">Reset view ↺</button></div></section>
+<section class="viewport" id="viewport"><div class="overlay-top"><div class="eyebrow" id="moodLabel">01 / CALM</div><h2 id="roomHeadline">A room for calm.</h2></div><div class="hint" id="hint">Drag furniture or windows in the active step. Drag a window to the room corner to snap it onto the next wall.</div><div class="weather-fx" id="weatherFx" aria-hidden="true"></div><div class="intro-screen" id="introScreen" aria-label="Introduction to the light experiment"><div class="intro-top"><span class="intro-mark">A Measure of Daylight / A Day in Light</span><button type="button" class="intro-skip" id="skipIntro">Skip intro ↗</button></div><div class="intro-center" aria-live="polite"><div class="intro-time" id="introTime">06:00 · Morning</div><h1 id="introTitle">Light changes throughout the day.</h1><p id="introDescription">Watch the same room move through morning, afternoon, dusk and night.</p></div><div class="intro-bottom"><div class="intro-track" aria-hidden="true"><i id="introProgress"></i></div><button class="primary" type="button" id="beginIntro">Begin experiment →</button></div></div><div class="object-menu" id="objectMenu"></div><div class="toolbar"><button id="resetView" title="Reset camera">Reset view ↺</button></div></section>
 <aside class="panel"><div class="panel-content"><div class="step-count" id="stepCount">01 / 08</div><div class="progress" id="progress"></div><div id="controls"></div></div><div class="foot"><button class="outline" id="back">← Back</button><button class="primary" id="next">Next step →</button></div></aside>
 </main>
 <div class="toast" id="toast" role="status"></div>
@@ -113,7 +152,8 @@ const SUPABASE_ANON_KEY = 'sb_publishable_-ApwE4jnADQ4yT9lIxdQjQ_Y17THrUL';
 
 const MOODS=['Calm','Safe','Focused','Energized'];
 const STEPS=['setup','study'];
-const DEFAULT=()=>({brightness:72,softness:68,temperature:3900,artificial:58,time:15,sunAzimuth:35,wall:'#e8e5da',floor:'#ad987e',windowX:-1.35,windowY:2.45,windowWidth:1.7,curtain:100,windows:[{x:-1.65,y:2.45,width:1.35},{x:.65,y:2.45,width:1.1}],layout:'Bedroom',objects:[{type:'bed',x:-1.2,z:.9},{type:'desk',x:1.65,z:-.7},{type:'chair',x:1.65,z:.45},{type:'floorlamp',x:2.25,z:1.6},{type:'plant',x:-2.3,z:-1.25},{type:'desklamp',x:1.65,z:-.7}],note:''});
+const WEATHER=['sunny','cloudy','rainy'];
+const DEFAULT=()=>({brightness:72,softness:68,temperature:3900,artificial:58,time:15,weather:'sunny',sunAzimuth:35,wall:'#e8e5da',floor:'#ad987e',windowX:-1.35,windowY:2.45,windowWidth:1.7,curtain:100,windows:[{x:-1.65,y:2.45,width:1.35},{x:.65,y:2.45,width:1.1}],layout:'Bedroom',objects:[{type:'bed',x:-1.2,z:.9},{type:'desk',x:1.65,z:-.7},{type:'chair',x:1.65,z:.45},{type:'floorlamp',x:2.25,z:1.6},{type:'plant',x:-2.3,z:-1.25},{type:'desklamp',x:1.65,z:-.7}],note:''});
 const state={mood:0,step:0,results:MOODS.map(()=>DEFAULT()),selected:null,title:'',note:''};
 const $=id=>document.getElementById(id);const current=()=>state.results[state.mood];
 const hex=n=>'#'+new THREE.Color(n).getHexString();
@@ -125,16 +165,37 @@ const orbit=new OrbitControls(camera,renderer.domElement);orbit.target.set(0,1.6
 const ambient=new THREE.HemisphereLight('#edf3ff','#988573',.65);scene.add(ambient);
 const sunlight=new THREE.DirectionalLight('#fff4df',3);sunlight.position.set(-3,6,4);sunlight.castShadow=true;sunlight.shadow.mapSize.set(1024,1024);sunlight.shadow.camera.left=-8;sunlight.shadow.camera.right=8;sunlight.shadow.camera.top=8;sunlight.shadow.camera.bottom=-8;sunlight.shadow.bias=-.0002;sunlight.shadow.radius=3;scene.add(sunlight);
 const lamps=[];let lightPatches=[];let lastLampTint=null;const sunBeam=new THREE.Group();scene.add(sunBeam);
-const MAT=(color,roughness=.88)=>new THREE.MeshStandardMaterial({color,roughness,metalness:0,side:THREE.DoubleSide});
+const MAT=(color,roughness=.82,metalness=.02,map=null,bumpMap=null,bumpScale=.0)=>new THREE.MeshStandardMaterial({color,roughness,metalness,map,bumpMap,bumpScale,side:THREE.DoubleSide});
 let floor,back,left,windowGroups=[],objectGroups=[];const highlight=new THREE.BoxHelper(new THREE.Object3D(),0x678675);scene.add(highlight);highlight.visible=false;
 function mesh(geo,mat,x=0,y=0,z=0,parent=scene){let o=new THREE.Mesh(geo,mat);o.position.set(x,y,z);o.receiveShadow=true;o.castShadow=true;parent.add(o);return o}
+function makeNoiseTexture(base='#ffffff',accent='rgba(0,0,0,.06)',size=256,step=8){
+ const c=document.createElement('canvas');c.width=c.height=size;const ctx=c.getContext('2d');ctx.fillStyle=base;ctx.fillRect(0,0,size,size);
+ for(let y=0;y<size;y+=step){for(let x=0;x<size;x+=step){const a=Math.random()*.08+.02;ctx.fillStyle=accent.replace('ALPHA',a.toFixed(3));ctx.fillRect(x,y,step,step);}}
+ const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.wrapS=t.wrapT=THREE.RepeatWrapping;return t;
+}
+function makeWoodTexture(){
+ const c=document.createElement('canvas');c.width=1024;c.height=256;const ctx=c.getContext('2d');ctx.fillStyle='#ab9176';ctx.fillRect(0,0,c.width,c.height);
+ for(let y=0;y<c.height;y+=64){ctx.fillStyle='rgba(82,57,36,.10)';ctx.fillRect(0,y,c.width,2);}
+ for(let i=0;i<420;i++){const x=Math.random()*c.width,y=Math.random()*c.height,w=60+Math.random()*240;ctx.strokeStyle=`rgba(125,90,63,${0.03+Math.random()*0.08})`;ctx.lineWidth=1+Math.random()*1.5;ctx.beginPath();ctx.moveTo(x,y);ctx.bezierCurveTo(x+w*.25,y+8-Math.random()*16,x+w*.75,y+8-Math.random()*16,x+w,y);ctx.stroke();}
+ const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(2.4,2.1);t.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());return t;
+}
+function makeCloudTexture(){
+ const c=document.createElement('canvas');c.width=c.height=256;const ctx=c.getContext('2d');
+ const p=(x,y,r,a)=>{const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(255,255,255,${a})`);g.addColorStop(1,'rgba(255,255,255,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();};
+ p(90,135,62,.95);p(135,106,56,.95);p(168,136,48,.82);p(62,140,44,.72);p(118,156,58,.78);
+ const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;
+}
+const wallTexture=makeNoiseTexture('#f2ece1','rgba(108,93,79,ALPHA)',256,8);wallTexture.repeat.set(3.5,2.5);
+const floorTexture=makeWoodTexture();
+const fabricTexture=makeNoiseTexture('#ddd5c8','rgba(80,65,54,ALPHA)',256,6);fabricTexture.repeat.set(2,2);
+const cloudTexture=makeCloudTexture();
 // Round only furniture pieces; room walls and windows stay geometrically accurate.
 const furnitureShapes=new Map();
 function cube(parent,w,h,d,color,x,y,z){
  const isFurniture=!!parent.userData.object;
- const radius=isFurniture?Math.min(.075,w*.20,h*.28,d*.20):0;
+ const radius=isFurniture?Math.min(.03,w*.08,h*.12,d*.08):0;
  let geometry;
- if(radius>.007){
+ if(radius>.004){
   const key=[w,h,d,radius].join('/');
   geometry=furnitureShapes.get(key);
   if(!geometry){geometry=new RoundedBoxGeometry(w,h,d,3,radius);furnitureShapes.set(key,geometry)}
@@ -154,7 +215,13 @@ function makeRugTexture(){
 }
 const rugTexture=makeRugTexture();
 function cylinder(parent,r1,r2,h,color,x,y,z){return mesh(new THREE.CylinderGeometry(r1,r2,h,18),MAT(color),x,y,z,parent)}
-function buildRoom(){floor=cube(scene,6.2,.16,5.8,'#ad987e',0,-.08,0);back=cube(scene,6.2,4.1,.13,'#e8e5da',0,2.05,-2.9);left=cube(scene,.13,4.1,5.8,'#dad6c9',-3.1,2.05,0);cube(scene,6.25,.11,.08,'#d1c6b5',0,.07,-2.8); }
+function buildRoom(){
+ floor=cube(scene,6.2,.16,5.8,'#ad987e',0,-.08,0);
+ floor.material=MAT('#ad987e',.9,.02,floorTexture,floorTexture,.015);
+ back=cube(scene,6.2,4.1,.13,'#e8e5da',0,2.05,-2.9);back.material=MAT('#e8e5da',.96,0);
+ left=cube(scene,.13,4.1,5.8,'#dad6c9',-3.1,2.05,0);left.material=MAT('#dad6c9',.96,0);
+ const trim=cube(scene,6.25,.11,.08,'#d1c6b5',0,.07,-2.8);trim.material.roughness=.76;
+ }
 function createWindow(w,index){
  const g=new THREE.Group();g.userData.windowIndex=index;g.userData.baseWidth=w.width;g.userData.curtainParts=[];scene.add(g);
  const width=w.width, ht=1.53;
@@ -180,15 +247,80 @@ function createWindow(w,index){
 }
 function syncWindows(s){windowGroups.forEach(g=>scene.remove(g));windowGroups=[];(s.windows||[]).forEach((w,i)=>createWindow(w,i))}
 buildRoom();
+const skyGroup=new THREE.Group();scene.add(skyGroup);
+// Canvas-backed circular celestial bodies: transparent outside the disc, softly antialiased edges.
+function celestialTexture(kind){
+ const c=document.createElement('canvas');c.width=c.height=512;
+ const ctx=c.getContext('2d'),cx=256,cy=256,r=171;
+ const glow=ctx.createRadialGradient(cx,cy,r*.7,cx,cy,250);
+ if(kind==='sun'){
+  glow.addColorStop(0,'rgba(255,211,125,.18)');glow.addColorStop(.65,'rgba(255,191,104,.09)');glow.addColorStop(1,'rgba(255,183,97,0)');
+ }else{
+  glow.addColorStop(0,'rgba(223,237,255,.13)');glow.addColorStop(.6,'rgba(203,225,255,.06)');glow.addColorStop(1,'rgba(203,225,255,0)');
+ }
+ ctx.fillStyle=glow;ctx.fillRect(0,0,512,512);
+ const disc=ctx.createRadialGradient(cx-r*.25,cy-r*.28,r*.03,cx,cy,r);
+ if(kind==='sun'){
+  disc.addColorStop(0,'#fff9d8');disc.addColorStop(.77,'#ffe3a2');disc.addColorStop(.97,'#ffca83');disc.addColorStop(1,'rgba(255,202,131,.95)');
+ }else{
+  disc.addColorStop(0,'#ffffff');disc.addColorStop(.84,'#f1f4ff');disc.addColorStop(1,'#dbe4f7');
+ }
+ ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);ctx.fillStyle=disc;ctx.fill();
+ if(kind==='moon'){
+  ctx.save();ctx.beginPath();ctx.arc(cx,cy,r-2,0,2*Math.PI);ctx.clip();
+  for(const [x,y,rr,a] of [[194,220,28,.085],[295,296,39,.06],[325,192,19,.07],[230,330,22,.06]]){
+   ctx.beginPath();ctx.arc(x,y,rr,0,2*Math.PI);ctx.fillStyle=`rgba(129,148,176,${a})`;ctx.fill();
+  }
+  ctx.restore();
+ }
+ const texture=new THREE.CanvasTexture(c);texture.colorSpace=THREE.SRGBColorSpace;texture.minFilter=THREE.LinearFilter;texture.magFilter=THREE.LinearFilter;return texture;
+}
+const sunSprite=new THREE.Sprite(new THREE.SpriteMaterial({map:celestialTexture('sun'),color:'#ffffff',transparent:true,opacity:.98,depthWrite:false,alphaTest:.012}));sunSprite.scale.set(1.65,1.65,1);skyGroup.add(sunSprite); sunSprite.visible=false;
+const moonSprite=new THREE.Sprite(new THREE.SpriteMaterial({map:celestialTexture('moon'),color:'#ffffff',transparent:true,opacity:.92,depthWrite:false,alphaTest:.012}));moonSprite.scale.set(1.23,1.23,1);skyGroup.add(moonSprite); moonSprite.visible=false;
+const cloudSprites=[];
+for(let i=0;i<6;i++){const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:cloudTexture,color:'#ffffff',transparent:true,opacity:.0,depthWrite:false}));sp.scale.set(2.2+Math.random()*1.4,1.05+Math.random()*.45,1);sp.userData.offset=i/6;sp.userData.depth=-6.4-Math.random()*.9;sp.userData.baseY=3.3+Math.random()*1.8;skyGroup.add(sp);cloudSprites.push(sp);}
+function skyTimeColor(time,weather){
+ const palette={sunny:['#162235','#344766','#8ea6c2','#c6deec','#cfe6f1','#e7bc9d','#5d6487','#162235'],cloudy:['#162235','#2f4057','#7f90a6','#acb7be','#b7c2ca','#a7aeb8','#5c647c','#162235'],rainy:['#132031','#26354a','#65788f','#7e94a6','#8093a5','#6a7b8f','#434d64','#132031']};
+ const colors=palette[weather||'sunny']; const stops=[0,5.5,6.8,9,15.8,18.2,20.2,24];
+ if(time<=stops[0])return new THREE.Color(colors[0]);
+ for(let i=0;i<stops.length-1;i++){if(time<=stops[i+1]){const t=(time-stops[i])/(stops[i+1]-stops[i]);return new THREE.Color(colors[i]).lerp(new THREE.Color(colors[i+1]),Math.max(0,Math.min(1,t)));}}
+ return new THREE.Color(colors[colors.length-1]);
+}
+function updateSkyObjects(s){
+ const t=((s.time%24)+24)%24, weather=s.weather||'sunny';
+ const skyCol=skyTimeColor(t,weather); scene.background.copy(skyCol);
+ const day=((t-6)/12); const dayArc=Math.PI*(day-0.5);
+ const moonArc=dayArc+Math.PI; const r=5.2,z=-6.4;
+ const sunY=2.0+Math.sin(dayArc)*3.2; const moonY=2.0+Math.sin(moonArc)*3.1;
+ sunSprite.position.set(Math.cos(dayArc)*3.9,sunY,z); moonSprite.position.set(Math.cos(moonArc)*4.1,moonY,z-.05);
+ const sunVisible=Math.max(0,Math.sin(Math.PI*(t-6)/12)); const moonVisible=Math.max(0,Math.sin(Math.PI*((t+6)-6)/12));
+ sunSprite.material.opacity=(weather==='rainy'?.34:weather==='cloudy'?.62:.96)*sunVisible;
+ moonSprite.material.opacity=.88*moonVisible;
+ sunSprite.visible=false; moonSprite.visible=false;
+ const cloudStrength=weather==='sunny'?.28:weather==='cloudy'?.72:.92;
+ cloudSprites.forEach((sp,i)=>{const drift=(t*0.16+i*1.7)%12-6;sp.position.set(drift,sp.userData.baseY+Math.sin(t*.15+i)*.12,sp.userData.depth);sp.material.opacity=cloudStrength*(weather==='rainy'?.72:weather==='cloudy'?.78:.45)*(t<5.5||t>20?.18:1);sp.material.color.set(weather==='rainy'?'#bcc7d6':'#ffffff');});
+}
 function addObject(data){const group=new THREE.Group();group.userData.object=data;group.position.set(data.x,0,data.z);group.rotation.y=data.rotation||0;scene.add(group);objectGroups.push(group);
- if(data.type==='sofa'){cube(group,1.8,.37,.83,'#a6ada2',0,.38,0);cube(group,1.8,.75,.19,'#929d93',0,.7,-.37);cube(group,.2,.54,.85,'#98a598',-.83,.53,0);cube(group,.2,.54,.85,'#98a598',.83,.53,0);cube(group,1.4,.12,.68,'#c1c3b7',0,.59,.09)}
- if(data.type==='table'){cylinder(group,.58,.58,.10,'#9e7b5f',0,.68,0);cylinder(group,.11,.15,.66,'#8e755d',0,.34,0);cylinder(group,.44,.44,.09,'#8e755d',0,.07,0)}
- if(data.type==='bed'){cube(group,1.65,.24,2.1,'#b8a18d',0,.33,0);cube(group,1.53,.25,1.93,'#f1eee5',0,.56,.04);cube(group,1.58,.67,.14,'#a88c77',0,.6,-1.03);cube(group,1.5,.11,1.12,'#c2cbbf',0,.72,.34);for(let x of [-.43,.43])cube(group,.58,.13,.38,'#faf8f1',x,.77,-.63)}
- if(data.type==='desk'){cube(group,1.45,.12,.74,'#ac9074',0,.83,0);for(let x of [-.62,.62])for(let z of [-.26,.26])cube(group,.075,.79,.075,'#796550',x,.4,z);cube(group,.42,.05,.09,'#c4b7a7',0,.91,-.17)}
- if(data.type==='chair'){cube(group,.72,.14,.72,'#b98d66',0,.53,0);cube(group,.72,.8,.12,'#ad835f',0,.93,-.31);for(let x of [-.25,.25])for(let z of [-.25,.25])cube(group,.1,.52,.1,'#735d49',x,.26,z)}
- if(data.type==='floorlamp'){cylinder(group,.26,.26,.07,'#68625a',0,.04,0);cylinder(group,.04,.05,1.75,'#68625a',0,.91,0);let shade=mesh(new THREE.CylinderGeometry(.23,.4,.46,24,1,true),MAT('#f0e4c7'),0,1.82,0,group);shade.castShadow=false;cube(group,.06,.06,.06,'#fff0bf',0,1.63,0)}
- if(data.type==='desklamp'){cube(group,.75,.58,.7,'#a18b73',0,.3,0);cylinder(group,.19,.19,.04,'#4c514d',0,.62,0);cylinder(group,.035,.035,.56,'#4c514d',0,.9,0);mesh(new THREE.CylinderGeometry(.12,.33,.37,24,1,true),MAT('#f0e5d6'),0,1.29,0,group)}
- if(data.type==='plant'){cylinder(group,.32,.25,.45,'#b58a75',0,.22,0);cylinder(group,.06,.06,.9,'#4e6945',0,.85,0);for(let i=0;i<7;i++){let a=i*Math.PI*2/7;let leaf=mesh(new THREE.SphereGeometry(.17,8,8),MAT('#638163'),Math.cos(a)*.26,1.18+Math.sin(i*1.9)*.18,Math.sin(a)*.26,group);leaf.scale.set(1.3,2,.6)}}
+ if(data.type==='sofa'){const base=cube(group,1.95,.28,.88,'#b5b4ac',0,.28,0);base.material=MAT('#b9b2a7',.9,0,fabricTexture);const seat=cube(group,1.82,.22,.76,'#c8c4bb',0,.54,.04);seat.material=MAT('#c9c4bb',.92,0,fabricTexture);const backrest=cube(group,1.82,.48,.16,'#b8b2a8',0,.79,-.36);backrest.material=MAT('#b8b2a8',.92,0,fabricTexture);const armL=cube(group,.14,.42,.84,'#b3aea5',-.9,.6,0);const armR=cube(group,.14,.42,.84,'#b3aea5',.9,.6,0);armL.material=armR.material=MAT('#b3aea5',.93,0,fabricTexture)}
+ if(data.type==='table'){const top=cylinder(group,.42,.42,.05,'#9f7c60',0,.43,0);top.material=MAT('#9f7c60',.63,.03,floorTexture);const stem=cylinder(group,.075,.11,.36,'#826753',0,.2,0);stem.material=MAT('#826753',.58,.03);const base=cylinder(group,.26,.29,.045,'#7d6450',0,.02,0);base.material=MAT('#7d6450',.6,.03)}
+ if(data.type==='bed'){const frame=cube(group,1.68,.22,2.08,'#ac8f77',0,.24,0);frame.material=MAT('#ac8f77',.68,.02,floorTexture);const mattress=cube(group,1.56,.2,1.96,'#f0ede6',0,.46,.03);mattress.material=MAT('#f0ede6',.97,0,fabricTexture);const headboard=cube(group,1.62,.82,.10,'#9d7e67',0,.65,-.99);headboard.material=MAT('#9d7e67',.72,.02,floorTexture);const blanket=cube(group,1.49,.09,1.1,'#c8d0c4',0,.58,.34);blanket.material=MAT('#c8d0c4',.95,0,fabricTexture);for(let x of [-.42,.42]){const pillow=cube(group,.56,.11,.36,'#faf8f1',x,.63,-.63);pillow.material=MAT('#faf8f1',.98,0,fabricTexture);}}
+ if(data.type==='desk'){const top=cube(group,1.38,.08,.68,'#ab8b71',0,.76,0);top.material=MAT('#ab8b71',.63,.02,floorTexture);for(let x of [-.6,.6])for(let z of [-.24,.24]){const leg=cube(group,.06,.72,.06,'#6f5948',x,.36,z);leg.material=MAT('#6f5948',.58,.03);}const tray=cube(group,.48,.04,.1,'#cfc5b5',0,.83,-.15);tray.material=MAT('#cfc5b5',.84,.01);}
+ if(data.type==='chair'){const seat=cube(group,.5,.06,.5,'#b98d66',0,.46,0);seat.material=MAT('#b98d66',.66,.02,floorTexture);const backrest=cube(group,.5,.52,.06,'#ad835f',0,.74,-.22);backrest.material=MAT('#ad835f',.66,.02,floorTexture);for(let x of [-.18,.18])for(let z of [-.18,.18]){const leg=cube(group,.06,.45,.06,'#735d49',x,.225,z);leg.material=MAT('#735d49',.58,.03);}}
+ if(data.type==='floorlamp'){const base=cylinder(group,.18,.18,.045,'#5f5c57',0,.02,0);base.material=MAT('#5f5c57',.45,.15);const stem=cylinder(group,.025,.03,1.55,'#5f5c57',0,.8,0);stem.material=MAT('#5f5c57',.4,.15);let shade=mesh(new THREE.CylinderGeometry(.18,.29,.34,24,1,true),MAT('#eee1c7',.95,0,fabricTexture),0,1.63,0,group);shade.castShadow=false;cube(group,.05,.05,.05,'#fff0bf',0,1.47,0)}
+ if(data.type==='desklamp'){
+   // Desk top is y=0.80m: place the lamp foot ABOVE it rather than inside the tabletop.
+   const lampBaseY=.835;
+   const base=cylinder(group,.12,.12,.03,'#4c514d',0,lampBaseY,0);
+   base.material=MAT('#4c514d',.42,.2);
+   const stem=cylinder(group,.018,.018,.34,'#4c514d',0,1.02,0);
+   stem.material=MAT('#4c514d',.42,.2);
+   const arm=cylinder(group,.015,.015,.22,'#4c514d',.07,1.20,0);
+   arm.rotation.z=-.55;arm.material=MAT('#4c514d',.42,.2);
+   // Shade's lower rim sits above the upright stem, no intersection with the desk.
+   const shade=mesh(new THREE.CylinderGeometry(.09,.20,.22,24,1,true),MAT('#f0e5d6',.95,0,fabricTexture),.14,1.31,0,group);
+   shade.castShadow=false;
+ }
+ if(data.type==='plant'){const pot=cylinder(group,.22,.18,.34,'#b58a75',0,.17,0);pot.material=MAT('#b58a75',.86,.02);cylinder(group,.04,.04,.64,'#4e6945',0,.62,0);for(let i=0;i<9;i++){let a=i*Math.PI*2/9;let leaf=mesh(new THREE.SphereGeometry(.14,10,8),MAT('#638163',.88,0),Math.cos(a)*.2,.95+Math.sin(i*1.9)*.16,Math.sin(a)*.2,group);leaf.scale.set(1.15,2.1,.55)}}
  if(data.type==='rug'){
   const rug=cube(group,1.85,.035,1.45,'#f1e7d7',0,.025,0);rug.castShadow=false;
   rug.material=new THREE.MeshStandardMaterial({map:rugTexture,color:'#fff8ef',roughness:1});
@@ -198,15 +330,15 @@ function addObject(data){const group=new THREE.Group();group.userData.object=dat
    tassel.castShadow=false;
   }
  }
-  if(data.type==='walllamp'){cube(group,.14,.4,.3,'#a9927b',0,2.14,-.02);const shade=mesh(new THREE.SphereGeometry(.23,16,10),MAT('#f3dbb1'),0,2.18,.13,group);shade.scale.set(.7,1.1,.7)}
-  if(data.type==='ceilinglamp'){cylinder(group,.035,.035,.53,'#7c6b5b',0,3.75,0);mesh(new THREE.SphereGeometry(.38,20,12),MAT('#f4e0c1'),0,3.40,0,group)}
+  if(data.type==='walllamp'){const arm=cube(group,.08,.18,.18,'#a9927b',0,2.02,-.02);arm.material=MAT('#a9927b',.55,.08);const shade=mesh(new THREE.SphereGeometry(.18,18,12),MAT('#f3dbb1',.95,0,fabricTexture),0,2.07,.13,group);shade.scale.set(.62,.98,.62)}
+  if(data.type==='ceilinglamp'){const rod=cylinder(group,.02,.02,.38,'#7c6b5b',0,3.69,0);rod.material=MAT('#7c6b5b',.45,.08);mesh(new THREE.SphereGeometry(.27,22,14),MAT('#f4e0c1',.92,0,fabricTexture),0,3.43,0,group)}
   if(data.color){group.traverse(m=>{if(m.isMesh&&m.material?.isMeshStandardMaterial)m.material.color.set(data.color)})}
 
  if(['floorlamp','desklamp','walllamp','ceilinglamp'].includes(data.type)){
-   const isDesk=data.type==='desklamp';const height=data.type==='ceilinglamp'?3.38:data.type==='walllamp'?2.18:isDesk?1.18:1.64;
-   const bulb=mesh(new THREE.SphereGeometry(.095,12,8),new THREE.MeshBasicMaterial({color:'#fff1cb'}),0,height,0,group);
+   const isDesk=data.type==='desklamp';const height=data.type==='ceilinglamp'?3.42:data.type==='walllamp'?2.07:isDesk?1.30:1.47;
+   const bulb=mesh(new THREE.SphereGeometry(isDesk?.055:.095,12,8),new THREE.MeshBasicMaterial({color:'#fff1cb'}),0,height,0,group);
    const light=new THREE.PointLight('#ffd4a1',0,7,1.6);light.position.set(0,height-.08,.03);group.add(light);lamps.push({light,bulb,data});
-   const glow=mesh(new THREE.SphereGeometry(isDesk?.38:.52,14,10),new THREE.MeshBasicMaterial({color:'#ffe5a9',transparent:true,opacity:.14,depthWrite:false}),0,height-.06,0,group);glow.castShadow=false;lamps[lamps.length-1].glow=glow;
+   const glow=mesh(new THREE.SphereGeometry(isDesk?.26:.42,14,10),new THREE.MeshBasicMaterial({color:'#ffe5a9',transparent:true,opacity:.14,depthWrite:false}),0,height-.06,0,group);glow.castShadow=false;lamps[lamps.length-1].glow=glow;
  }
  return group;}
 function kelvinColor(k){const t=k/100;let r=t<=66?255:329.698727446*Math.pow(t-60,-.1332047592);let g=t<=66?99.4708025861*Math.log(t)-161.1195681661:288.1221695283*Math.pow(t-60,-.0755148492);let b=t>=66?255:t<=19?0:138.5177312231*Math.log(t-10)-305.0447927307;return new THREE.Color(`rgb(${Math.max(0,Math.min(255,r))},${Math.max(0,Math.min(255,g))},${Math.max(0,Math.min(255,b))})`)}
@@ -237,10 +369,10 @@ function createSunPatches(s){
  (s.windows||[]).forEach((w,i)=>{
   // Visible moving pools of daylight, with spread controlled by the softness slider.
   const wide=w.width*(.78+s.softness/68);
-  const patch=new THREE.Mesh(new THREE.PlaneGeometry(wide,1.4+s.softness/38),new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:(s.brightness/100)*open*(1.15-s.softness*.004),depthWrite:false,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2}));
+  const patch=new THREE.Mesh(new THREE.PlaneGeometry(wide,1.4+s.softness/38),new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:(s.brightness/100)*open*(1.15-s.softness*.004)*(s.weather==='sunny'||!s.weather?1:s.weather==='cloudy'?.6:.38),depthWrite:false,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2}));
   patch.rotation.x=-Math.PI/2;patch.rotation.z=-(s.sunAzimuth||0)*Math.PI/900;patch.position.set(w.wall==='left'?-1.25+i*.15:Math.max(-2.4,Math.min(2.4,w.x+Math.cos((s.sunAzimuth||0)*Math.PI/180)*.8)),.011,w.wall==='left'?Math.max(-2,Math.min(2,w.x+.35)):-.78+i*.22+Math.cos((s.time-12)*Math.PI/14)*.45);
   scene.add(patch);lightPatches.push(patch);
-  const wallPatch=new THREE.Mesh(new THREE.PlaneGeometry(wide*.9,.9+s.softness/125),new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:open*s.brightness/140,depthWrite:false,side:THREE.DoubleSide}));
+  const wallPatch=new THREE.Mesh(new THREE.PlaneGeometry(wide*.9,.9+s.softness/125),new THREE.MeshBasicMaterial({map:tex,transparent:true,opacity:open*s.brightness/140*(s.weather==='sunny'||!s.weather?1:s.weather==='cloudy'?.6:.38),depthWrite:false,side:THREE.DoubleSide}));
   if(w.wall==='left'){wallPatch.rotation.y=Math.PI/2;wallPatch.position.set(-2.856,1.24,w.x+.17)}else{wallPatch.position.set(Math.max(-2.5,Math.min(2.5,w.x+.17)),1.24,-2.666)}scene.add(wallPatch);lightPatches.push(wallPatch);
  });
 }
@@ -252,7 +384,23 @@ function updateWindowPatchPositions(){
   if(w.wall==='left')wall.position.z=w.x+.17;else wall.position.x=Math.max(-2.5,Math.min(2.5,w.x+.17));
  });
 }
-function updateSun(s){const elev=Math.max(.04,Math.sin(Math.PI*(s.time-6)/12));const az=(s.sunAzimuth||0)*Math.PI/180;const d=7;sunlight.position.set(Math.cos(az)*d,Math.max(.15,elev*9),Math.sin(az)*d);sunlight.intensity=(.25+s.brightness/42)*(.25+.75*s.curtain/100)*(s.time<6||s.time>19?.08:Math.max(.2,elev));sunlight.color.set(s.time<9||s.time>17?'#ffd5a2':'#fff3dc');ambient.intensity=(.25+s.brightness/250)*(s.time<6||s.time>19?.45:1)}
+function updateSun(s){
+ const elev=Math.max(0,Math.sin(Math.PI*(s.time-6)/12));
+ const az=(s.sunAzimuth||0)*Math.PI/180,d=7;
+ sunlight.position.set(Math.cos(az)*d,Math.max(.15,elev*9),Math.sin(az)*d);
+ const daylight=(s.time<=5.7||s.time>=19.8)?0:Math.min(1,Math.pow(Math.max(0,elev),.78)*1.18);
+ const weather=s.weather||'sunny',lightFactor=weather==='sunny'?1:weather==='cloudy'?.58:.34;
+ sunlight.intensity=(.23+s.brightness/44)*(.22+.78*s.curtain/100)*daylight*lightFactor;
+ sunlight.color.set(s.time<8.5||s.time>17.4?'#ffd2a8':weather==='sunny'?'#fff2da':weather==='cloudy'?'#e7edf6':'#cfdcec');
+ ambient.intensity=(.14+s.brightness/255)*(.34+.66*daylight)*(weather==='sunny'?1:weather==='cloudy'?.9:.78);
+ ambient.color.set(s.time<7||s.time>19?'#a4b1cd':weather==='sunny'?'#edf3ff':'#d7e4f1');
+ updateSkyObjects(s);
+ const rain=$('weatherFx');if(rain)rain.style.opacity='0';
+}
+function updateLamps(s){
+ const tint=new THREE.Color(s.temperature<3900?'#ff9b42':s.temperature>5000?'#8acbff':'#fff0cd');
+ for(const l of lamps){l.light.color.copy(tint);l.light.intensity=s.artificial/100*24;l.light.distance=7;l.light.decay=1.6;l.bulb.material.color.copy(tint);l.glow.material.color.copy(tint);l.glow.material.opacity=s.artificial/100*.62;}
+}
 function syncScene(){
  const s=current();if(!s.windows?.length)s.windows=[{x:-1.5,y:2.45,width:1.35}];
  if(s.curtain===undefined)s.curtain=100;
@@ -262,8 +410,7 @@ function syncScene(){
  syncWindows(s);
  for(const g of objectGroups)scene.remove(g);objectGroups=[];lamps.length=0;
  s.objects.forEach(addObject);
- const col=kelvinColor(s.temperature);
- for(const l of lamps){const tint=new THREE.Color(s.temperature<3900?'#ff9b42':s.temperature>5000?'#8acbff':'#fff0cd');l.light.color.copy(tint);l.light.intensity=s.artificial/100*24;l.light.distance=7;l.light.decay=1.6;l.bulb.material.color.copy(tint);l.glow.material.color.copy(tint);l.glow.material.opacity=s.artificial/100*.62;}
+ updateLamps(s);
  createSunPatches(s);
  render();
 }
@@ -275,14 +422,14 @@ function schedulePatches(){if(patchPending)return;patchPending=true;requestAnima
 function liveUpdate(id){
  const s=current();
  if(id==='wall'||id==='floor'){floor.material.color.set(s.floor);back.material.color.set(s.wall);left.material.color.set(s.wall).multiplyScalar(.93)}
- if(['brightness','curtain','softness','time','sunAzimuth'].includes(id)){
+ if(['brightness','curtain','softness','time','sunAzimuth','weather'].includes(id)){
   const opening=s.curtain/100;updateSun(s);
   sunlight.shadow.radius=1+s.softness/3;
   if(id==='curtain')windowGroups.forEach(g=>{if(g.userData.curtainParts)g.userData.curtainParts.forEach(part=>{const width=g.userData.baseWidth;const cover=width*(1-opening)*.48;part.mesh.scale.x=Math.max(.035,cover)/part.baseWidth;part.mesh.position.x=part.side*(width/2-Math.max(.035,cover)/2)})});
   schedulePatches();
  }
  if(id==='artificial'||id==='temperature'){
-  const col=kelvinColor(s.temperature);for(const l of lamps){const tint=new THREE.Color(s.temperature<3900?'#ff9b42':s.temperature>5000?'#8acbff':'#fff0cd');l.light.color.copy(tint);l.light.intensity=s.artificial/100*24;l.light.distance=7;l.light.decay=1.6;l.bulb.material.color.copy(tint);l.glow.material.color.copy(tint);l.glow.material.opacity=s.artificial/100*.62;}
+  updateLamps(s);
  }
  render();
 }
@@ -290,7 +437,7 @@ function resize(){const r=$('viewport').getBoundingClientRect();renderer.setSize
 const ray=new THREE.Raycaster(),pointer=new THREE.Vector2();let drag=null,windowDrag=null,objectDrag=null;const dragPlane=new THREE.Plane(new THREE.Vector3(0,1,0),0),wallPlane=new THREE.Plane(new THREE.Vector3(0,0,1),-2.76),leftWallPlane=new THREE.Plane(new THREE.Vector3(1,0,0),2.96);
 function point(e){let r=renderer.domElement.getBoundingClientRect();pointer.x=(e.clientX-r.left)/r.width*2-1;pointer.y=-(e.clientY-r.top)/r.height*2+1;ray.setFromCamera(pointer,camera)}
 function findGroup(obj){while(obj&&obj.parent!==scene){if(obj.userData.windowIndex!==undefined||obj.userData.object)return obj;obj=obj.parent}return obj&&(obj.userData.windowIndex!==undefined||obj.userData.object)?obj:null}
-renderer.domElement.addEventListener('pointerdown',e=>{if(state.step!==0)return;point(e);let hits=ray.intersectObjects([...objectGroups,...windowGroups],true);if(!hits.length)return;let group=findGroup(hits[0].object);if(!group)return;const isWindow=group.userData.windowIndex!==undefined;drag=group;closeObjectMenu();
+renderer.domElement.addEventListener('pointerdown',e=>{if(introActive||state.step!==0)return;point(e);let hits=ray.intersectObjects([...objectGroups,...windowGroups],true);if(!hits.length)return;let group=findGroup(hits[0].object);if(!group)return;const isWindow=group.userData.windowIndex!==undefined;drag=group;closeObjectMenu();
 windowDrag=null;objectDrag=null;
 if(!isWindow){const hit=new THREE.Vector3();if(ray.ray.intersectPlane(dragPlane,hit)){objectDrag={offsetX:hit.x-group.position.x,offsetZ:hit.z-group.position.z,startX:e.clientX,startY:e.clientY};}}
 if(isWindow){
@@ -373,16 +520,23 @@ function showObjectMenu(g){
  hovered=g;objMenu.style.display='block';
  const world=new THREE.Vector3();g.getWorldPosition(world);world.y+=1.2;world.project(camera);
  const rect=$('viewport').getBoundingClientRect();
- objMenu.style.left=Math.max(8,Math.min(rect.width-225,(world.x+1)*rect.width/2+15))+'px';
- objMenu.style.top=Math.max(8,Math.min(rect.height-170,(-world.y+1)*rect.height/2-30))+'px';
- objMenu.innerHTML=`<label>${escapeHTML(g.userData.object.type.replace(/lamp/g,' lamp'))} · Edit</label><input type="color" title="Change color" value="${g.userData.object.color||'#b7a58c'}" id="objectColor"/><button id="objectCopy">＋ Copy</button><button id="objectDelete">Delete</button><div class="minor">Drag the object itself to move it.</div>`;
+ objMenu.style.left=Math.max(8,Math.min(rect.width-250,(world.x+1)*rect.width/2+15))+'px';
+ objMenu.style.top=Math.max(8,Math.min(rect.height-260,(-world.y+1)*rect.height/2-30))+'px';
+ const degrees=((Math.round(THREE.MathUtils.radToDeg(g.userData.object.rotation||0))%360)+360)%360;
+ objMenu.innerHTML=`<label>${escapeHTML(g.userData.object.type.replace(/lamp/g,' lamp'))} · Edit</label><div class="rotate-label"><span>Direction</span><b id="rotationValue">${degrees}°</b></div><input class="rotate-range" id="rotationRange" aria-label="Furniture rotation" type="range" min="0" max="360" step="5" value="${degrees}"/><div class="rotate-actions"><button type="button" id="rotateLeft" title="Rotate left 15 degrees">↶ 15°</button><button type="button" id="rotateRight" title="Rotate right 15 degrees">15° ↷</button><button type="button" id="rotateReset" title="Reset rotation">Reset</button></div><input type="color" title="Change color" value="${g.userData.object.color||'#b7a58c'}" id="objectColor"/><button id="objectCopy">＋ Copy</button><button id="objectDelete">Delete</button><div class="minor">Drag to move · Rotate to turn</div>`;
+ const rotateTo=(deg)=>{const angle=((Number(deg)%360)+360)%360;g.rotation.y=THREE.MathUtils.degToRad(angle);g.userData.object.rotation=g.rotation.y;$('rotationRange').value=angle;$('rotationValue').textContent=Math.round(angle)+'°';propagateRoom();render();};
+ $('rotationRange').oninput=e=>rotateTo(e.target.value);
+ $('rotateLeft').onclick=()=>rotateTo(Math.round(THREE.MathUtils.radToDeg(g.rotation.y))-15);
+ $('rotateRight').onclick=()=>rotateTo(Math.round(THREE.MathUtils.radToDeg(g.rotation.y))+15);
+ $('rotateReset').onclick=()=>rotateTo(0);
  $('objectColor').oninput=ev=>{g.userData.object.color=ev.target.value;propagateRoom();g.traverse(child=>{if(child.isMesh&&child.material?.color&&!child.material.isMeshBasicMaterial)child.material.color.set(ev.target.value)});render()};
  $('objectDelete').onclick=()=>{current().objects=current().objects.filter(x=>x!==g.userData.object);propagateRoom();closeObjectMenu();syncScene()};
  $('objectCopy').onclick=()=>{current().objects.push({...structuredClone(g.userData.object),x:Math.min(2.3,g.position.x+.45),z:Math.min(2.2,g.position.z+.45)});propagateRoom();closeObjectMenu();syncScene()};
 }
 renderer.domElement.addEventListener('pointermove',e=>{
- if(drag||state.step!==0||$('gallery').classList.contains('visible'))return;
+ if(introActive||drag||state.step!==0||$('gallery').classList.contains('visible'))return;
  point(e);const hits=ray.intersectObjects(objectGroups,true),g=hits.length?findGroup(hits[0].object):null;
+ if(menuPinned)return;
  if(g?.userData.object)showObjectMenu(g);
  // Keep the menu visible after leaving the object so the pointer can reach its buttons.
 });
@@ -394,23 +548,30 @@ renderer.domElement.addEventListener('click',e=>{
 objMenu.addEventListener('pointerenter',()=>{menuPinned=true});
 objMenu.addEventListener('pointerleave',()=>{menuPinned=false});
 function endDrag(){if(state.step===0)propagateRoom();drag=null;windowDrag=null;objectDrag=null;orbit.enabled=true;renderer.shadowMap.autoUpdate=true;renderer.shadowMap.needsUpdate=true;render()}renderer.domElement.addEventListener('pointerup',endDrag);renderer.domElement.addEventListener('pointercancel',endDrag);
-const range=(id,label,min,max,step=1,suffix='')=>{let v=current()[id];return `<div class="label">${label}</div><div class="range-head"><span>Adjust the room</span><b id="val-${id}">${v}${suffix}</b></div><input type="range" id="field-${id}" min="${min}" max="${max}" step="${step}" value="${v}"/>`};
+const range=(id,label,min,max,step=1,suffix='')=>{let v=current()[id];return `<div class="compact-range"><div class="range-head"><span>${label}</span><b id="val-${id}">${v}${suffix}</b></div><input aria-label="${label}" type="range" id="field-${id}" min="${min}" max="${max}" step="${step}" value="${v}"/></div>`};
 function propagateRoom(){const src=current();for(const r of state.results){if(r===src)continue;r.objects=structuredClone(src.objects);r.windows=structuredClone(src.windows);r.layout=src.layout;r.curtain=src.curtain;}}
 const inventory=[['bed','Bed'],['desk','Desk'],['chair','Chair'],['sofa','Sofa'],['table','Coffee table'],['rug','Rug'],['plant','Plant'],['floorlamp','Floor lamp'],['desklamp','Table lamp'],['walllamp','Wall sconce'],['ceilinglamp','Ceiling light']];
 function group(title,content,opened=false){return `<details class="control-group" ${opened?'open':''}><summary>${title}</summary>${content}</details>`}
-function setControls(){if(typeof closeObjectMenu==='function')closeObjectMenu();const s=current();$('moodLabel').textContent=state.step===0?'ROOM / SETUP':`0${state.mood+1} / ${MOODS[state.mood].toUpperCase()}`;$('roomHeadline').textContent=state.step===0?'Make this space yours.':`A room for ${MOODS[state.mood].toLowerCase()}.`;$('stepCount').textContent=state.step===0?'SET UP YOUR ROOM ONCE':'LIGHT STUDY · FOUR FEELINGS';$('progress').innerHTML='';$('back').textContent=state.step===0?'Reset room':'← Room setup';$('next').textContent=state.step===0?'Start with Calm →':state.mood===3?'Download four rooms ↓':'Save & next feeling →';$('hint').textContent=state.step===0?(matchMedia('(hover: none)').matches?'Tap an object to edit it. Drag to move; drag empty space to rotate.':'Drag furniture or windows to move them. Hover or click an object to edit.'):'Adjust the light below. Drag empty space to rotate the room.';
+function setControls(){if(typeof closeObjectMenu==='function')closeObjectMenu();const s=current();$('moodLabel').textContent=state.step===0?'ROOM / SETUP':`0${state.mood+1} / ${MOODS[state.mood].toUpperCase()}`;$('roomHeadline').textContent=state.step===0?'Make this space yours.':`A room for ${MOODS[state.mood].toLowerCase()}.`;$('stepCount').textContent=state.step===0?'SET UP YOUR ROOM ONCE':'LIGHT STUDY · FOUR FEELINGS';$('progress').innerHTML='';$('back').textContent=state.step===0?'Reset room':'← Room setup';$('next').textContent=state.step===0?'Explore light →':state.mood===3?'Download JPEG ↓':'Save & next →';$('hint').textContent=state.step===0?(matchMedia('(hover: none)').matches?'Tap an object to edit it. Drag to move; drag empty space to rotate.':'Drag furniture or windows to move them. Hover or click an object to edit.'):'Adjust the light below. Drag empty space to rotate the room.';
 let content='';
-if(state.step===0){content=`<h1>First, your room.</h1><p class="desc">① Use the room as it is, or add furniture. ② Drag an object to move it. ③ Click <b>Start with Calm</b>. You only set up the room once.</p>`+group('＋ Add or remove furniture',`<div class="tool-row">${inventory.map(([type,name])=>`<button class="tool" data-add="${type}">＋ ${name}</button>`).join('')}</div><div class="small-actions"><button id="removeLast">Remove last object</button></div>`,false)+group('Windows & curtains',`<div class="small-actions"><button id="addWindow">＋ Window</button><button id="removeWindow">− Window</button></div>${range('curtain','Open the curtains',0,100,1,'%')}${s.windows.map((w,i)=>`<div class="label">Window ${i+1}</div><div class="pills"><button class="pill ${(w.wall||'back')==='back'?'selected':''}" data-window-wall="${i}" data-wall="back">Back wall</button><button class="pill ${w.wall==='left'?'selected':''}" data-window-wall="${i}" data-wall="left">Left wall</button></div><div class="range-head"><span>Width</span><b id="win-value-${i}">${w.width.toFixed(2)} m</b></div><input type="range" data-win-width="${i}" min="0.6" max="2.4" step="0.05" value="${w.width}"/>`).join('')}`,false);}
-else{content=`<h1>${MOODS[state.mood]}</h1><p class="desc">Adjust the light until this room feels <b>${MOODS[state.mood].toLowerCase()}</b> to you. Then choose <b>Next feeling</b>. No right or wrong answers.</p><div class="mood-tabs">${MOODS.map((m,i)=>`<button data-mood="${i}" class="${i===state.mood?'selected':''}">${m}</button>`).join('')}</div>`+
-group('☀ Sun & time',range('time','Time of day',6,20,.25,' h')+group('More sun settings',range('sunAzimuth','Sun direction',-180,180,1,'°')),true)+
-group('◐ Daylight',range('brightness','Brightness',0,100,1,'%')+range('softness','Softness',0,100,1,'%')+group('Curtains',range('curtain','Curtains open',0,100,1,'%')),true)+
-group('✦ Indoor lights',range('artificial','Lamp brightness',0,100,1,'%')+'<div class="small-actions"><button data-kelvin="2700">Warm glow</button><button data-kelvin="6000">Cool glow</button></div>'+group('Fine-tune warmth',range('temperature','Color temperature',2200,6500,100,' K')),false)+
-group('◉ Room colors',`<div class="label">Wall color</div><div class="swatch-line"><input type="color" id="color-wall" value="${s.wall}"/><span id="val-wall">${s.wall.toUpperCase()}</span></div><div class="label">Floor color</div><div class="swatch-line"><input type="color" id="color-floor" value="${s.floor}"/><span id="val-floor">${s.floor.toUpperCase()}</span></div>`,false)+
-group('♡ A memory of light',`<p class="minor">Does this light remind you of a place, person or moment?</p><textarea id="mood-note" maxlength="500" placeholder="This light reminds me of…">${escapeHTML(s.note)}</textarea>`,false)+ (state.mood===3?group('Share your study',`<div class="label">Study title</div><input id="study-title" type="text" maxlength="80" value="${escapeAttr(state.title)}" placeholder="Give your light a name"/><div class="label">Final thoughts · optional</div><textarea id="study-note" maxlength="500">${escapeHTML(state.note)}</textarea><button class="primary" style="width:100%;margin-top:12px" id="publishStudy">Save to shared gallery ↗</button><p class="minor">Public studies can be viewed and downloaded by anyone.</p>`,true):'');}
+if(state.step===0){content=`<h1>Your room.</h1><p class="compact-lead">Make it yours. Drag furniture to move it; drag empty space to rotate.</p>`+
+ group('＋ Furniture',`<div class="tool-row">${inventory.map(([type,name])=>`<button class="tool" data-add="${type}">＋ ${name}</button>`).join('')}</div><div class="small-actions"><button id="removeLast">Undo last addition</button></div>`,false)+
+ group('Windows & curtains',`<div class="small-actions"><button id="addWindow">＋ Window</button><button id="removeWindow">− Window</button></div>${range('curtain','Curtains',0,100,1,'%')}${s.windows.map((w,i)=>`<div class="compact-label">Window ${i+1}</div><div class="pills"><button class="pill ${(w.wall||'back')==='back'?'selected':''}" data-window-wall="${i}" data-wall="back">Back wall</button><button class="pill ${w.wall==='left'?'selected':''}" data-window-wall="${i}" data-wall="left">Left wall</button></div><div class="range-head"><span>Width</span><b id="win-value-${i}">${w.width.toFixed(2)} m</b></div><input type="range" data-win-width="${i}" min="0.6" max="2.4" step="0.05" value="${w.width}"/>`).join('')}`,false);}
+else{content=`<h1>${MOODS[state.mood]}</h1><p class="compact-lead">Make the room feel ${MOODS[state.mood].toLowerCase()} to you. There are no right answers.</p><div class="mood-tabs">${MOODS.map((m,i)=>`<button data-mood="${i}" class="${i===state.mood?'selected':''}">${m}</button>`).join('')}</div>`+
+ `<div class="compact-label">Natural light</div>`+
+ range('time','Time',6,22,.25,' h')+range('brightness','Daylight',0,100,1,'%')+range('softness','Softness',0,100,1,'%')+
+ `<div class="compact-label">Indoor lighting</div>`+range('artificial','Lamp intensity',0,100,1,'%')+`<div class="weather-select"><button data-kelvin="2700">Warm</button><button data-kelvin="4000">Neutral</button><button data-kelvin="6000">Cool</button></div>`+
+ `<div class="compact-label">Weather</div><div class="weather-select">${WEATHER.map(w=>`<button class="${(s.weather||'sunny')===w?'selected':''}" data-weather="${w}">${w==='sunny'?'☀ Sunny':w==='cloudy'?'☁ Cloudy':'☂ Rainy'}</button>`).join('')}</div>`+
+ `<details class="compact-details"><summary>More options · direction, colors & memories</summary>`+
+ range('sunAzimuth','Sun direction',-180,180,1,'°')+range('curtain','Curtains',0,100,1,'%')+range('temperature','Color temperature',2200,6500,100,' K')+
+ `<div class="compact-label">Room colors</div><div class="swatch-line"><input type="color" id="color-wall" aria-label="Wall color" value="${s.wall}"/><span>Wall</span><input type="color" id="color-floor" aria-label="Floor color" value="${s.floor}"/><span>Floor</span></div>`+
+ `<div class="compact-label">A memory of light · optional</div><textarea id="mood-note" maxlength="500" placeholder="This light reminds me of…">${escapeHTML(s.note)}</textarea></details>`+
+ (state.mood===3?group('Share your study',`<div class="compact-label">Study title</div><input id="study-title" type="text" maxlength="80" value="${escapeAttr(state.title)}" placeholder="Give your light a name"/><div class="compact-label">Final thoughts · optional</div><textarea id="study-note" maxlength="500">${escapeHTML(state.note)}</textarea><button class="primary" style="width:100%;margin-top:12px" id="publishStudy">Save to shared gallery ↗</button><p class="minor">Anyone can view and download published studies.</p>`,true):'');}
 $('controls').innerHTML=content;
 $('controls').querySelectorAll('[data-mood]').forEach(b=>b.onclick=()=>{state.mood=+b.dataset.mood;setControls()});
 $('controls').querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{s.objects.push({type:b.dataset.add,x:1.1,z:1.1});propagateRoom();syncScene();notify('Added! Drag it to a new spot.')});
 $('controls').querySelectorAll('[data-kelvin]').forEach(b=>b.onclick=()=>{s.temperature=+b.dataset.kelvin;setControls()});
+ $('controls').querySelectorAll('[data-weather]').forEach(b=>b.onclick=()=>{s.weather=b.dataset.weather;liveUpdate('weather');$('controls').querySelectorAll('[data-weather]').forEach(btn=>btn.classList.toggle('selected',btn.dataset.weather===s.weather));});
 $('addWindow')?.addEventListener('click',()=>{if(s.windows.length>=5)return notify('You can add up to five windows.');s.windows.push({x:Math.min(2,-1.7+s.windows.length*.8),y:2.45,width:1.1});propagateRoom();setControls()});
 $('removeWindow')?.addEventListener('click',()=>{if(s.windows.length<2)return notify('Keep at least one window.');s.windows.pop();propagateRoom();setControls()});
 $('removeLast')?.addEventListener('click',()=>{s.objects.pop();propagateRoom();syncScene()});
@@ -490,6 +651,62 @@ async function openGallery(){
 $('galleryOpen').onclick=openGallery;
 $('galleryClose').onclick=()=>$('gallery').classList.remove('visible');
 // Public users intentionally have no delete control: safe admin deletion must be server-authorized.
-setControls();resize();window.__lightAppReady=true;
+// Opening: a 28-second, continuously looping day-to-night tour.
+// Stored participant settings remain untouched and are restored on Begin / Skip.
+const introDuration=28000;
+let introActive=true,introStart=0,introFrame=0,introLastCaption=-1;
+const introOriginal=state.results[0];
+const introDemo=structuredClone(DEFAULT());
+const introCaptions=[
+ {title:'Light changes throughout the day.',desc:'One room. Many atmospheres.'},
+ {title:'The same room can feel completely different.',desc:'Morning, sunlight, clouds, and the changing sky.'},
+ {title:'How does light make you feel?',desc:'Notice the colors, shadows and evening lamps.'},
+ {title:'Create your own atmosphere.',desc:'Explore four feelings through light.'}
+];
+function introTick(now){
+ if(!introActive)return;
+ if(!introStart)introStart=now;
+ const phase=((now-introStart)%introDuration)/introDuration;
+ const wrapped=.5-.5*Math.cos(phase*Math.PI*2);
+ const time=5.4+wrapped*18.9;
+ const s=introDemo;s.time=time>=24?time-24:time;
+ const solar=Math.max(0,Math.sin(Math.PI*(s.time-6)/12));
+ s.weather=phase<.35?'sunny':phase<.58?'cloudy':phase<.76?'rainy':'sunny';
+ s.sunAzimuth=-120+phase*240;
+ s.brightness=64+solar*30;
+ s.softness=s.weather==='sunny'?34:s.weather==='cloudy'?76:92;
+ s.artificial=s.time>=18.2||s.time<6.3?Math.min(78,14+Math.max(0,(s.time>=18.2?s.time-18.2:s.time+5))*18):0;
+ updateSun(s);updateLamps(s);updateWindowPatchPositions();
+ for(const p of lightPatches){p.material.opacity=(p.position.y<.1?.58:.44)*solar*(s.weather==='sunny'?1:s.weather==='cloudy'?.62:.38)}
+ const angle=.68+Math.sin(phase*Math.PI*2)*.18;
+ const radius=10.15;
+ camera.position.set(Math.cos(angle)*radius,6.08,Math.sin(angle)*radius);
+ camera.lookAt(orbit.target);
+ const caption=Math.min(3,Math.floor(phase*4));
+ if(caption!==introLastCaption){introLastCaption=caption;$('introTitle').textContent=introCaptions[caption].title;$('introDescription').textContent=introCaptions[caption].desc;}
+ const hh=Math.floor(s.time),mm=Math.floor((s.time-hh)*60);
+ $('introTime').textContent=`${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')} · ${s.time<10?'Morning':s.time<16?'Daylight':s.time<19?'Evening':'Night'} · ${s.weather}`;
+ $('introProgress').style.width=(phase*100).toFixed(1)+'%';
+ renderer.render(scene,camera);
+ introFrame=requestAnimationFrame(introTick);
+}
+function finishIntro(){
+ if(!introActive)return;
+ introActive=false;cancelAnimationFrame(introFrame);
+ state.results[0]=introOriginal;
+ document.body.classList.remove('intro-mode');
+ camera.position.set(7,5.8,8.8);orbit.target.set(0,1.6,0);orbit.update();
+ setControls();resize();render();
+}
+$('beginIntro').addEventListener('click',finishIntro);
+$('skipIntro').addEventListener('click',finishIntro);
+window.addEventListener('keydown',e=>{if(e.key==='Escape'&&introActive)finishIntro()});
+state.results[0]=introDemo;
+document.body.classList.add('intro-mode');
+setControls();resize();syncScene();
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){introStart=performance.now()-introDuration*.52;}
+introFrame=requestAnimationFrame(introTick);
+window.__lightAppReady=true;
+
 </script>
 </body></html>
