@@ -78,3 +78,7 @@ Added manifesto.html and four original images (two print compositions and two en
 ## UNDERFLOW — Book & Motion Poster
 
 New clickable editorial/visual project card in `index.html` opens `underflow.html`. Original uploaded book mockups are optimized in `images/underflow-*.webp`. The original 30.8-second vertical motion poster is included as `underflow-motion.mp4` and plays with native browser controls, muted autoplay and loop. Keep the MP4 next to `underflow.html` when moving the site.
+
+
+## Transparent favicon update
+Dog face uses true alpha transparency (no purple square), with transparent black favicon for light themes and transparent white version for dark themes. Existing page design untouched.
