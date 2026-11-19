@@ -78,3 +78,8 @@ translations.en.manifestoCardDescription = 'Manifesto Poster · Typography & Vis
 translations.zh.manifestoCardDescription = '宣言海报 · 字体设计与视觉传播';
 translations.en.projectNote = 'Selected design work across branding, editorial, poster design, and illustration.';
 translations.zh.projectNote = '涵盖品牌视觉、编辑设计、海报设计与插画的精选作品。';
+
+translations.en.underflowCardDesc = 'Manhole Patterns · Book & Motion Poster';
+translations.zh.underflowCardDesc = '纽约井盖纹样 · 书籍与动态海报';
+translations.en.projectNote = 'Selected work across visual identities, editorial publications, typography, motion and illustration.';
+translations.zh.projectNote = '涵盖视觉识别、书籍设计、字体、动态设计与插画的精选作品。';

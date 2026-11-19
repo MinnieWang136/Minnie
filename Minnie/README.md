@@ -68,3 +68,13 @@ This version has no dog decoration elements or dog image backgrounds inside Sele
 
 
 V5: About section large dog illustration preserved. No free-floating dog graphics in Selected Work; Hero collage and Dogheads portfolio project preserved.
+
+
+## Manifesto Poster
+
+Added manifesto.html and four original images (two print compositions and two environmental mockups), with a bilingual project page. The homepage project card replaces the old digital placeholder.
+
+
+## UNDERFLOW — Book & Motion Poster
+
+New clickable editorial/visual project card in `index.html` opens `underflow.html`. Original uploaded book mockups are optimized in `images/underflow-*.webp`. The original 30.8-second vertical motion poster is included as `underflow-motion.mp4` and plays with native browser controls, muted autoplay and loop. Keep the MP4 next to `underflow.html` when moving the site.
