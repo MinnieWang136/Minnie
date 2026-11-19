@@ -1,0 +1,223 @@
+
+/* Personal drawn dog identity shared across all pages */
+.wordmark,.logo{display:inline-flex!important;align-items:center!important;gap:.08em;white-space:nowrap}
+.dog-wordmark{width:37px;height:33px;object-fit:contain;display:inline-block;vertical-align:middle;flex-shrink:0;margin:0 .07em;mix-blend-mode:multiply}
+.hero-dog-signature{width:clamp(70px,8vw,122px);height:clamp(60px,7vw,100px);object-fit:contain;vertical-align:middle;margin-left:.12em;transform:rotate(-9deg)}
+.hero-dog-stage{position:absolute;right:0;top:15%;bottom:0;width:46%;pointer-events:none;z-index:0}
+.hero-pup{position:absolute;object-fit:contain;filter:drop-shadow(0 18px 13px rgba(66,19,88,.13));transition:transform .45s ease}
+.hero-pup-blue{width:38%;right:3%;top:2%;transform:rotate(18deg)}
+.hero-pup-pink{width:31%;right:28%;top:38%;transform:rotate(-17deg)}
+.hero-pup-lime{width:28%;right:0;bottom:8%;transform:rotate(11deg)}
+.hero h1{max-width:100%;}
+.about-dog-signature{width:min(22vw,250px);max-height:360px;object-fit:contain;filter:drop-shadow(0 18px 16px rgba(51,25,56,.15));margin-top:45px}
+.dog-art-cover{background:radial-gradient(circle at 30% 30%,#fff0a2,#ff83b8 42%,#976aff 100%);position:relative}
+.dog-art-cover>img{width:93%;height:93%;object-fit:contain;transition:transform .4s ease}
+.project-dogs .project-link:hover .dog-art-cover>img{transform:rotate(-3deg) scale(1.06)}
+.dog-card-arrow{position:absolute;bottom:18px;right:18px;background:#fff;color:#28112a;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:25px}
+.dog-page{background:#fff7ec;color:#25152d}
+.dog-page .dog-gallery{width:min(1200px,90%);margin:0 auto}
+.dog-page .dog-intro{padding:80px 0 65px;border-bottom:1px solid rgba(35,20,45,.3)}
+.dog-page .dog-kicker{font-size:12px;letter-spacing:.18em;font-weight:800}
+.dog-page .dog-intro h1{font-size:clamp(60px,12vw,170px);line-height:.9;letter-spacing:-.09em;margin:25px 0 40px}
+.dog-page .dog-intro p{max-width:650px;font-size:clamp(16px,2vw,22px);line-height:1.55}
+.dog-page .dog-lead-image{background:linear-gradient(120deg,#ffb0c9,#ffde81 42%,#7fdaef);display:grid;place-items:center;border-radius:18px;margin:50px 0 80px;min-height:330px;overflow:hidden}
+.dog-page .dog-lead-image img{height:min(66vw,560px);width:90%;object-fit:contain}
+.dog-page .dog-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;padding-bottom:100px}
+.dog-page .dog-tile{min-height:280px;border-radius:16px;display:grid;place-items:center;overflow:hidden;background:var(--tile-bg,#ffd5ee)}
+.dog-page .dog-tile img{width:95%;height:290px;object-fit:contain;filter:drop-shadow(0 13px 8px rgba(70,28,80,.13));transition:transform .35s}
+.dog-page .dog-tile:hover img{transform:rotate(-5deg) scale(1.06)}
+.dog-page .dog-section-title{font-size:clamp(36px,6vw,72px);letter-spacing:-.06em;margin:10px 0 28px}
+.dog-page .dog-back{display:inline-block;padding:24px 0;font-size:14px;text-decoration:underline;text-underline-offset:6px}
+@media(max-width:850px){.hero-dog-stage{width:38%;opacity:.72}.hero-pup-blue{top:20%}.dog-page .dog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.dog-wordmark{width:26px;height:25px}.hero-dog-stage{right:-12%;top:2%;width:65%;opacity:.32}.hero-pup-pink{top:55%}.hero-dog-signature{width:44px;height:45px}.about-dog-signature{width:160px;max-height:175px}.dog-page .dog-grid{grid-template-columns:1fr}.dog-page .dog-intro{padding-top:45px}}
+@media(prefers-reduced-motion:reduce){.hero-pup,.dog-tile img{transition:none!important}}
+
+
+/* =========================================================
+   ORIGINAL ART EDITION — HERO COLLAGE + STICKERS
+   Each piece is one of Qimiao's original cut-out drawings.
+   ========================================================= */
+
+/* Desktop: make deliberate space for the assembled heads. */
+.hero{
+  min-height: 835px;
+  isolation:isolate;
+  overflow:hidden;
+}
+.hero h1{
+  max-width: 66%;
+  font-size:clamp(4.2rem,7.45vw,8.6rem);
+  line-height:.91;
+  margin:95px 0 55px;
+  position:relative;
+  z-index:2;
+}
+.hero-dog-signature{
+  width:clamp(56px,6vw,92px);
+  height:clamp(50px,5.3vw,83px);
+}
+.hero-dog-stage{
+  position:absolute;
+  width:51%;
+  height:690px;
+  right:-2.5%;
+  top:95px;
+  bottom:auto;
+  z-index:1;
+  pointer-events:none;
+  opacity:1;
+}
+.hero-dog-collage{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  transform:rotate(2deg);
+  filter:drop-shadow(0 25px 20px rgba(61,20,73,.16));
+}
+.hero-bottom{z-index:3;position:relative}
+.orbit{z-index:0}
+
+/* Project images and captions are kept free of dog stickers. */
+.project-grid {overflow:visible;position:relative;row-gap:95px;column-gap:46px}
+.project {position:relative}
+
+/* Large and medium tablet layouts */
+@media(max-width:1000px){
+  .hero h1{font-size:clamp(3.8rem,7.4vw,6.5rem);max-width:70%}
+  .hero-dog-stage{right:-8%;width:52%;top:105px;height:610px;opacity:1}
+  .project-grid{column-gap:28px}
+}
+
+/* Mobile: collage sits as its own hero illustration, below the headline. */
+@media(max-width:700px){
+  .hero{
+    display:flex;
+    flex-direction:column;
+    padding-bottom:45px;
+    min-height:unset;
+    overflow:hidden;
+  }
+  .hero-topline{order:0}
+  .hero h1{
+    order:1;
+    width:100%;
+    max-width:100%;
+    font-size:clamp(3.05rem,12.4vw,5.8rem);
+    margin:78px 0 8px;
+  }
+  .hero-dog-signature{width:45px;height:41px}
+  .hero-dog-stage{
+    position:relative;
+    order:2;
+    align-self:center;
+    width:90%;
+    max-width:450px;
+    height:auto;
+    aspect-ratio:1/1;
+    top:auto;
+    right:auto;
+    bottom:auto;
+    margin:-4px auto -4px;
+    opacity:1;
+  }
+  .hero-dog-collage{height:100%;width:100%;transform:rotate(2deg)}
+  .hero-bottom{order:3;margin-top:10px;align-items:center}
+  .project-grid{row-gap:76px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-dog-collage{animation:none!important;transition:none!important}
+}
+
+
+/* ==========================================================
+   SELECTED WORK — SOFT CONTINUOUS GRADIENT
+   Transition from the pink/orange hero toward the blue/violet
+   About section. Project images and typography remain legible.
+   ========================================================== */
+.work-section {
+  background-color:#efd6ef;
+  background-image:
+    radial-gradient(ellipse 48% 19% at 13% 5%, rgba(255,106,159,.47), transparent 92%),
+    radial-gradient(ellipse 44% 22% at 97% 31%, rgba(255,179,122,.38), transparent 90%),
+    radial-gradient(ellipse 54% 24% at 9% 66%, rgba(114,223,255,.35), transparent 94%),
+    radial-gradient(ellipse 50% 26% at 90% 87%, rgba(174,150,255,.34), transparent 94%),
+    linear-gradient(180deg,
+      #ffb3b3 0%,
+      #ffd6bc 17%,
+      #ffecd4 36%,
+      #e2f0ee 55%,
+      #bcdaf7 75%,
+      #b5a6e9 100%);
+  background-repeat:no-repeat;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+}
+
+.work-section .section-heading,
+.work-section .filters,
+.work-section .project-grid,
+.work-section .project-note {
+  position:relative;
+  z-index:1;
+}
+.work-section .section-heading h2,
+.work-section .eyebrow,
+.work-section .project-meta h3 {
+  color:#27162f;
+}
+.work-section .section-heading p,
+.work-section .project-meta p,
+.work-section .project-note {
+  color:#524258;
+}
+.work-section .project-meta {
+  background:rgba(255,250,247,.81);
+  border:1px solid rgba(58,29,65,.13);
+  border-radius:11px;
+  padding:16px 16px 14px;
+  margin-top:20px;
+  box-shadow:0 6px 22px rgba(75,33,93,.06);
+}
+.work-section .filter {
+  background:rgba(255,250,247,.9);
+}
+.work-section .filter.active,
+.work-section .filter:hover {
+  background:#24142f;
+  border-color:#24142f;
+  color:#fff;
+}
+.work-section .project-note {
+  display:inline-block;
+  max-width:760px;
+  background:rgba(255,250,247,.74);
+  border-radius:9px;
+  padding:11px 15px;
+}
+@media(max-width:700px){
+  .work-section .project-meta{padding:14px 13px 12px}
+}
+
+/* The Selected Work backdrop is pure CSS gradient; no image or pseudo-element. */
+.work-section::before,
+.work-section::after,
+.work-section .project::after {
+  content: none;
+  display: none;
+}
+
+/* Selected Work: strictly gradient + project cards; no decorative dogs. */
+#work { background-image: radial-gradient(ellipse 48% 19% at 13% 5%, rgba(255,106,159,.47), transparent 92%), radial-gradient(ellipse 44% 22% at 97% 31%, rgba(255,179,122,.38), transparent 90%), radial-gradient(ellipse 54% 24% at 9% 66%, rgba(114,223,255,.35), transparent 94%), linear-gradient(180deg,#ffb3b3 0%,#ffd6bc 17%,#ffecd4 36%,#e2f0ee 55%,#bcdaf7 75%,#b5a6e9 100%) !important; }
+#work::before,#work::after,#work .project::before,#work .project::after,#work .work-sticker,#work .work-sticker-layer,#work .work-dogs,#work .work-dog,#work .background-dogs,#work .floating-dog { display:none !important; content:none !important; background-image:none !important; }
+
+/* V5: Only remove free-floating dog decorations from Selected Work.
+   IMPORTANT: About dog (.about-dog-signature) is intentionally preserved. */
+#work .work-sticker-layer, #work .work-dog-layer, #work .work-dogs,
+#work .work-dog, #work .background-dogs, #work .floating-dog,
+#work .work-sticker, #work::before, #work::after {
+  display:none !important; content:none !important; background-image:none !important;
+}
+#work { overflow:hidden; }
+.about-section .about-dog-signature {display:block !important;}

@@ -1,0 +1,59 @@
+
+/* 2026-11-18 — Visible dog-head stickers on top of the Selected Work
+   gradient, in the SIDE GUTTERS, not over project images or text. */
+.work-section::before {
+  content: none !important;
+  display: none !important;
+}
+.work-section {
+  isolation: isolate;
+  overflow: hidden;
+}
+.work-section .work-sticker-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.work-section .work-sticker {
+  position: absolute;
+  display: block;
+  width: clamp(46px, 5vw, 76px);
+  height: auto;
+  opacity: .92;
+  filter: drop-shadow(0 6px 6px rgba(52,23,74,.16));
+  user-select: none;
+}
+.work-section .sticker-1 { top: 20%; left: .3%; transform: rotate(-17deg); }
+.work-section .sticker-2 { top: 34%; right: .2%; transform: rotate(15deg); }
+.work-section .sticker-3 { top: 48%; left: .6%; transform: rotate(12deg); }
+.work-section .sticker-4 { top: 64%; right: .5%; transform: rotate(-14deg); }
+.work-section .sticker-5 { top: 80%; left: .3%; transform: rotate(17deg); }
+.work-section .sticker-6 { top: 92%; right: .3%; transform: rotate(-9deg); }
+
+/* Text, project cards, and filtering controls are always above stickers. */
+.work-section > :not(.work-sticker-layer) {
+  position: relative;
+  z-index: 2;
+}
+
+/* Keep decorations completely out of the card area on narrow viewports. */
+@media (max-width: 900px) {
+  .work-section .work-sticker { width: 36px; opacity: .82; }
+  .work-section .sticker-1,
+  .work-section .sticker-3,
+  .work-section .sticker-5 { left: -17px; }
+  .work-section .sticker-2,
+  .work-section .sticker-4,
+  .work-section .sticker-6 { right: -17px; }
+}
+@media (max-width: 600px) {
+  .work-section .work-sticker { width: 28px; opacity: .75; }
+  .work-section .sticker-1,
+  .work-section .sticker-3,
+  .work-section .sticker-5 { left: -13px; }
+  .work-section .sticker-2,
+  .work-section .sticker-4,
+  .work-section .sticker-6 { right: -13px; }
+}

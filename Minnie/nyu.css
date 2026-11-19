@@ -1,0 +1,97 @@
+/* NYU standalone case study. Scoped so the colorful homepage & ZEN remain unchanged. */
+body.nyu-page { --purple:#63339a; --deep:#2e1953; --lavender:#eee7f8; --cream:#faf8f2; --text:#27212e; background:var(--cream); color:var(--text); }
+.nyu-page .site-header {background:var(--cream);border-bottom:1px solid #ded8df;}
+.nyu-page .asterisk {color:var(--purple)}
+.nyu-page #language-toggle {background:transparent;color:var(--deep);border:1px solid var(--deep)}
+.nyu-page #language-toggle:hover {background:var(--deep);color:white}
+.nyu-page .nyu-container {max-width:1440px;width:90%;margin-left:auto;margin-right:auto}
+.nyu-page .nyu-intro {background:var(--lavender);padding:40px 0 92px;overflow:hidden}
+.nyu-page .nyu-overline {display:flex;justify-content:space-between;gap:20px;font-size:11px;letter-spacing:.13em;font-weight:700;color:#5c4b69}
+.nyu-page .nyu-overline a {border-bottom:1px solid #5c4b69;padding-bottom:5px}
+.nyu-page .nyu-intro-grid {display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:6%;align-items:end;margin-top:92px}
+.nyu-page .nyu-title-area {min-width:0}
+.nyu-page .nyu-label {font-size:12px;letter-spacing:.16em;font-weight:800;color:var(--purple);margin-bottom:20px}
+.nyu-page .tiny-spark {color:#f3b615;font-size:19px;margin:0 7px}
+.nyu-page .nyu-title-area h1 {font-size:clamp(62px,8.65vw,145px);line-height:.88;letter-spacing:-.085em;margin:0;word-break:normal;color:var(--deep);font-weight:900}
+.nyu-page .nyu-h1-asterisk {font-size:.3em;color:#ecb623;vertical-align:top;margin-left:.07em;letter-spacing:0}
+.nyu-page .nyu-display-sub {font-size:clamp(37px,5.35vw,82px);letter-spacing:-.07em;line-height:1;margin:30px 0 0;color:var(--deep);font-weight:700}
+.nyu-page .nyu-display-sub em {font-family:Georgia,serif;color:var(--purple);font-weight:400}
+.nyu-page .nyu-intro-aside {padding-bottom:7px}
+.nyu-page .nyu-tag {display:inline-block;background:var(--deep);color:white;padding:8px 12px;font-size:10px;font-weight:700;letter-spacing:.12em;border-radius:30px}
+.nyu-page .nyu-intro-aside p {font-size:17px;line-height:1.65;margin:22px 0 45px;max-width:290px}
+.nyu-page .nyu-scroll {font-size:10px;letter-spacing:.13em;font-weight:800;display:flex;justify-content:space-between;border-top:1px solid #b4a7c4;padding-top:12px}
+.nyu-page .nyu-scroll span {font-size:20px;line-height:1}
+.nyu-page figure {margin:0;min-width:0}
+.nyu-page .nyu-featured {padding-top:72px}
+.nyu-page .nyu-feature-grid {display:grid;grid-template-columns:minmax(0,1fr) 28%;gap:20px;background:#e6e7e4;overflow:hidden}
+.nyu-page .nyu-installation-photo {height:min(74vw,740px);min-height:460px;overflow:hidden}
+.nyu-page .nyu-installation-photo img {display:block;width:100%;height:100%;object-fit:cover;object-position:center 46%}
+.nyu-page .nyu-feature-aside {background:#cee9f3;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(22px,4vw,58px);min-width:0;position:relative;overflow:hidden}
+.nyu-page .nyu-feature-number {font-size:clamp(40px,6vw,95px);font-weight:800;letter-spacing:-.09em;line-height:.9;color:var(--deep)}
+.nyu-page .nyu-feature-number span {font-size:15px;letter-spacing:0;font-weight:500}
+.nyu-page .nyu-vertical-copy {font-size:clamp(30px,3.4vw,54px);font-weight:800;letter-spacing:-.06em;line-height:1.04;color:var(--deep)}
+.nyu-page .nyu-feature-aside p {line-height:1.6;font-size:13px;max-width:250px;position:relative;z-index:1}
+.nyu-page .nyu-feature-mark {position:absolute;font-size:clamp(110px,15vw,220px);color:#b6dfea;bottom:-100px;right:-27px;pointer-events:none}
+.nyu-page .nyu-small-caption,.nyu-page .nyu-image-frame figcaption {display:flex;justify-content:space-between;gap:12px;font-size:11px;color:#6d6470;letter-spacing:.06em;margin-top:12px;line-height:1.4}
+.nyu-page .nyu-overview {display:grid;grid-template-columns:1fr 3fr;gap:5%;padding-top:132px;padding-bottom:130px}
+.nyu-page .nyu-section-marker {font-size:11px;font-weight:800;letter-spacing:.17em;color:var(--purple);white-space:normal}
+.nyu-page .nyu-overview-content h2 {font-size:clamp(41px,5.2vw,78px);line-height:1.06;letter-spacing:-.068em;font-weight:800;max-width:810px;margin:0 0 50px}
+.nyu-page .nyu-overview-text {display:grid;grid-template-columns:1fr 1fr;gap:25px 40px;max-width:850px}
+.nyu-page .nyu-overview-text>p {margin:0;line-height:1.8;font-size:15px;color:#4d4552}
+.nyu-page .nyu-info-strip {grid-column:1/-1;border-top:1px solid #cfc7d2;margin-top:25px;padding-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:25px}
+.nyu-page .nyu-info-strip div {display:flex;flex-direction:column;gap:9px}
+.nyu-page .nyu-info-strip small {font-size:10px;letter-spacing:.12em;color:var(--purple);font-weight:700}
+.nyu-page .nyu-info-strip strong {font-size:14px;font-weight:500}
+.nyu-page .nyu-system {background:#eee8f6;padding:105px 0 110px}
+.nyu-page .nyu-section-head {display:flex;justify-content:space-between;align-items:end;gap:45px;margin-bottom:45px}
+.nyu-page .nyu-section-head h2 {font-size:clamp(43px,6.3vw,88px);letter-spacing:-.075em;line-height:1;margin:20px 0 0}
+.nyu-page .nyu-section-head h2 em {font-family:Georgia,serif;color:var(--purple);font-weight:400}
+.nyu-page .nyu-section-head>p {font-size:14px;line-height:1.7;color:#62576b;max-width:285px;margin:0 0 3px}
+.nyu-page .nyu-image-frame img {display:block;width:100%;height:auto;object-fit:contain}
+.nyu-page .nyu-light-frame {background:#fff}
+.nyu-page .nyu-summer {padding-top:110px;padding-bottom:125px}
+.nyu-page .nyu-applications {background:#f2f3eb;padding:105px 0 90px}
+.nyu-page .nyu-applications-image {margin-bottom:55px}
+.nyu-page .nyu-bottom-grid {display:grid;grid-template-columns:1.45fr 1fr;gap:34px;align-items:stretch}
+.nyu-page .nyu-bottom-grid .nyu-image-frame img {aspect-ratio:1.65;object-fit:cover}
+.nyu-page .nyu-closing-note {background:#66369a;color:white;padding:35px;display:flex;flex-direction:column;justify-content:space-between;min-height:250px}
+.nyu-page .nyu-closing-spark {font-size:60px;line-height:1;color:#ffdb55}
+.nyu-page .nyu-closing-note p {font-size:clamp(27px,3.4vw,50px);line-height:1.08;letter-spacing:-.055em;font-weight:700;margin:35px 0}
+.nyu-page .nyu-closing-note span {font-size:10px;letter-spacing:.15em}
+.nyu-page .nyu-end {border-top:1px solid #d8d0dc;padding:42px 0 72px;display:flex;justify-content:space-between;gap:20px;align-items:center;font-size:11px;letter-spacing:.12em;font-weight:700}
+.nyu-page .nyu-end a {color:var(--purple);border-bottom:1px solid currentColor;padding-bottom:6px}
+.nyu-page footer {background:var(--cream);color:var(--text);border-top:1px solid #d8d0dc}
+@media(max-width:1000px){
+  .nyu-page .nyu-intro-grid{grid-template-columns:minmax(0,1fr) 215px;gap:25px}
+  .nyu-page .nyu-title-area h1{font-size:clamp(57px,8.9vw,110px)}
+  .nyu-page .nyu-feature-aside{padding:22px}
+}
+@media(max-width:720px){
+  .nyu-page .nyu-container{width:90%}
+  .nyu-page .nyu-intro{padding:28px 0 55px}
+  .nyu-page .nyu-overline{font-size:9px}
+  .nyu-page .nyu-intro-grid{grid-template-columns:1fr;margin-top:70px;gap:35px}
+  .nyu-page .nyu-title-area h1{font-size:clamp(48px,13.1vw,94px)}
+  .nyu-page .nyu-display-sub{font-size:clamp(34px,8vw,58px);margin-top:17px}
+  .nyu-page .nyu-intro-aside p{max-width:450px;margin:15px 0 22px}
+  .nyu-page .nyu-featured{padding-top:35px}
+  .nyu-page .nyu-feature-grid{grid-template-columns:1fr}
+  .nyu-page .nyu-installation-photo{height:auto;min-height:0;aspect-ratio:3/4}
+  .nyu-page .nyu-feature-aside{min-height:180px;display:grid;grid-template-columns:1fr 1.2fr;gap:15px}
+  .nyu-page .nyu-vertical-copy{font-size:31px}
+  .nyu-page .nyu-feature-aside p{grid-column:2;margin:0}
+  .nyu-page .nyu-feature-mark{display:none}
+  .nyu-page .nyu-overview{grid-template-columns:1fr;padding:75px 0;gap:30px}
+  .nyu-page .nyu-overview-content h2{margin-bottom:30px}
+  .nyu-page .nyu-overview-text{grid-template-columns:1fr;gap:22px}
+  .nyu-page .nyu-info-strip{grid-column:1}
+  .nyu-page .nyu-system{padding:70px 0}
+  .nyu-page .nyu-section-head{display:block;margin-bottom:30px}
+  .nyu-page .nyu-section-head>p{max-width:480px;margin-top:22px}
+  .nyu-page .nyu-summer{padding:75px 0}
+  .nyu-page .nyu-applications{padding:70px 0}
+  .nyu-page .nyu-bottom-grid{grid-template-columns:1fr;gap:35px}
+  .nyu-page .nyu-closing-note{min-height:230px}
+  .nyu-page .nyu-end{padding:35px 0 55px}
+}
+@media(max-width:390px){.nyu-page .nyu-title-area h1{font-size:12.1vw}.nyu-page .nyu-feature-aside{grid-template-columns:1fr}.nyu-page .nyu-feature-aside p{grid-column:1}}

@@ -1,0 +1,39 @@
+/* Independent SUZHOU editorial case-study layout */
+.suzhou-page{background:#f7f6f2;color:#242422;--ink:#242422;--blue:#343434;--line:#d8d6d0}
+.suzhou-page .site-header{background:#f7f6f2;border-color:#deddd8}
+.suzhou-page .asterisk{color:#8c857b}
+.suzhou-page #language-toggle{background:transparent;border-color:#aaa39c}
+.suzhou-page .sz-wrap{width:90%;max-width:1380px;margin-left:auto;margin-right:auto}
+.suzhou-page .sz-intro{padding-top:40px;padding-bottom:72px}
+.suzhou-page .sz-top{display:flex;justify-content:space-between;gap:20px;font-size:11px;letter-spacing:.14em;font-weight:700;color:#7a7670}
+.suzhou-page .sz-top a{border-bottom:1px solid #9a9892;padding-bottom:5px}
+.suzhou-page .sz-heading{margin-top:95px;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:55px;align-items:end}
+.suzhou-page .sz-kicker{font-size:11px;letter-spacing:.17em;color:#77746e;font-weight:700}
+.suzhou-page h1{font-size:clamp(72px,12.5vw,180px);letter-spacing:-.085em;line-height:.9;margin:20px 0 0;font-weight:500;font-family:Georgia,serif}
+.suzhou-page h1 span{display:block;font-size:.25em;font-weight:400;letter-spacing:.1em;margin:30px 0 0;font-family:Georgia,'Songti SC',serif}
+.suzhou-page .sz-heading>p{line-height:1.7;font-size:18px;max-width:290px;margin:0 0 15px}
+.suzhou-page .sz-lead-media{background:#eeeeed;display:flex;justify-content:center;align-items:center;overflow:hidden}
+.suzhou-page .sz-lead-media img{width:100%;height:auto;max-height:820px;object-fit:contain;display:block}
+.suzhou-page .sz-overview{padding-top:125px;padding-bottom:130px;display:grid;grid-template-columns:24% 1fr;gap:6%;border-bottom:1px solid #d5d3ce}
+.suzhou-page .sz-section-index{font-size:11px;letter-spacing:.16em;color:#817c72;font-weight:700}
+.suzhou-page .sz-overview h2{font-family:Georgia,'Songti SC',serif;font-size:clamp(43px,5.3vw,81px);font-weight:400;line-height:1.08;letter-spacing:-.065em;margin:0 0 44px;max-width:760px}
+.suzhou-page .sz-columns{display:grid;grid-template-columns:1fr 1fr;gap:38px}
+.suzhou-page .sz-columns p{font-size:15px;line-height:1.85;margin:0;color:#524f49}
+.suzhou-page .sz-meta{border-top:1px solid #d5d3ce;margin-top:55px;padding-top:22px;display:flex;gap:65px;flex-wrap:wrap}
+.suzhou-page .sz-meta span{display:flex;flex-direction:column;gap:10px}
+.suzhou-page .sz-meta small{font-size:10px;letter-spacing:.16em;color:#817c72}
+.suzhou-page .sz-meta strong{font-size:14px;font-weight:500}
+.suzhou-page .sz-gallery{padding-top:115px;padding-bottom:90px}
+.suzhou-page .sz-gallery-head{display:flex;justify-content:space-between;gap:70px;align-items:end;margin-bottom:70px}
+.suzhou-page .sz-gallery-head h2{font-family:Georgia,'Songti SC',serif;font-size:clamp(46px,6.5vw,95px);font-weight:400;line-height:1.03;letter-spacing:-.066em;margin:22px 0 0}
+.suzhou-page .sz-gallery-head p{font-size:15px;line-height:1.7;color:#625e57;max-width:280px;margin:0 0 5px}
+.suzhou-page .sz-image-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px 28px;align-items:start}
+.suzhou-page .sz-figure{margin:0;min-width:0}
+.suzhou-page .sz-figure.sz-full{grid-column:1/-1}
+.suzhou-page .sz-figure img{width:100%;height:auto;display:block;background:#e8e8e7;object-fit:contain}
+.suzhou-page .sz-figure figcaption{border-top:1px solid #cfcfc9;margin-top:15px;padding-top:13px;display:flex;justify-content:space-between;gap:20px;font-size:11px;letter-spacing:.07em;color:#77736d}
+.suzhou-page .sz-end{border-top:1px solid #d5d3ce;padding:42px 0 75px;display:flex;justify-content:space-between;gap:20px;font-size:11px;font-weight:700;letter-spacing:.13em}
+.suzhou-page .sz-end a{border-bottom:1px solid currentColor;padding-bottom:5px}
+.suzhou-page footer{background:#f7f6f2}
+@media(max-width:850px){.suzhou-page .sz-heading{grid-template-columns:1fr;gap:35px;margin-top:70px}.suzhou-page .sz-heading>p{max-width:550px}.suzhou-page .sz-overview{grid-template-columns:1fr;gap:25px;padding:85px 0}.suzhou-page .sz-gallery-head{display:block}.suzhou-page .sz-gallery-head p{margin-top:25px}}
+@media(max-width:600px){.suzhou-page .sz-intro{padding-bottom:50px}.suzhou-page .sz-heading{margin-top:65px}.suzhou-page h1{font-size:clamp(60px,15vw,100px)}.suzhou-page .sz-columns{grid-template-columns:1fr;gap:22px}.suzhou-page .sz-gallery{padding:75px 0}.suzhou-page .sz-image-grid{grid-template-columns:1fr;gap:55px}.suzhou-page .sz-figure.sz-full{grid-column:auto}.suzhou-page .sz-gallery-head{margin-bottom:35px}}
