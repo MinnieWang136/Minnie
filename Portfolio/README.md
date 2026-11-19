@@ -82,3 +82,9 @@ New clickable editorial/visual project card in `index.html` opens `underflow.htm
 
 ## Transparent favicon update
 Dog face uses true alpha transparency (no purple square), with transparent black favicon for light themes and transparent white version for dark themes. Existing page design untouched.
+
+
+## Resume integration
+- `resume.html`: bilingual HTML résumé, preserving the uploaded résumé facts.
+- `resume-qimiao-wang-2026-cn.pdf`: original one-page Chinese PDF for viewing/downloading.
+- Navigation, About and Contact links updated in `index.html`.

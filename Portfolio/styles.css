@@ -638,3 +638,11 @@ body.zen-page{background:#f6f5f2;color:#242320;font-family:Arial,"Noto Sans SC",
 .underflow-cover img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
 .underflow-card-open{position:absolute;right:19px;bottom:19px;width:44px;height:44px;display:grid;place-items:center;background:#111;color:#fff;border-radius:50%;font-size:1.3rem;transition:transform .25s}
 .project-underflow a:hover .underflow-card-open{transform:rotate(45deg)}
+
+/* Resume integration */
+.about-resume-action {margin-top:35px}
+.resume-pill {display:inline-flex;align-items:center;justify-content:center;background:#eaffb2;color:#23152d;border:2px solid #23152d;border-radius:999px;padding:14px 25px;font-size:.91rem;font-weight:800;box-shadow:5px 5px 0 #25152d;transition:transform .2s,box-shadow .2s}
+.resume-pill:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 #25152d}
+.contact-real-link{color:#25152d;border-bottom:2px solid #25152d;padding-bottom:9px;font-size:.95rem;font-weight:700}
+.contact-real-link:hover{color:#075cff;border-color:#075cff}
+@media(max-width:600px){.site-header nav a[href="resume.html"]{display:inline}.contact-actions{gap:16px}.about-resume-action{margin-top:25px}}

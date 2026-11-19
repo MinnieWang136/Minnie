@@ -83,3 +83,7 @@ translations.en.underflowCardDesc = 'Manhole Patterns · Book & Motion Poster';
 translations.zh.underflowCardDesc = '纽约井盖纹样 · 书籍与动态海报';
 translations.en.projectNote = 'Selected work across visual identities, editorial publications, typography, motion and illustration.';
 translations.zh.projectNote = '涵盖视觉识别、书籍设计、字体、动态设计与插画的精选作品。';
+
+// Resume navigation and contact links.
+Object.assign(translations.en,{navResume:'Resume',aboutResumeCTA:'View my résumé ↗',contactBody:'Open to design opportunities and creative collaborations. Reach out by email or view my résumé.',emailAction:'Email ↗',resumeAction:'View résumé ↗',downloadResumeAction:'Download Chinese PDF ↓'});
+Object.assign(translations.zh,{navResume:'简历',aboutResumeCTA:'查看我的简历 ↗',contactBody:'期待设计工作机会与创意合作。欢迎邮件联系或查看我的简历。',emailAction:'发送邮件 ↗',resumeAction:'在线查看简历 ↗',downloadResumeAction:'下载中文简历 PDF ↓'});
