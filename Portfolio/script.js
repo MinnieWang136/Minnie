@@ -87,3 +87,9 @@ translations.zh.projectNote = '涵盖视觉识别、书籍设计、字体、动�
 // Resume navigation and contact links.
 Object.assign(translations.en,{navResume:'Resume',aboutResumeCTA:'View my résumé ↗',contactBody:'Open to design opportunities and creative collaborations. Reach out by email or view my résumé.',emailAction:'Email ↗',resumeAction:'View résumé ↗',downloadResumeAction:'Download Chinese PDF ↓'});
 Object.assign(translations.zh,{navResume:'简历',aboutResumeCTA:'查看我的简历 ↗',contactBody:'期待设计工作机会与创意合作。欢迎邮件联系或查看我的简历。',emailAction:'发送邮件 ↗',resumeAction:'在线查看简历 ↗',downloadResumeAction:'下载中文简历 PDF ↓'});
+
+// Daylight: interactive website + editorial publication.
+translations.en.daylightCardDesc = 'Daylight Study · Editorial & Interactive Design';
+translations.zh.daylightCardDesc = '日光研究 · 编辑设计与交互体验';
+translations.en.projectNote = 'Selected work spanning visual identities, publications, typography, interactive environments and motion.';
+translations.zh.projectNote = '涵盖视觉识别、出版物、字体设计、互动体验与动态设计的精选作品。';
